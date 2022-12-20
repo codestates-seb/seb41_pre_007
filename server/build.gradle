@@ -2,9 +2,11 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "org.asciidoctor.jvm.convert" version "3.3.2" //Spring Rest Docs API; Asciidoctor 플러그인 사용
+	//Asciidoctor 을 통해 .adoc 파일 확장자를 가지는 AsciiDoc 문서를 생성
 }
 
-group = 'com.pre007'
+group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -18,13 +20,87 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//Spring Rest Docs API
+//: `ext`변수의 set() 메서드를 이용해서 API 문서 snippets 의 생성 경로를 지정 (ext 가 task 명 같음)
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
+}
+//Spring Rest Docs API
+//`:asciidoctor` task 가 실행되면, AsciiDoctor 에서 ‘asciidoctorExtensions’라는 의존 그룹을 지정
+configurations {
+	asciidoctorExtensions
 }
 
-tasks.named('test') {
+dependencies {
+	//Spring Boot 기본값 (Spring Web)
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//Lombok 사용
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	//Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	//MapStruct
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+	//H2 In-Memory
+	//.yml 설정 필요
+	//https://www.h2database.com/html/main.html
+	runtimeOnly 'com.h2database:h2'
+	//Spring Data JDBC
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	//Spring Data JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//GSON
+	implementation 'com.google.code.gson:gson'
+	//Spring Rest Docs
+	//.yml 부가 설정 필요(많이)
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc' //`spring-restdocs-core`와 `spring-restdocs-mockmvc` 라이브러리 추가
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor' //`spring-restdocs-asciidoctor` 라이브러리 추가
+	//jjwt 라이브러리(JWT 사용)
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	//JavaMailSender
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	//Rest Template; Apache HttpComponents
+	implementation 'org.apache.httpcomponents:httpclient'
+}
+
+tasks.named('test') { //tasks.named('A') : `:A라는 task 가 실행된 후~`라는 의미
+	//Spring Rest Docs API
+	//outputs.dir: `:test`task 가 실행되면, `snippetsDir`라는 이름으로 지정된 경로로 API 문서 생성 스니핏을 생성한다. (해당 경로는 `ext`변수의 set() 메서드로 지정)
+	outputs.dir snippetsDir
+	//원래 있음.
 	useJUnitPlatform()
+}
+
+//Spring Rest Docs API
+//`asciidoctorExtensions`라는 의존 그룹을 미리 설정하여 `:asciidoctor`task 가 실행된 후 Asciidoctor 기능을 사용할 수 있게 한다.
+tasks.named('asciidoctor') {
+	configurations "asciidoctorExtensions" //위의 configurations 부분과 같으면 될 듯.
+	inputs.dir snippetsDir //경로(dir)로 입력(input)을 하는 것으로 보아하니, 해당 태스크에서 snippets 를 만드는 기능을 담당할 것 같음.
+	dependsOn test //`dependsOn` + `:task` : `:task`가 실행된 후, 해당 옵션을 붙인 `task`가 바로 실행되도록 하는 설정. (현재 : :test -> :asciidoctor)
+}
+
+//Spring Rest Docs API
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor            // :test -> :asciidoctor -> :copyDocument
+	from file("${asciidoctor.outputDir}")   // `build/docs/asciidoc/`경로에 생기는 `index.html`을 copy 한 후,
+	into file("src/main/resources/static/docs")   // `src/main/resources/static/docs`경로로 `index.html`을 추가. => 파일 형태(.html)로 api 문서를 송수신할 수 있음.
+}
+
+//Spring Rest Docs API
+// `:build` 설정 : `:build`task 는 `:copyDocument`task 가 실행된 후 실행됨.
+build {
+	dependsOn copyDocument  // :test -> :asciidoctor -> :copyDocument -> build
+}
+
+//Spring Rest Docs API
+// `:bootJar` 설정 : `:bootJar`task 는 `:copyDocument`task 가 실행된 후 실행됨.
+bootJar {
+	dependsOn copyDocument    // :test -> :asciidoctor -> :copyDocument -> :bootJar
+	from("${asciidoctor.outputDir}") {  // `build/docs/asciidoc/`경로에 생기는 `index.html`을 jar 파일 안에 추가 => jar 파일을 통해 애플리케이션을 실행하면 웹 브라우저에서 API 문서를 확인할 수 있음.
+		into 'static/docs'     // ?
+	}
 }
