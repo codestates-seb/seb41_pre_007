@@ -7,6 +7,11 @@ import { ReactComponent as Help } from '../image/Help.svg';
 import { ReactComponent as WinterBash } from '../image/WinterBash.svg';
 import { ReactComponent as Logout } from '../image/Logout.svg';
 
+const SWrapper = styled.div`
+  position: sticky;
+  top: 0;
+`;
+
 const SHeaderTop = styled.div`
   width: 100vw;
   .header-top {
@@ -133,7 +138,7 @@ const SHeader = styled.header`
 
 const LoginHeader = () => {
   return (
-    <>
+    <SWrapper>
       <SHeaderTop>
         <div className="header-top"></div>
       </SHeaderTop>
@@ -196,7 +201,7 @@ const LoginHeader = () => {
           </div>
         </div>
       </SHeader>
-    </>
+    </SWrapper>
   );
 };
 

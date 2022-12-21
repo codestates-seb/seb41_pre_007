@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import { ReactComponent as StackOverFlow } from '../image/StackOverFlow.svg';
 import { ReactComponent as Search } from '../image/Search.svg';
 
+const SWrapper = styled.div`
+  position: sticky;
+  top: 0;
+`;
+
 const SHeaderTop = styled.div`
   width: 100vw;
   .header-top {
@@ -117,7 +122,7 @@ const SHeader = styled.header`
 
 const LogoutHeader = () => {
   return (
-    <>
+    <SWrapper>
       <SHeaderTop>
         <div className="header-top"></div>
       </SHeaderTop>
@@ -155,7 +160,7 @@ const LogoutHeader = () => {
           </div>
         </div>
       </SHeader>
-    </>
+    </SWrapper>
   );
 };
 
