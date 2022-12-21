@@ -1,8 +1,7 @@
-package com.pre007.server.member.entity;
+package com.pre007.server.member_미완.entity;
 
 import com.pre007.server.audit.Auditable;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@NoArgsConstructor
 @Getter
 @Setter
 @Slf4j
