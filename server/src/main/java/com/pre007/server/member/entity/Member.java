@@ -4,7 +4,7 @@ import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.audit.Auditable;
 import com.pre007.server.comment.entity.Comment;
 import com.pre007.server.question.entity.Question;
-import com.pre007.server.vote_미완.entity.Vote;
+import com.pre007.server.vote.entity.Vote;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
