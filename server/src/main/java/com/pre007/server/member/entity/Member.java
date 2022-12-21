@@ -31,7 +31,7 @@ public class Member extends Auditable {
     private String password; // post, patch, response|
     private String email; // post, response|
     private String address; // post, patch, response|
-    private String profileImage; // patch, response| 기본값을 어떻게 설정해야할까? => `No Image`라는 Image 로 설정
+    private String profileImage = "No Image"; // patch, response| 기본값을 어떻게 설정해야할까? => `No Image`라는 Image 로 설정
     private String nickname; // post, patch, response|
     private String name; // post, patch, response|
     private int age; // post, patch, response|
