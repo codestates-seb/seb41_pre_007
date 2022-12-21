@@ -55,10 +55,12 @@ const SWrap = styled.div`
   /* box-sizing: border-box; */
   /* border: 0.5px solid #f1f2f3; */
   border-right: #4e4e4e;
-  width: 15%;
+  width: 164px;
   display: block;
   text-align: left;
   margin-left: 8%;
+  flex-shrink: 0;
+  position: relative !important;
   .padding {
     padding: 1rem;
     margin: 0;
