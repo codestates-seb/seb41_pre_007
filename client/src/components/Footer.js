@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as StackOverFlowLogo } from '../image/StackOverFlowLogo.svg';
-import { ReactComponent as Github } from '../image/Github.svg';
+import { ReactComponent as GithubLogo } from '../image/GithubLogo.svg';
 
 const SFooter = styled.footer`
   box-sizing: border-box;
@@ -54,12 +54,12 @@ const SFooter = styled.footer`
     font-size: 12px;
   }
 
-  .footer-github-container {
+  .footer-GithubLogo-container {
     display: flex;
     margin: auto;
   }
 
-  .footer-github-team {
+  .footer-GithubLogo-team {
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -125,40 +125,40 @@ const Footer = () => {
             <span className="footer-outer-link">LinkedIn</span>
             <span className="footer-outer-link">Instagram</span>
           </div>
-          <div className="footer-github-container">
-            <div className="footer-github-team">
-              <a href="https://github.com/nayul34">
-                <Github fill="hsl(210, 8%, 60%)" />
+          <div className="footer-GithubLogo-container">
+            <div className="footer-GithubLogo-team">
+              <a href="https://GithubLogo.com/nayul34">
+                <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[FE]김나율</div>
               </a>
             </div>
-            <div className="footer-github-team">
-              <a href="https://github.com/SUBINSON">
-                <Github fill="hsl(210, 8%, 60%)" />
+            <div className="footer-GithubLogo-team">
+              <a href="https://GithubLogo.com/SUBINSON">
+                <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[FE]손수빈</div>
               </a>
             </div>
-            <div className="footer-github-team">
-              <a href="https://github.com/djWjfk">
-                <Github fill="hsl(210, 8%, 60%)" />
+            <div className="footer-GithubLogo-team">
+              <a href="https://GithubLogo.com/djWjfk">
+                <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[FE]최윤지</div>
               </a>
             </div>
-            <div className="footer-github-team">
-              <a href="https://github.com/keumbi">
-                <Github fill="hsl(210, 8%, 60%)" />
+            <div className="footer-GithubLogo-team">
+              <a href="https://GithubLogo.com/keumbi">
+                <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[BE]박금비</div>
               </a>
             </div>
-            <div className="footer-github-team">
-              <a href="https://github.com/YJCMS">
-                <Github fill="hsl(210, 8%, 60%)" />
+            <div className="footer-GithubLogo-team">
+              <a href="https://GithubLogo.com/YJCMS">
+                <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[BE]이승현</div>
               </a>
             </div>
-            <div className="footer-github-team">
-              <a href="https://github.com/hso8706">
-                <Github fill="hsl(210, 8%, 60%)" />
+            <div className="footer-GithubLogo-team">
+              <a href="https://GithubLogo.com/hso8706">
+                <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[BE]하정호</div>
               </a>
             </div>
