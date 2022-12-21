@@ -18,6 +18,11 @@ import java.util.List;
 @Slf4j
 @Entity
 public class Member extends Auditable {
+    /*
+    TODO
+    1. image type 수정 및 기본값 설정
+    2. image update 방식 설정(물리적 or 경로)
+     */
     //기본 Entity 필드
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +34,8 @@ public class Member extends Auditable {
     private String profileImage; // patch, response| 기본값을 어떻게 설정해야할까? => `No Image`라는 Image 로 설정
     private String nickname; // post, patch, response|
     private String name; // post, patch, response|
-    private String age; // post, patch, response|
-    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
+    private int age; // post, patch, response|
+    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE; // patch, response|
 
     //Foreign Key 필드
     @OneToMany(mappedBy = "member")
