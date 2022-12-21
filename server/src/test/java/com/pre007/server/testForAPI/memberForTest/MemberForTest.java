@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -23,11 +27,11 @@ import java.util.List;
 import static com.pre007.server.prettifyTests.ApiDocumentUtils.getRequestPreProcessor;
 import static com.pre007.server.prettifyTests.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
@@ -48,7 +52,6 @@ public class MemberForTest {
     1. Stub data AOP 단계별로 실천해보기
      */
 
-
     //throws Exception : MockMvc.perform() 문제 해결
     @Test
     public void postMemberTest() throws Exception {
@@ -59,7 +62,7 @@ public class MemberForTest {
                 "Password",
                 "email@gmail.com",
                 "A시 B구",
-                "NickName",
+                "Hong",
                 "홍길동",
                 20
         );
@@ -74,7 +77,7 @@ public class MemberForTest {
                 "email@gmail.com",
                 "A시 B구",
                 "No Image",
-                "NickName",
+                "Hong",
                 "홍길동",
                 20,
                 Member.MemberStatus.MEMBER_ACTIVE);
@@ -140,7 +143,7 @@ public class MemberForTest {
                 "ChangedPassword",
                 "C시 D구",
                 "Personal Image",
-                "ChangedNickName",
+                "Soo",
                 "김철수",
                 30,
                 Member.MemberStatus.MEMBER_SLEEP);
@@ -154,7 +157,7 @@ public class MemberForTest {
                 "email@gmail.com",
                 "C시 D구",
                 "Personal Image",
-                "ChangedNickName",
+                "Soo",
                 "김철수",
                 30,
                 Member.MemberStatus.MEMBER_SLEEP);
@@ -223,7 +226,7 @@ public class MemberForTest {
                 "email@gmail.com",
                 "C시 D구",
                 "Personal Image",
-                "ChangedNickName",
+                "Soo",
                 "김철수",
                 30,
                 Member.MemberStatus.MEMBER_SLEEP);
@@ -240,7 +243,7 @@ public class MemberForTest {
         actions //forTest
                 .andExpect(status().isOk())
                 //forDocs
-                .andDo(document("patch-member",
+                .andDo(document("get-one-member",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         pathParameters(
@@ -263,34 +266,120 @@ public class MemberForTest {
                         )
                 ));
     }
-//    @Test
-//    public void getAllMembersTest() throws Exception{
-//        //given
-//        //1. stub post request
-//        //2. Json 형태 변경
-//        //3. stub response
-//        //4. Mocking Methods
-//        //when
-//        //then
-//    }
-//    @Test
-//    public void deleteOneMemberTest() throws Exception{
-//        //given
-//        //1. stub post request
-//        //2. Json 형태 변경
-//        //3. stub response
-//        //4. Mocking Methods
-//        //when
-//        //then
-//    }
+    @Test
+    public void getAllMembersTest() throws Exception{
+        //given
+        //1. stub post request
+        //2. Json 형태 변경
+        //3. stub response
+        //Page<Member>
+        Member member1 = new Member("image_1", "Hong", "홍길동", 20);
+        Member member2 = new Member("image_2", "Soo", "김철수", 30);
+        Page<Member> pageMember = new PageImpl<>(List.of(member1, member2), PageRequest.of(0, 10, Sort.by("memberId").descending()),2);
+        //List<MemberDto.Response>
+        long memberId1 = 1L;
+        MemberDto.Response responseDto1 = new MemberDto.Response(
+                memberId1,
+                "Login",
+                "Password",
+                "email@gmail.com",
+                "A시 B구",
+                "image_1",
+                "Hong",
+                "홍길동",
+                20,
+                Member.MemberStatus.MEMBER_ACTIVE);
+        long memberId2 = 2L;
+        MemberDto.Response responseDto2 = new MemberDto.Response(
+                memberId2,
+                "Login",
+                "ChangedPassword",
+                "email@gmail.com",
+                "C시 D구",
+                "image_2",
+                "Soo",
+                "김철수",
+                30,
+                Member.MemberStatus.MEMBER_SLEEP);
+        List<MemberDto.Response> listMember = List.of(responseDto2, responseDto1);
+        //4. Mocking Methods
+        given(memberService.findAllMembers(Mockito.anyInt(), Mockito.anyInt())).willReturn(pageMember);
+        given(memberMapper.memberListToMemberResponseList(Mockito.anyList())).willReturn(listMember);
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/members")
+                        .param("page", "1")
+                        .param("size", "10")
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        //then
+        actions.andExpect(status().isOk())
+                .andDo(document(
+                        "get-all-members",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestParameters(
+                                List.of(
+                                        parameterWithName("page").description("현재 페이지 쪽수"),
+                                        parameterWithName("size").description("한 페이지 당 데이터 갯수")
+                                )
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
+                                        fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
+                                        fieldWithPath("data[].loginId").type(JsonFieldType.STRING).description("로그인 아이디"),
+                                        fieldWithPath("data[].password").type(JsonFieldType.STRING).description("로그인 패스워드"),
+                                        fieldWithPath("data[].email").type(JsonFieldType.STRING).description("회원 이메일"),
+                                        fieldWithPath("data[].address").type(JsonFieldType.STRING).description("회원 주소"),
+                                        fieldWithPath("data[].profileImage").type(JsonFieldType.STRING).description("회원 프로필이미지"),
+                                        fieldWithPath("data[].nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
+                                        fieldWithPath("data[].name").type(JsonFieldType.STRING).description("회원 이름"),
+                                        fieldWithPath("data[].age").type(JsonFieldType.NUMBER).description("회원 나이"),
+                                        fieldWithPath("data[].memberStatus").type(JsonFieldType.STRING).description("회원 상태"),
+                                        fieldWithPath("pageInfo").type(JsonFieldType.OBJECT).description("페이지 정보"),
+                                        fieldWithPath("pageInfo.page").type(JsonFieldType.NUMBER).description("현재 페이지 쪽수"),
+                                        fieldWithPath("pageInfo.size").type(JsonFieldType.NUMBER).description("한 페이지 당 데이터 갯수"),
+                                        fieldWithPath("pageInfo.totalElements").type(JsonFieldType.NUMBER).description("전체 데이터 갯수"),
+                                        fieldWithPath("pageInfo.totalPages").type(JsonFieldType.NUMBER).description("전체 페이지 수")
+                                )
+                        )
+                ));
+    }
+    @Test
+    public void deleteOneMemberTest() throws Exception{
+        //given
+        Long memberId = 1L;
+        doNothing().when(memberService).deleteOneMember(Mockito.anyLong());
+        //when
+        ResultActions actions = mockMvc.perform(
+                delete("/members/{member-id}", memberId)
+        );
+        //then
+        actions.andExpect(status().isNoContent())
+                .andDo(document(
+                        "delete-one-member",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("member-id").description("회원 식별자")
+                        )
+                ));
+    }
 //    @Test
 //    public void deleteAllMembersTest() throws Exception{
 //        //given
-//        //1. stub post request
-//        //2. Json 형태 변경
-//        //3. stub response
-//        //4. Mocking Methods
+//        doNothing().when(memberService).deleteOneMember(Mockito.);
 //        //when
+//        ResultActions actions = mockMvc.perform(
+//                delete("/members")
+//        );
 //        //then
+//        actions.andExpect(status().isNoContent())
+//                .andDo(document(
+//                        "delete-All-members",
+//                        getRequestPreProcessor(),
+//                        getResponsePreProcessor()
+//                ));
 //    }
 }
