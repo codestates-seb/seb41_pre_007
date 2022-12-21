@@ -115,7 +115,7 @@ const SHeader = styled.header`
   }
 `;
 
-const Header = () => {
+const LogoutHeader = () => {
   return (
     <>
       <SHeaderTop>
@@ -159,4 +159,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default LogoutHeader;
