@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -62,8 +63,8 @@ public class MemberController {
 
     //TODO GET ALL
     @GetMapping
-    public ResponseEntity getAllMembers(@RequestParam int page,
-                                       @RequestParam int size){
+    public ResponseEntity getAllMembers(@Positive @RequestParam int page,
+                                       @Positive @RequestParam int size){
         Page<Member> pageMember = memberService.findAllMembers(page-1, size);
         List<Member> memberListForResponse = pageMember.getContent();
         List<MemberDto.Response> responses = mapper.memberListToMemberResponseList(memberListForResponse);

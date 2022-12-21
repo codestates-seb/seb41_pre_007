@@ -37,6 +37,15 @@ public class Member extends Auditable {
     private int age; // post, patch, response|
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE; // patch, response|
 
+    public Member() {}
+
+    public Member(String profileImage, String nickname, String name, int age) {
+        this.profileImage = profileImage;
+        this.nickname = nickname;
+        this.name = name;
+        this.age = age;
+    }
+
     //Foreign Key 필드
     @OneToMany(mappedBy = "member")
     private List<Question> questions = new ArrayList<>();
