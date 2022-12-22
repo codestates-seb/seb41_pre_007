@@ -56,9 +56,4 @@ public class QuestionService {
         questionRepository.delete(findQuestionResult);
     }
 
-    // save
-    private Question saveQuestion(Question question) {
-        return questionRepository.save(question);
-    }
-
 }
