@@ -6,6 +6,28 @@ const STips = styled.div`
   right: 0;
   z-index: 2000;
 
+  .search-tips-container::before {
+    content: '';
+    border-bottom: 10px solid hsl(210, 8%, 85%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .search-tips-container::after {
+    content: '';
+    border-bottom: 10px solid #fff;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .search-tips-container {
     display: flex;
     flex-direction: column;
