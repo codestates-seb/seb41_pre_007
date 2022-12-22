@@ -1,5 +1,7 @@
 package com.pre007.server.comment.entity;
 
+import com.pre007.server.answer.entity.Answer;
+import com.pre007.server.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,5 +30,13 @@ public class Comment {
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "answer_id")
+    private Answer answer;
 
 }

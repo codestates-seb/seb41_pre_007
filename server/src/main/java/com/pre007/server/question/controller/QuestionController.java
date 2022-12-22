@@ -6,6 +6,7 @@ import com.pre007.server.question.dto.QuestionDto;
 import com.pre007.server.question.entity.Question;
 import com.pre007.server.question.mapper.QuestionMapper;
 import com.pre007.server.question.service.QuestionService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/questions")
 @Validated
+@AllArgsConstructor
 @Slf4j
 public class QuestionController {
-private QuestionService questionService;
-private QuestionMapper questionMapper;
+private final QuestionService questionService;
+private final QuestionMapper questionMapper;
 
     // 질문 등록
     @PostMapping
