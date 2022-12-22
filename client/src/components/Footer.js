@@ -9,7 +9,6 @@ const SFooter = styled.footer`
   background-color: hsl(210, 8%, 15%);
   color: hsl(210, 8%, 60%);
   font-size: 14px;
-  position: relative;
   position: absolute;
 
   .footer {
