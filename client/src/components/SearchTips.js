@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 const STips = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+
   .search-tips-container {
     display: flex;
     flex-direction: column;
@@ -13,7 +18,6 @@ const STips = styled.div`
       0 3px 8px hsla(0, 0%, 0%, 0.09);
     margin: auto;
     margin-top: 5px;
-    z-index: 2000;
   }
 
   .search-tips-text-container {
