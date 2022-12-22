@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 import { Sidebar } from '../components/Sidebar';
 import { useNavigate } from 'react-router-dom';
+import dummyData from '../db/dummyData.json';
 
 export const Home = () => {
   const navigate = useNavigate();
   return (
-    <HomeWrap>
+    <SHomeWrap>
       <Sidebar />
-      <div id="content" className="top-content">
-        <h1 id="top-h1">Top Questions</h1>
+      {/* top */}
+      <div id="content" className="top-content content">
+        <div id="top-h1">
+          <h1>Top Questions</h1>
+        </div>
         <div>
           <button
             type="button"
@@ -18,23 +22,33 @@ export const Home = () => {
             Ask Question
           </button>
         </div>
+        {/* bottum */}
+        <hr></hr>
+        <SQuestionSummary>
+          <div className="singleBoxContainer">
+            {dummyData.questions.map((question) => (
+              <div className="singleBox" key={question.id}>
+                <div>{question.title}</div>
+                <p>{question.createdAt}</p>
+                <p>{question.userNickname}</p>
+              </div>
+            ))}
+          </div>
+        </SQuestionSummary>
       </div>
-    </HomeWrap>
+    </SHomeWrap>
   );
 };
 
-const HomeWrap = styled.div`
+const SHomeWrap = styled.div`
   display: flex;
-  #content {
+  .content {
     max-width: 1100px;
     width: 1100px;
     background-color: white;
     border-radius: 0;
-    border: 1px solid gray;
-    border-top-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 1px;
-    border-right-width: 0;
+    border: 1px solid #ececec;
+    border-width: 0 0 0 1px;
   }
   .top-content {
     display: flex;
@@ -55,5 +69,14 @@ const HomeWrap = styled.div`
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     margin-left: 5%;
+  }
+`;
+
+const SQuestionSummary = styled.div`
+  transform: translate(-300px, 120px);
+  .singleBox {
+    border: 1px solid #ececec;
+    border-width: 1px 0;
+    width: 50vw;
   }
 `;
