@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import { ReactComponent as Google } from '../image/Google.svg';
 import { ReactComponent as Github } from '../image/Github.svg';
@@ -21,13 +22,19 @@ export const SModal = styled.div`
 `;
 export const SModalView = styled.div`
   width: 350px;
-  height: 650px;
+  height: 700px;
   background-color: #f1f2f3;
   margin: 0px 30px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  > button {
+    margin-left: 320px;
+    font-size: 25px;
+    background-color: none;
+    border: none;
+  }
 `;
 export const SSocialButton = styled.div`
   height: 27%;
@@ -86,7 +93,7 @@ export const SSocialButton = styled.div`
   }
 `;
 export const SLoginForm = styled.form`
-  height: 400px;
+  height: 450px;
   width: 280px;
   background-color: white;
   border: 2px solid #eaebeb;
@@ -103,7 +110,7 @@ export const SLoginForm = styled.form`
 
     > span {
       font-weight: bold;
-      margin-top: 18px;
+      margin-top: 15px;
     }
     > input {
       height: 28px;
@@ -117,7 +124,7 @@ export const SLoginForm = styled.form`
     }
     > button {
       height: 34px;
-      margin-top: 15px;
+      margin-top: 8px;
       background-color: #0995ff;
       color: white;
       border: none;
@@ -140,19 +147,19 @@ export const Check = styled.div`
 
   > input {
     position: relative;
-    top: -14px;
+    top: -24px;
     margin-right: 3px;
   }
 `;
 export const Setc = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   font-size: 12px;
   > .up {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     > .click {
       padding-left: 5px;
       color: #1077cd;
@@ -167,30 +174,26 @@ export const Setc = styled.div`
   }
 `;
 
-const SignUp = () => {
-  // const [isOpen, setIsOpen] = useState(false);
+const SignUp = ({ onIsSignOpen }) => {
   return (
     <>
-      {/* <button onClick={() => setIsOpen(true)}>회원가입누르세요</button> */}
-      {/* {isOpen === true ? ( */}
       <div>
-        <SModalBack>
-          {/* <button onClick={() => setIsOpen(false)}>닫아</button> */}
-        </SModalBack>
+        <SModalBack onClick={onIsSignOpen}></SModalBack>
         <SModal>
           <SModalView>
+            <button onClick={onIsSignOpen}>x</button>
             <SSocialButton>
               <button className="GoogleLogin">
                 <Google />
-                <span>Log in with Google</span>
+                <span>Sign up with Google</span>
               </button>
               <button className="GithubLogin">
                 <Github />
-                <span>Log in with Github</span>
+                <span>Sign up with Github</span>
               </button>
               <button className="NaverLogin">
                 <Naver className="Naver" />
-                <span>Log in with Naver</span>
+                <span>Sign up with Naver</span>
               </button>
             </SSocialButton>
             <SLoginForm>
@@ -212,7 +215,7 @@ const SignUp = () => {
                     invitations, company announcements, and digests.
                   </p>
                 </Check>
-                <button className="signupbtn">Signup</button>
+                <button className="signupbtn">Sign up</button>
                 <p>
                   By clicking &apos;Sign up&apos;, you agree to our terms of
                   service, privacy policy and cookie policy
