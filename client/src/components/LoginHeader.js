@@ -137,8 +137,6 @@ const SHeader = styled.header`
   }
 `;
 
-const STips = styled.div``;
-
 const LoginHeader = () => {
   const navigate = useNavigate();
 
@@ -172,7 +170,6 @@ const LoginHeader = () => {
               placeholder="Search..."
             ></input>
           </form>
-          <STips />
           <div className="header-bottom-profile-container">
             <img
               className="header-bottom-profile header-bottom-pointer"
