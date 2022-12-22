@@ -3,8 +3,10 @@ package com.pre007.server.vote.repository;
 import com.pre007.server.vote.entity.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface VoteRepository extends JpaRepository<Vote, Long> {
-    Long countByQuestionId(long questionId);
+    Optional<Vote> findByMemberIdAndQuestionId(Long memberId, Long questionId);
 }
 
 /*
