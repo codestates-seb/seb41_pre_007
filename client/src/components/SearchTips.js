@@ -8,24 +8,26 @@ const STips = styled.div`
 
   .search-tips-container::before {
     content: '';
-    border-bottom: 10px solid hsl(210, 8%, 85%);
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    position: absolute;
-    top: -4px;
+    width: 10px;
+    height: 10px;
+    top: 3px;
     left: 50%;
-    transform: translateX(-50%);
+    background: hsl(210, 8%, 85%);
+    transform: rotate(45deg) translateX(-50%);
+    display: block;
+    position: absolute;
   }
 
   .search-tips-container::after {
     content: '';
-    border-bottom: 10px solid #fff;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    position: absolute;
-    top: -2px;
+    width: 10px;
+    height: 10px;
+    top: 4px;
     left: 50%;
-    transform: translateX(-50%);
+    background: #fff;
+    transform: rotate(45deg) translateX(-50%);
+    display: block;
+    position: absolute;
   }
 
   .search-tips-container {
