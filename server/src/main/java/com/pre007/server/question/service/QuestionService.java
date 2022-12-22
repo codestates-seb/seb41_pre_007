@@ -7,6 +7,7 @@ import com.pre007.server.question.repository.QuestionRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -26,7 +27,13 @@ public class QuestionService {
 
     // 질문 수정
     public Question updateQuestion(Question question) {
-        return null;
+        Question findQuestion = findQuestion(question.getQuestionId());
+        Optional.ofNullable(question.getTitle())
+                .ifPresent(findQuestion::setTitle);
+        Optional.ofNullable(question.getContent())
+                .ifPresent(findQuestion::setContent);
+
+        return questionRepository.save(findQuestion);
     }
 
     // 특정 질문 조회
@@ -45,8 +52,8 @@ public class QuestionService {
 
     // 특정 질문 삭제
     public void delete(long questionId) {
-        Question findQuestion = findQuestion(questionId);
-        questionRepository.delete(findQuestion);
+        Question findQuestionResult = findQuestion(questionId);
+        questionRepository.delete(findQuestionResult);
     }
 
     // save
