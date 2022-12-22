@@ -69,7 +69,7 @@ public class MemberService {
 
     //validation 영역
     @Transactional(readOnly = true)
-    public Member findVerifiedMember(long memberId) {
+    private Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
                 memberRepository.findById(memberId);
         Member findMember =
