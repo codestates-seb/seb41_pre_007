@@ -43,7 +43,7 @@ public class QuestionService {
     // 모든 질문 조회
     public Page<Question> findAllQuestion(int page, int size) {
         return questionRepository.findAll(
-                PageRequest.of(page, size, Sort.by("createdAt").descending()));
+                PageRequest.of(page, size, Sort.by("questionId").descending()));
     }
 
     // 특정 질문 삭제
