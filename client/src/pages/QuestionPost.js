@@ -12,18 +12,29 @@ const SContainer = styled.div`
   margin: auto;
   padding: 30px;
 
-  h1 {
+  h3 {
     margin-bottom: 50px;
   }
 
-  h1,
-  h5 {
+  h3,
+  h6 {
     font-weight: bold;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 0.3;
+  }
+
+  ul {
+    margin: 0;
   }
 
   .question-card {
     width: 70%;
     border-radius: 3px;
+    padding: 25px;
+    margin-bottom: 10px;
   }
 
   .blue-card {
@@ -36,14 +47,36 @@ const SContainer = styled.div`
     border: 1px solid hsl(210, 8%, 90%);
   }
 
-  .question-title-container {
-    display: flex;
-    align-items: flex-start;
-  }
-
   input,
   textarea {
     width: 100%;
+  }
+
+  button {
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    margin-right: 10px;
+  }
+
+  .question-upload-button {
+    color: #fff;
+    border: 1px solid rgb(10, 149, 255);
+    background-color: hsl(206, 100%, 52%);
+    box-shadow: rgb(255 255 255 / 40%) 0px 1px 0px 0px inset;
+  }
+
+  .question-draft-button {
+    color: #c22e32;
+    background-color: transparent;
+  }
+
+  .question-upload-button:hover {
+    background-color: hsl(205, 46%, 32%);
+  }
+
+  .question-draft-button:hover {
+    background-color: hsl(358, 75%, 97%);
   }
 `;
 
@@ -52,19 +85,19 @@ export const QuestionPost = () => {
     <SWrapper>
       <SContainer>
         <div>
-          <h1>Ask a public question</h1>
+          <h3>Ask a public question</h3>
         </div>
         <div className="question-card blue-card">
-          <h2>Writing a good question</h2>
+          <h5>Writing a good question</h5>
           <p>
             You’re ready to ask a programming-related question and this form
             will help guide you through the process.
           </p>
-          <p>
+          <p id="p2">
             Looking to ask a non-programming question? See the topics here to
             find a relevant site.
           </p>
-          <h5>Steps</h5>
+          <h6>Steps</h6>
           <ul>
             <li>Summarize your problem in a one-line title.</li>
             <li>Describe your problem in more detail.</li>
@@ -77,48 +110,50 @@ export const QuestionPost = () => {
           </ul>
         </div>
         <div className="question-card white-card">
-          <h5>Title</h5>
-          <div>
+          <h6>Title</h6>
+          <p>
             Be specific and imagine {`you're`} asking a question to another
             person.
-          </div>
+          </p>
           <form>
             <input placeholder="e.g. Is there an R function for finding the index of an element in a vector?"></input>
           </form>
         </div>
         <div className="question-card white-card">
-          <h5>What are the details of your problem?</h5>
-          <div>
+          <h6>What are the details of your problem?</h6>
+          <p>
             Introduce the problem and expand on what you put in the title.
             Minimum 20 characters.
-          </div>
+          </p>
           <form>
             <textarea></textarea>
           </form>
         </div>
         <div className="question-card white-card">
-          <h5>What did you try and what were you expecting?</h5>
-          <div>
+          <h6>What did you try and what were you expecting?</h6>
+          <p>
             Describe what you tried, what you expected to happen, and what
             actually resulted. Minimum 20 characters.
-          </div>
+          </p>
           <form>
             <textarea></textarea>
           </form>
         </div>
         <div className="question-card white-card">
-          <h5>Tags</h5>
-          <div>
+          <h6>Tags</h6>
+          <p>
             Add up to 5 tags to describe what your question is about. Start
             typing to see suggestions.
-          </div>
+          </p>
           <form>
             <input placeholder="e.g. (css sql-server asp.net-mvc)"></input>
           </form>
         </div>
         <div>
-          <button>Review your question</button>
-          <button>Discard draft</button>
+          <button className="question-upload-button">
+            Review your question
+          </button>
+          <button className="question-draft-button">Discard draft</button>
         </div>
       </SContainer>
     </SWrapper>
