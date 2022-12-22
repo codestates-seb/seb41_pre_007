@@ -2,14 +2,11 @@ package com.pre007.server.question.service;
 
 import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
-import com.pre007.server.member.entity.Member;
-import com.pre007.server.member.service.MemberService;
 import com.pre007.server.question.entity.Question;
 import com.pre007.server.question.repository.QuestionRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
