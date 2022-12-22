@@ -5,6 +5,7 @@ import { ReactComponent as Search } from '../image/Search.svg';
 const SWrapper = styled.div`
   position: sticky;
   top: 0;
+  z-index: 5;
 `;
 
 const SHeaderTop = styled.div`

@@ -10,6 +10,7 @@ import { ReactComponent as Logout } from '../image/Logout.svg';
 const SWrapper = styled.div`
   position: sticky;
   top: 0;
+  z-index: 5;
 `;
 
 const SHeaderTop = styled.div`
