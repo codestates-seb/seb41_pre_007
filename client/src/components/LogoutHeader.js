@@ -84,6 +84,7 @@ const SHeader = styled.header`
 
   .header-bottom-search {
     width: 100%;
+    height: 2.2rem;
     padding: 0.6em 2rem;
     border: 1px solid #dcdcdc;
     border-radius: 3px;

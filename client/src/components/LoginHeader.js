@@ -38,6 +38,7 @@ const SHeader = styled.header`
     width: 90rem;
     max-width: 1264px;
     height: 50px;
+    z-index: 1;
   }
 
   .header-bottom-pointer {
@@ -89,6 +90,7 @@ const SHeader = styled.header`
 
   .header-bottom-search {
     width: 100%;
+    height: 2.2rem;
     padding: 0.6em 2rem;
     border: 1px solid #dcdcdc;
     border-radius: 3px;
@@ -125,6 +127,7 @@ const SHeader = styled.header`
     display: flex;
     align-items: center;
     height: 50px;
+    z-index: 2;
   }
 
   .header-bottom-topbar-background:hover {
@@ -133,6 +136,7 @@ const SHeader = styled.header`
 
   .header-bottom-topbar {
     padding: 0 10px 0 10px;
+    z-index: 3;
   }
 `;
 
@@ -145,7 +149,9 @@ const LoginHeader = () => {
       <SHeader>
         <div className="header-bottom">
           <div className="header-bottom-logo-container header-bottom-pointer">
-            <StackOverFlow />
+            <a href="loacalhost:3000/home">
+              <StackOverFlow />
+            </a>
           </div>
           <div className="header-bottom-navigation-container">
             <button className="header-bottom-navigation header-bottom-pointer">
