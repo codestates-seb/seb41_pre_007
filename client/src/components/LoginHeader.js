@@ -6,6 +6,7 @@ import { ReactComponent as Achievements } from '../image/Achievements.svg';
 import { ReactComponent as Help } from '../image/Help.svg';
 import { ReactComponent as WinterBash } from '../image/WinterBash.svg';
 import { ReactComponent as Logout } from '../image/Logout.svg';
+import { useNavigate } from 'react-router-dom';
 
 const SWrapper = styled.div`
   position: sticky;
@@ -134,7 +135,15 @@ const SHeader = styled.header`
   }
 `;
 
+const STips = styled.div``;
+
 const LoginHeader = () => {
+  const navigate = useNavigate();
+
+  const handleClickHome = () => {
+    navigate(`/home`);
+  };
+
   return (
     <SWrapper>
       <SHeaderTop>
@@ -142,11 +151,12 @@ const LoginHeader = () => {
       </SHeaderTop>
       <SHeader>
         <div className="header-bottom">
-          <div className="header-bottom-logo-container header-bottom-pointer">
-            <a href="loacalhost:3000/home">
-              <StackOverFlow />
-            </a>
-          </div>
+          <button
+            className="header-bottom-logo-container header-bottom-pointer"
+            onClick={handleClickHome}
+          >
+            <StackOverFlow />
+          </button>
           <div className="header-bottom-navigation-container">
             <button className="header-bottom-navigation header-bottom-pointer">
               <div>Products</div>
@@ -160,6 +170,7 @@ const LoginHeader = () => {
               placeholder="Search..."
             ></input>
           </form>
+          <STips />
           <div className="header-bottom-profile-container">
             <img
               className="header-bottom-profile header-bottom-pointer"
