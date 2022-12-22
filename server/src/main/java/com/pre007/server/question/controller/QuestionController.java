@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -24,41 +25,59 @@ public class QuestionController {
 private QuestionService questionService;
 private QuestionMapper questionMapper;
 
+    // 질문 등록
     @PostMapping
     public ResponseEntity<SingleResponseDto<QuestionDto.Response>> postQuestion(
-            @RequestBody QuestionDto.Post requestBody) {
+            @Valid @RequestBody QuestionDto.Post requestBody) {
+        Question question = questionMapper.questionPostToQuestion(requestBody);
+        Question createdQuestion = questionService.createQuestion(question);
+        QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(createdQuestion);
 
-        // service
-        return new ResponseEntity(requestBody, HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
 
+    // 질문 수정
    @PatchMapping("/{question-id}")
    public ResponseEntity<SingleResponseDto<QuestionDto.Response>> patchQuestion(
-            @RequestBody QuestionDto.Patch requestBody) {
-        // service
-        return new ResponseEntity(requestBody, HttpStatus.OK);
+           @PathVariable("question-id") @Positive long questionId,
+           @Valid @RequestBody QuestionDto.Patch requestBody) {
+       requestBody.setQuestionId(questionId);
+       Question updateQuestion =
+               questionService.updateQuestion(questionMapper.questionPatchToQuestion(requestBody));
+       QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(updateQuestion);
+
+       return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
    }
 
+   // 특정 질문 찾기
    @GetMapping("/{question-id}")
    public ResponseEntity<SingleResponseDto<QuestionDto.Response>> getQuestion(
-           @PathVariable("question-id") Long questionId) {
+           @PathVariable("question-id") long questionId) {
 
-        return null;
+       Question question = questionService.findQuestion(questionId);
+
+       return new ResponseEntity<>(
+               new SingleResponseDto<>(questionMapper.questionToQuestionResponseDto(question)),
+               HttpStatus.OK);
    }
 
+   // 모든 질문 조회
    @GetMapping
    public ResponseEntity<MultiResponseDto<QuestionDto.Response>> getQuestions(
            @Positive @RequestParam int page,
            @Positive @RequestParam int size) {
        Page<Question> questionPage = questionService.findAllQuestion(page-1, size);
-       List<QuestionDto.Response> responses = questionMapper
-               .questionsToQuestionResponses(questionPage.getContent());
+       List<QuestionDto.Response> responses =
+               questionMapper.questionsToQuestionResponseDtos(questionPage.getContent());
+
        return  new ResponseEntity<>(new MultiResponseDto<>(responses, questionPage), HttpStatus.OK);
    }
 
+    // 특정 질문 삭제
    @DeleteMapping("/{question-id}")
-    public ResponseEntity<String> deleteQuestion(@PathVariable("question-id") @Positive long id) {
-        return null;
+    public ResponseEntity<String> deleteQuestion(@PathVariable("question-id") @Positive long questionId) {
+        questionService.delete(questionId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
    }
 
 }
