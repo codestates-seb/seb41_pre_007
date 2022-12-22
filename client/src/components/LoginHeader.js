@@ -50,6 +50,8 @@ const SHeader = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
+    background-color: transparent;
     width: 165px;
     height: 50px;
   }
