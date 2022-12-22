@@ -19,6 +19,9 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
+    // MemberService 필요
+    // 파라미터에 MemberId 추가해서 question.setMember 코드 필요
+
     // 질문 작성
     public Question createQuestion(Question question) {
         Question saveQuestion = questionRepository.save(question);
@@ -41,7 +44,8 @@ public class QuestionService {
         Optional<Question> optionalQuestion = questionRepository.findById(questionId);
 
         return optionalQuestion.orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.TODOS_NOT_FOUND)); // Exception 코드 수정 및 추가 필요
+                () -> new BusinessLogicException(ExceptionCode.TODOS_NOT_FOUND));
+        // 임의로 넣은 Exception 코드, 수정 및 추가 필요
     }
 
     // 모든 질문 조회
