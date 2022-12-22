@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ReactComponent as Thinking } from '../image/Thinking.svg';
 
 const SWrapper = styled.div`
   box-sizing: border-box;
@@ -12,8 +13,12 @@ const SContainer = styled.div`
   margin: auto;
   padding: 30px;
 
-  h3 {
-    margin-bottom: 50px;
+  .question-subject-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 130px;
+    padding-bottom: 50px;
   }
 
   h3,
@@ -84,8 +89,9 @@ export const QuestionPost = () => {
   return (
     <SWrapper>
       <SContainer>
-        <div>
+        <div className="question-subject-container">
           <h3>Ask a public question</h3>
+          <Thinking height="130px" />
         </div>
         <div className="question-card blue-card">
           <h5>Writing a good question</h5>
