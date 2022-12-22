@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { ReactComponent as StackOverFlow } from '../image/StackOverFlow.svg';
 import { ReactComponent as Search } from '../image/Search.svg';
+import { useState } from 'react';
+// import Login from './Login';
+import Signup from './Signup';
 
 const SWrapper = styled.div`
   position: sticky;
@@ -123,6 +126,16 @@ const SHeader = styled.header`
 `;
 
 const LogoutHeader = () => {
+  // const [isOpen, setIsOpen] = useState(false);
+  const [isSignOpen, setIsSignOpen] = useState(false);
+
+  // const handleIsOpen = () => {
+  //   setIsOpen((prev) => !prev);
+  // };
+  const handleIsSignOpen = () => {
+    setIsSignOpen((prev) => !prev);
+  };
+
   return (
     <SWrapper>
       <SHeaderTop>
@@ -153,15 +166,23 @@ const LogoutHeader = () => {
             ></input>
           </form>
           <div>
-            <button className="header-bottom-ls-button header-bottom-login header-bottom-pointer">
+            <button
+              className="header-bottom-ls-button header-bottom-login header-bottom-pointer"
+              // onClick={onIsOpen}
+            >
               Log in
             </button>
-            <button className="header-bottom-ls-button header-bottom-signup header-bottom-pointer">
+            <button
+              className="header-bottom-ls-button header-bottom-signup header-bottom-pointer"
+              onClick={handleIsSignOpen}
+            >
               Sign up
             </button>
           </div>
         </div>
       </SHeader>
+      {/* {isOpen && <Login onIsOpen={handlleIsOpen} />} */}
+      {isSignOpen && <Signup onIsSignOpen={handleIsSignOpen} />}
     </SWrapper>
   );
 };
