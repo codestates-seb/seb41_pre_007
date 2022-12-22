@@ -3,6 +3,8 @@ package com.pre007.server.question.entity;
 import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.comment.entity.Comment;
 import com.pre007.server.member.entity.Member;
+import com.pre007.server.tag.entity.Tag;
+import com.pre007.server.vote.entity.Vote;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,11 +47,14 @@ public class Question {
     @JoinColumn(name = "member_id")
     private Member member;
 
-//    @OneToMany(mappedBy = "question")
-//    private List<Answer> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "question")
+    private List<QuestionTag> questionTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "question")
-    private List<Comment> comments = new ArrayList<>();
+    private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question")
+    private List<Vote> votes = new ArrayList<>();
 
 
 
