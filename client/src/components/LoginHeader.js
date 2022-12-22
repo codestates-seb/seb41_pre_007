@@ -38,7 +38,6 @@ const SHeader = styled.header`
     width: 90rem;
     max-width: 1264px;
     height: 50px;
-    z-index: 1;
   }
 
   .header-bottom-pointer {
@@ -101,14 +100,12 @@ const SHeader = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
+    width: 60px;
     height: 50px;
   }
 
   .header-bottom-profile-container:hover {
     background-color: #dcdcdc;
-    width: 40px;
-    height: 50px;
   }
 
   .header-bottom-profile {
@@ -126,17 +123,13 @@ const SHeader = styled.header`
   .header-bottom-topbar-background {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 40px;
     height: 50px;
-    z-index: 2;
   }
 
   .header-bottom-topbar-background:hover {
     background-color: #dcdcdc;
-  }
-
-  .header-bottom-topbar {
-    padding: 0 10px 0 10px;
-    z-index: 3;
   }
 `;
 
@@ -175,34 +168,19 @@ const LoginHeader = () => {
           </div>
           <div className="header-bottom-topbar-container">
             <div className="header-bottom-topbar-background">
-              <Inbox
-                className="header-bottom-pointer header-bottom-topbar"
-                fill="#404040"
-              />
+              <Inbox className="header-bottom-pointer" fill="#404040" />
             </div>
             <div className="header-bottom-topbar-background">
-              <Achievements
-                className="header-bottom-pointer header-bottom-topbar"
-                fill="#404040"
-              />
+              <Achievements className="header-bottom-pointer" fill="#404040" />
             </div>
             <div className="header-bottom-topbar-background">
-              <Help
-                className="header-bottom-pointer header-bottom-topbar"
-                fill="#404040"
-              />
+              <Help className="header-bottom-pointer" fill="#404040" />
             </div>
             <div className="header-bottom-topbar-background">
-              <WinterBash
-                className="header-bottom-pointer header-bottom-topbar"
-                fill="#404040"
-              />
+              <WinterBash className="header-bottom-pointer" fill="#404040" />
             </div>
             <div className="header-bottom-topbar-background">
-              <Logout
-                className="header-bottom-pointer header-bottom-topbar"
-                fill="#404040"
-              />
+              <Logout className="header-bottom-pointer" fill="#404040" />
             </div>
           </div>
         </div>
