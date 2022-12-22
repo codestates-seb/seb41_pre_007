@@ -55,7 +55,6 @@ private final QuestionMapper questionMapper;
    @GetMapping("/{question-id}")
    public ResponseEntity<SingleResponseDto<QuestionDto.Response>> getQuestion(
            @PathVariable("question-id") long questionId) {
-
        Question question = questionService.findQuestion(questionId);
 
        return new ResponseEntity<>(
