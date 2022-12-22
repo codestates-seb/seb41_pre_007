@@ -5,7 +5,7 @@ import { ReactComponent as GithubLogo } from '../image/GithubLogo.svg';
 const SFooter = styled.footer`
   box-sizing: border-box;
   width: 100vw;
-  height: 322px;
+  height: 360px;
   background-color: hsl(210, 8%, 15%);
   color: hsl(210, 8%, 60%);
   font-size: 14px;
@@ -15,7 +15,7 @@ const SFooter = styled.footer`
     justify-content: space-between;
     max-width: 1264px;
     height: 278px;
-    padding-top: 35px;
+    padding-top: 30px;
     margin: auto;
   }
 
