@@ -1,4 +1,7 @@
 package com.pre007.server.vote.mapper;
 
-public class VoteMapper {
+import org.mapstruct.Mapper;
+
+@Mapper(componentModel = "spring")
+public interface VoteMapper {
 }
