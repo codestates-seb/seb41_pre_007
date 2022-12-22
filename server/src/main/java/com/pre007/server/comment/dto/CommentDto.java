@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 public class CommentDto {
 
-    @AllArgsConstructor
     @Getter
     @Setter
     public static class Post {
@@ -31,14 +30,17 @@ public class CommentDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private long memberId;
+        private long answerId;
 
         @Builder
-        public Response(Long commentId, String content, LocalDateTime createdAt, LocalDateTime modifiedAt, long memberId) {
+        public Response(Long commentId, String content, LocalDateTime createdAt,
+                        LocalDateTime modifiedAt, long memberId, long answerId) {
             this.commentId = commentId;
             this.content = content;
             this.createdAt = createdAt;
             this.modifiedAt = modifiedAt;
             this.memberId = memberId;
+            this.answerId = answerId;
         }
     }
 }
