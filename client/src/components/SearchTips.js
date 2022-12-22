@@ -10,7 +10,7 @@ const STips = styled.div`
     content: '';
     width: 10px;
     height: 10px;
-    top: 3px;
+    top: 3.5px;
     left: 50%;
     background: hsl(210, 8%, 85%);
     transform: rotate(45deg) translateX(-50%);
@@ -22,7 +22,7 @@ const STips = styled.div`
     content: '';
     width: 10px;
     height: 10px;
-    top: 4px;
+    top: 5px;
     left: 50%;
     background: #fff;
     transform: rotate(45deg) translateX(-50%);
