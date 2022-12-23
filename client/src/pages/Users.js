@@ -1,5 +1,4 @@
 import { Sidebar } from '../components/Sidebar';
-import { SidebarRight } from '../components/SidebarRight';
 import { ReactComponent as Search } from '../image/Search.svg';
 import styled from 'styled-components';
 import dummyUsers from '../db/dummyUsers.json';
@@ -12,30 +11,25 @@ const SWrapper = styled.div`
 const SUsers = styled.main`
   display: flex;
   flex-direction: column;
-  max-width: 1100px;
   width: 1100px;
   border: 1px solid #ececec;
   border-width: 0 0 0 1px;
 
   .users-content-container {
-    max-width: 800px;
-    margin: 0 0 3em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    margin-left: 5%;
+    margin: 30px;
   }
 
   .users-title {
     display: block;
     font: inherit;
     font-size: 2rem;
+    margin-bottom: 30px;
   }
 
   .users-filter-container {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 30px;
   }
 
   .users-filter-search-form {
@@ -73,19 +67,17 @@ const SUsers = styled.main`
   .users-period-container {
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 20px;
   }
 
   .users-period-button {
     border: none;
     background-color: transparent;
+    height: 40px;
     color: #6a737c;
-    :hover,
-    :active {
+    :hover {
       color: #3b4045;
       border-bottom: 1px solid #f48024;
-    }
-    :active {
-      font-weight: bold;
     }
   }
 `;
@@ -93,6 +85,44 @@ const SUsers = styled.main`
 const SUsersContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+
+  .users-inform-container {
+    display: flex;
+  }
+
+  .users-inform-avatar {
+    margin: 10px;
+  }
+
+  .users-inform {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .users-inform-nickname {
+    font-size: 15px;
+  }
+
+  .users-inform-region,
+  .users-inform-reputation,
+  .users-inform-tags {
+    font-size: 12px;
+    color: #6a737c;
+  }
+
+  .users-inform-reputation {
+    font-weight: bold;
+  }
+
+  .users-inform-tags-container {
+    display: flex;
+  }
+
+  .users-inform-tags {
+    padding-right: 4px;
+  }
 `;
 
 const Users = () => {
@@ -128,21 +158,33 @@ const Users = () => {
             <button className="users-period-button">year</button>
             <button className="users-period-button">all</button>
           </div>
-        </div>
-        <SUsersContainer>
-          {dummyUsers.users.map((user) => (
-            <div key={user.id}>
-              <Avatar image={user.avatar} size="48" />
-              <div>
-                <div>{user.userNickname}</div>
-                <div>{user.userRegion}</div>
-                <div>{user.tags}</div>
+          <SUsersContainer>
+            {dummyUsers.users.map((user) => (
+              <div className="users-inform-container" key={user.id}>
+                <div className="users-inform-avatar">
+                  <Avatar image={user.avatar} size="48" />
+                </div>
+                <div className="users-inform">
+                  <div className="users-inform-nickname">
+                    {user.userNickname}
+                  </div>
+                  <div className="users-inform-region">{user.userRegion}</div>
+                  <div className="users-inform-reputation">
+                    {user.reputation}
+                  </div>
+                  <div className="users-inform-tags-container">
+                    {user.tags.map((tag, idx) => (
+                      <div key={idx} className="users-inform-tags">
+                        {tag}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-        </SUsersContainer>
+            ))}
+          </SUsersContainer>
+        </div>
       </SUsers>
-      <SidebarRight />
     </SWrapper>
   );
 };
