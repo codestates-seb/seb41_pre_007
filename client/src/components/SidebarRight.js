@@ -46,11 +46,11 @@ export const SidebarRight = () => {
 };
 
 const SSidebarRightWrap = styled.div`
-  width: 450px;
-  height: 420px; // 삭제해도 됨
+  width: 300px;
+  height: 436px; // 삭제해도 됨
   position: relative;
   font-size: 13px;
-  transform: translate(-50px, 30px);
+  transform: translate(80px, 30px);
   .s-sidebarWidget {
     margin-bottom: 16px;
     box-shadow: 1px 1px 5px gray;

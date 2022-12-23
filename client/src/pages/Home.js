@@ -53,8 +53,8 @@ export const Home = () => {
 const SHomeWrap = styled.div`
   display: flex;
   .content {
-    max-width: 1100px;
-    width: 1100px;
+    max-width: 700px;
+    width: 700px;
     background-color: white;
     border-radius: 0;
     border: 1px solid #ececec;

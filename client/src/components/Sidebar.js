@@ -17,8 +17,11 @@ export const Sidebar = () => {
       </div>
       <div>
         <p className="font_size_small padding">PUBLIC</p>
-        <SWrapQuestion className="hover_events padding">
-          <span role="presentation" onClick={() => navigate('/allQuestions')}>
+        <SWrapQuestion
+          className="hover_events padding"
+          onClick={() => navigate('/allQuestions')}
+        >
+          <span className="hover_events" role="presentation">
             <QuestionIcon />
             Questions
           </span>
@@ -54,10 +57,10 @@ const SWrap = styled.div`
   z-index: 3;
   /* top: 100px; */
   border-right: #4e4e4e;
-  width: 250px;
+  width: 164px;
   display: block;
   text-align: left;
-  margin-left: 100px;
+  margin-left: 80px;
   transform: translate(0px, 30px);
 
   .padding {
