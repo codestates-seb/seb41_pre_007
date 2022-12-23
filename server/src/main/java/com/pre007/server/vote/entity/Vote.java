@@ -19,7 +19,7 @@ public class Vote extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long voteId;
-    private int voteCount;
+    private int voteCount = 0; // 기본값 0으로 설정
 
     //Foreign Key 필드
     @ManyToOne

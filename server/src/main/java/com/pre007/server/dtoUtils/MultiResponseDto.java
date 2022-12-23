@@ -1,15 +1,17 @@
 package com.pre007.server.dtoUtils;
 
+import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+@Getter
 public class MultiResponseDto<T> {
     //TODO Data List 필드
     private List<T> data;
     //TODO PageInfo 필드
     //page,size,totalElements, totalPages;
-    private PageInfo pageInfo;
+    private com.pre007.server.dtoUtils.PageInfo pageInfo;
     //TODO 생성자 (Pagination)
     public MultiResponseDto(List<T> data, Page page) {
         this.data = data;
