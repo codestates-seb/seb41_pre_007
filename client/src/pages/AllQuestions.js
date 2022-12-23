@@ -24,12 +24,26 @@ export const AllQuestions = () => {
           </button>
         </div>
         <STopBoxList>
-          <div className="top-boxList">
-            <button className="top-btnList">Newest</button>
-            <button className="top-btnList">Active</button>
-            <button className="top-btnList">Bountied</button>
-            <button className="top-btnList">Unanswered</button>
-            <button className="top-btnList">More</button>
+          <div
+            className="btn-group"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button type="button" className="btn btn-outline-primary">
+              Newest
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Active
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Bountied
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Unanswered
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              More
+            </button>
           </div>
         </STopBoxList>
         <AllQuestionPageNation />

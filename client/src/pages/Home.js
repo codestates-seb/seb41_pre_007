@@ -23,14 +23,29 @@ export const Home = () => {
           </button>
         </div>
         <STopBoxList>
-          <div className="top-boxList">
-            <button className="top-btnList">Interesting</button>
-            <button className="top-btnList">Bountied</button>
-            <button className="top-btnList">Hot</button>
-            <button className="top-btnList">Week</button>
-            <button className="top-btnList">Month</button>
+          <div
+            className="btn-group"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button type="button" className="btn btn-outline-primary">
+              Interestion
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Bountied
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Hot
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Week
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Month
+            </button>
           </div>
         </STopBoxList>
+
         <SQuestionSummary>
           <div className="singleBoxContainer">
             {dummyData.questions.map((question) => (
@@ -70,7 +85,7 @@ export const SHomeWrap = styled.div`
   .top-btn {
     margin-left: 12px;
     width: 10vw;
-    transform: translate(500px, -65px);
+    transform: translate(550px, -65px);
     margin: 0;
   }
   #top-h1 {
@@ -100,21 +115,12 @@ export const SQuestionSummary = styled.div`
 `;
 
 export const STopBoxList = styled.div`
-  width: 25vw;
-  height: 30px;
-  transform: translate(310px, -40px);
-  /* display: flex; */
+  width: 465;
+  height: 40px;
+  transform: translate(350px, -40px);
   margin-bottom: 16px;
-  .top-boxList {
-    display: inline-flex;
-  }
-  .top-btnList {
+
+  .btn-outline-primary {
     font-size: 13px;
-    background-color: white;
-    border: 0.5px solid gray;
-    border-radius: 5px;
-    :hover {
-      background-color: #ececec;
-    }
   }
 `;
