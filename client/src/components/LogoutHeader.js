@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 import { ReactComponent as StackOverFlow } from '../image/StackOverFlow.svg';
 import { ReactComponent as Search } from '../image/Search.svg';
+import { useState } from 'react';
+// import Login from './Login';
+import Signup from './Signup';
+import { useDispatch, useSelector } from 'react-redux';
+import searchSlice from '../redux/modules/searchSlice';
+import SearchTips from './SearchTips';
 
 const SWrapper = styled.div`
   position: sticky;
   top: 0;
+  z-index: 5;
 `;
 
 const SHeaderTop = styled.div`
@@ -84,6 +91,7 @@ const SHeader = styled.header`
 
   .header-bottom-search {
     width: 100%;
+    height: 2.2rem;
     padding: 0.6em 2rem;
     border: 1px solid #dcdcdc;
     border-radius: 3px;
@@ -121,6 +129,21 @@ const SHeader = styled.header`
 `;
 
 const LogoutHeader = () => {
+  // const [isOpen, setIsOpen] = useState(false);
+  const [isSignOpen, setIsSignOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  // const handleIsOpen = () => {
+  //   setIsOpen((prev) => !prev);
+  // };
+  const handleIsSignOpen = () => {
+    setIsSignOpen((prev) => !prev);
+  };
+  const handleSearch = () => {
+    dispatch(searchSlice.actions.setIsClicked());
+  };
+  const isClicked = useSelector((state) => state.search.isClicked);
+
   return (
     <SWrapper>
       <SHeaderTop>
@@ -148,18 +171,28 @@ const LogoutHeader = () => {
               className="header-bottom-search"
               type="search"
               placeholder="Search..."
+              onClick={handleSearch}
             ></input>
+            {isClicked && <SearchTips />}
           </form>
           <div>
-            <button className="header-bottom-ls-button header-bottom-login header-bottom-pointer">
+            <button
+              className="header-bottom-ls-button header-bottom-login header-bottom-pointer"
+              // onClick={onIsOpen}
+            >
               Log in
             </button>
-            <button className="header-bottom-ls-button header-bottom-signup header-bottom-pointer">
+            <button
+              className="header-bottom-ls-button header-bottom-signup header-bottom-pointer"
+              onClick={handleIsSignOpen}
+            >
               Sign up
             </button>
           </div>
         </div>
       </SHeader>
+      {/* {isOpen && <Login onIsOpen={handlleIsOpen} />} */}
+      {isSignOpen && <Signup onIsSignOpen={handleIsSignOpen} />}
     </SWrapper>
   );
 };
