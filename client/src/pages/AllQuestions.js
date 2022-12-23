@@ -1,12 +1,7 @@
-// import styled from 'styled-components';
-// import { useState } from 'react';
-// import dummyData from '../db/dummyData.json';
 import { useNavigate } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
 import { SHomeWrap, STopBoxList } from '../pages/Home';
-// import Pagination from 'react-js-pagination';
-// import { useState } from 'react';
 import { AllQuestionPageNation } from '../components/AllQuestionPageNation';
 
 export const AllQuestions = () => {
