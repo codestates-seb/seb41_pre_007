@@ -116,7 +116,7 @@ export const SLoginForm = styled.form`
       height: 28px;
       &:focus {
         outline: 4px solid #ddeaf7;
-        border: 1px solid#58a4de;
+        border: 1px solid #58a4de;
       }
     }
     > input[type='checkbox'] {
@@ -174,14 +174,14 @@ export const Setc = styled.div`
   }
 `;
 
-const SignUp = ({ onIsSignOpen }) => {
+const SignUp = ({ handleIsSignOpen }) => {
   return (
     <>
       <div>
-        <SModalBack onClick={onIsSignOpen}></SModalBack>
+        <SModalBack onClick={handleIsSignOpen}></SModalBack>
         <SModal>
           <SModalView>
-            <button onClick={onIsSignOpen}>x</button>
+            <button onClick={handleIsSignOpen}>x</button>
             <SSocialButton>
               <button className="GoogleLogin">
                 <Google />
