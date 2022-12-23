@@ -2,6 +2,8 @@ import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
 import { ReactComponent as Search } from '../image/Search.svg';
 import styled from 'styled-components';
+import dummyUsers from '../db/dummyUsers.json';
+import Avatar from '../components/Avatar';
 
 const SWrapper = styled.div`
   display: flex;
@@ -88,6 +90,11 @@ const SUsers = styled.main`
   }
 `;
 
+const SUsersContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+`;
+
 const Users = () => {
   return (
     <SWrapper>
@@ -122,6 +129,18 @@ const Users = () => {
             <button className="users-period-button">all</button>
           </div>
         </div>
+        <SUsersContainer>
+          {dummyUsers.users.map((user) => (
+            <div key={user.id}>
+              <Avatar image={user.avatar} size="48" />
+              <div>
+                <div>{user.userNickname}</div>
+                <div>{user.userRegion}</div>
+                <div>{user.tags}</div>
+              </div>
+            </div>
+          ))}
+        </SUsersContainer>
       </SUsers>
       <SidebarRight />
     </SWrapper>
