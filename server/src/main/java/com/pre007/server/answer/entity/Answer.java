@@ -9,7 +9,6 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +25,17 @@ public class Answer extends Auditable {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "STATUS")
+    private AnswerStatus answerStatus = AnswerStatus.ANSWER_EXIST;
+
+    /*@Column(nullable = false)
+    private int vote = 0;*/
+
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
 
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
@@ -37,22 +44,23 @@ public class Answer extends Auditable {
     @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
     private List<Vote> votes = new ArrayList<>();
 
+
+
     @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    /*public void setMember(Member member) {
-        this.member = member;
+    public enum AnswerStatus {
+        ANSWER_NOT_EXIST("존재하지 않는 답변"),
+        ANSWER_EXIST("존재하는 답볍");
+        @Getter
+        private String status;
+
+        AnswerStatus(String status) {
+            this.status = status;
+        }
     }
-    public void setQuestion(Question question) {
-        this.question = question;
-    }*/
 
 
-/*
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(nullable = false, name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt = LocalDateTime.now();*/
 
 }
