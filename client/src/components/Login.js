@@ -1,36 +1,36 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
+import { ReactComponent as StackOver } from '../image/StackOver.svg';
 import { ReactComponent as Google } from '../image/Google.svg';
 import { ReactComponent as Github } from '../image/Github.svg';
 import { ReactComponent as Naver } from '../image/Naver.svg';
-// import { useState } from 'react';
 
 export const SModalBack = styled.div`
-  position: fixed;
-  top: 0;
-  overflow: hidden;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  overflow: hidden;
 `;
 export const SModal = styled.div`
   position: fixed;
   top: 0;
   overflow: hidden;
-  top: 12%;
+  top: 15%;
   left: 39%;
 `;
 export const SModalView = styled.div`
   width: 350px;
-  height: 700px;
+  height: 600px;
   background-color: #f1f2f3;
-  margin: 0px 30px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   > button {
     margin-left: 320px;
+    margin-top: -50px;
     font-size: 25px;
     background-color: none;
     border: none;
@@ -93,13 +93,12 @@ export const SSocialButton = styled.div`
   }
 `;
 export const SLoginForm = styled.form`
-  height: 450px;
+  height: 220px;
   width: 280px;
   background-color: white;
   border: 2px solid #eaebeb;
   border-radius: 8px;
   display: flex;
-
   > .input-field {
     display: flex;
     justify-content: center;
@@ -107,7 +106,6 @@ export const SLoginForm = styled.form`
     align-items: left;
     width: 240px;
     margin-left: 20px;
-
     > span {
       font-weight: bold;
       margin-top: 15px;
@@ -119,12 +117,9 @@ export const SLoginForm = styled.form`
         border: 1px solid#58a4de;
       }
     }
-    > input[type='checkbox'] {
-      width: 10px;
-    }
     > button {
       height: 34px;
-      margin-top: 8px;
+      margin-top: 15px;
       background-color: #0995ff;
       color: white;
       border: none;
@@ -133,40 +128,23 @@ export const SLoginForm = styled.form`
         background-color: #0074cc;
       }
     }
-    > p {
-      font-size: 12px;
-      margin-top: 10px;
-      margin-bottom: 7px;
-      color: #6b747d;
-    }
-  }
-`;
-export const Check = styled.div`
-  display: flex;
-  font-size: 12px;
-
-  > input {
-    position: relative;
-    top: -24px;
-    margin-right: 3px;
   }
 `;
 export const Setc = styled.div`
-  margin-top: 20px;
+  padding-top: 40px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   font-size: 12px;
   > .up {
-    margin-bottom: 8px;
+    margin-bottom: 15px;
     > .click {
       padding-left: 5px;
       color: #1077cd;
     }
   }
   > .down {
-    margin-bottom: 10px;
     > .click {
       padding-left: 5px;
       color: #1077cd;
@@ -174,52 +152,40 @@ export const Setc = styled.div`
   }
 `;
 
-const SignUp = ({ onIsSignOpen }) => {
+const Login = ({ onIsOpen }) => {
   return (
     <>
+      {/* {isOpen === true ? ( */}
       <div>
-        <SModalBack onClick={onIsSignOpen}></SModalBack>
+        <SModalBack onClick={onIsOpen}>
+          {/* <button onClick={() => setIsOpen(false)}>닫아</button> */}
+        </SModalBack>
+
         <SModal>
           <SModalView>
-            <button onClick={onIsSignOpen}>x</button>
+            <button onClick={onIsOpen}>x</button>
+            <StackOver />
             <SSocialButton>
               <button className="GoogleLogin">
                 <Google />
-                <span>Sign up with Google</span>
+                <span>Log in with Google</span>
               </button>
               <button className="GithubLogin">
                 <Github />
-                <span>Sign up with Github</span>
+                <span>Log in with Github</span>
               </button>
               <button className="NaverLogin">
                 <Naver className="Naver" />
-                <span>Sign up with Naver</span>
+                <span>Log in with Naver</span>
               </button>
             </SSocialButton>
             <SLoginForm>
               <div className="input-field">
-                <span>Display name</span>
-                <input type="text" className="InputName"></input>
                 <span>Email</span>
                 <input type="text" className="InputEmail"></input>
                 <span>Password</span>
                 <input type="text" className="InputPassword"></input>
-                <p>
-                  Passwords must contain at least eight characters, including at
-                  least 1 letter and 1 number.
-                </p>
-                <Check>
-                  <input type="checkbox" />
-                  <p>
-                    Opt-in to receive occasional product updates, user research
-                    invitations, company announcements, and digests.
-                  </p>
-                </Check>
-                <button className="signupbtn">Sign up</button>
-                <p>
-                  By clicking &apos;Sign up&apos;, you agree to our terms of
-                  service, privacy policy and cookie policy
-                </p>
+                <button>Login</button>
               </div>
             </SLoginForm>
             <Setc>
@@ -240,4 +206,4 @@ const SignUp = ({ onIsSignOpen }) => {
   );
 };
 
-export default SignUp;
+export default Login;
