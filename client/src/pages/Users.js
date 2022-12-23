@@ -1,6 +1,7 @@
 import { Sidebar } from '../components/Sidebar';
-import styled from 'styled-components';
 import { SidebarRight } from '../components/SidebarRight';
+import { ReactComponent as Search } from '../image/Search.svg';
+import styled from 'styled-components';
 
 const SWrapper = styled.div`
   display: flex;
@@ -33,6 +34,29 @@ const SUsers = styled.main`
   .users-filter-container {
     display: flex;
     justify-content: space-between;
+  }
+
+  .users-filter-search-form {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    min-width: 184px;
+    flex-grow: 1;
+    padding-right: 8px;
+  }
+
+  .users-filter-search-icon {
+    position: absolute;
+    left: 10px;
+  }
+
+  .users-filter-search {
+    height: 2.2rem;
+    padding: 0.6em 2rem;
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    cursor: text;
   }
 
   .users-filter-button {
@@ -74,8 +98,13 @@ const Users = () => {
             <h1 className="users-title">Users</h1>
           </div>
           <div className="users-filter-container">
-            <form className="users-filter-search">
-              <input type="search"></input>
+            <form className="users-filter-search-form">
+              <Search className="users-filter-search-icon" fill="#808080" />
+              <input
+                className="users-filter-search"
+                type="search"
+                placeholder="Filter by user"
+              ></input>
             </form>
             <div className="users-filter-button-container">
               <button className="users-filter-button">Reputation</button>
