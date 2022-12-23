@@ -1,13 +1,14 @@
 package com.pre007.server.question.service;
 
-import com.pre007.server.member.entity.Member;
-import com.pre007.server.member.service.MemberService;
+import com.pre007.server.exception.BusinessLogicException;
+import com.pre007.server.exception.ExceptionCode;
 import com.pre007.server.question.entity.Question;
 import com.pre007.server.question.repository.QuestionRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class QuestionService {
@@ -18,28 +19,45 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
+    // MemberService 필요
+    // 파라미터에 MemberId 추가해서 question.setMember 코드 필요
+
+    // 질문 작성
     public Question createQuestion(Question question) {
         Question saveQuestion = questionRepository.save(question);
         return saveQuestion;
     }
 
+    // 질문 수정
     public Question updateQuestion(Question question) {
-        return null;
+        Question findQuestion = findQuestion(question.getQuestionId());
+        Optional.ofNullable(question.getTitle())
+                .ifPresent(findQuestion::setTitle);
+        Optional.ofNullable(question.getContent())
+                .ifPresent(findQuestion::setContent);
+
+        return questionRepository.save(findQuestion);
     }
 
-    // 질문 상세 조회?
-    public Question findOneQuestion(long questionId) {
-        return null;
+    // 특정 질문 조회
+    public Question findQuestion(Long questionId) {
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+
+        return optionalQuestion.orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.TODOS_NOT_FOUND));
+        // 임의로 넣은 Exception 코드, 수정 및 추가 필요
     }
 
+    // 모든 질문 조회
     public Page<Question> findAllQuestion(int page, int size) {
         return questionRepository.findAll(
-                PageRequest.of(page, size, Sort.by("createdAt").descending()));
+                PageRequest.of(page, size, Sort.by("questionId").descending()));
     }
 
-
-    private Question saveQuestion(Question question) {
-        return questionRepository.save(question);
+    // 특정 질문 삭제
+    public void delete(long questionId) {
+        Question findQuestionResult = findQuestion(questionId);
+        questionRepository.delete(findQuestionResult);
     }
 
 }

@@ -1,10 +1,8 @@
 package com.pre007.server.question.entity;
 
 import com.pre007.server.answer.entity.Answer;
-import com.pre007.server.comment.entity.Comment;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.tag.entity.QuestionTag;
-import com.pre007.server.tag.entity.Tag;
 import com.pre007.server.vote.entity.Vote;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
