@@ -16,35 +16,33 @@ export const Sidebar = () => {
         <p className="hover_events padding">Home</p>
       </div>
       <div>
-        <p className="font_size_small">PUBLIC</p>
-        <SWrapQuestion className="hover_events">
-          <p>
+        <p className="font_size_small padding">PUBLIC</p>
+        <SWrapQuestion className="hover_events padding">
+          <span role="presentation" onClick={() => navigate('/allQuestions')}>
             <QuestionIcon />
-          </p>
-          <span>Questions</span>
+            Questions
+          </span>
         </SWrapQuestion>
         <p className="hover_events padding">Tags</p>
         <p className="hover_events padding">Users</p>
         <p className="hover_events padding">Companies</p>
       </div>
-
       <div>
-        <p className="font_size_small">COLLECTIVES</p>
+        <p className="font_size_small padding ">COLLECTIVES</p>
         <SWrapCollective className="hover_events">
-          <p>
+          <span className="padding">
             <Collectives fill="#F48224" />
-          </p>
-          <span>Explore Collectives</span>
+            Explore Collectives
+          </span>
         </SWrapCollective>
       </div>
-
       <div>
-        <p className="font_size_small">TEAMS</p>
+        <p className="font_size_small padding">TEAMS</p>
         <SWrapTeam className="hover_events">
-          <p>
+          <span className="padding">
             <Teams fill="#F48224" />
-          </p>
-          <span>Create free Team</span>
+            Create free Team
+          </span>
         </SWrapTeam>
       </div>
     </SWrap>
@@ -52,19 +50,21 @@ export const Sidebar = () => {
 };
 
 const SWrap = styled.div`
-  /* box-sizing: border-box; */
-  /* border: 0.5px solid #f1f2f3; */
+  position: sticky;
+  z-index: 3;
+  /* top: 100px; */
   border-right: #4e4e4e;
-  width: 164px;
+  width: 250px;
   display: block;
   text-align: left;
-  margin-left: 8%;
-  flex-shrink: 0;
-  position: relative !important;
+  margin-left: 100px;
+  transform: translate(0px, 30px);
+
   .padding {
-    padding: 1rem;
+    padding: 10px;
     margin: 0;
   }
+
   .font_size_small {
     font-size: 10px;
     color: #4e4e4e;
