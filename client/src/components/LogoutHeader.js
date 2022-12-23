@@ -4,6 +4,9 @@ import { ReactComponent as Search } from '../image/Search.svg';
 import { useState } from 'react';
 // import Login from './Login';
 import Signup from './Signup';
+import { useDispatch, useSelector } from 'react-redux';
+import searchSlice from '../redux/modules/searchSlice';
+import SearchTips from './SearchTips';
 
 const SWrapper = styled.div`
   position: sticky;
@@ -128,6 +131,7 @@ const SHeader = styled.header`
 const LogoutHeader = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const [isSignOpen, setIsSignOpen] = useState(false);
+  const dispatch = useDispatch();
 
   // const handleIsOpen = () => {
   //   setIsOpen((prev) => !prev);
@@ -135,6 +139,10 @@ const LogoutHeader = () => {
   const handleIsSignOpen = () => {
     setIsSignOpen((prev) => !prev);
   };
+  const handleSearch = () => {
+    dispatch(searchSlice.actions.setIsClicked());
+  };
+  const isClicked = useSelector((state) => state.search.isClicked);
 
   return (
     <SWrapper>
@@ -163,7 +171,9 @@ const LogoutHeader = () => {
               className="header-bottom-search"
               type="search"
               placeholder="Search..."
+              onClick={handleSearch}
             ></input>
+            {isClicked && <SearchTips />}
           </form>
           <div>
             <button

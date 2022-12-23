@@ -7,6 +7,9 @@ import { ReactComponent as Help } from '../image/Help.svg';
 import { ReactComponent as WinterBash } from '../image/WinterBash.svg';
 import { ReactComponent as Logout } from '../image/Logout.svg';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import searchSlice from '../redux/modules/searchSlice';
+import SearchTips from './SearchTips';
 
 const SWrapper = styled.div`
   position: sticky;
@@ -139,64 +142,76 @@ const SHeader = styled.header`
 
 const LoginHeader = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClickHome = () => {
     navigate(`/home`);
   };
+  const handleSearch = () => {
+    dispatch(searchSlice.actions.setIsClicked());
+  };
+  const isClicked = useSelector((state) => state.search.isClicked);
 
   return (
-    <SWrapper>
-      <SHeaderTop>
-        <div className="header-top"></div>
-      </SHeaderTop>
-      <SHeader>
-        <div className="header-bottom">
-          <button
-            className="header-bottom-logo-container header-bottom-pointer"
-            onClick={handleClickHome}
-          >
-            <StackOverFlow />
-          </button>
-          <div className="header-bottom-navigation-container">
-            <button className="header-bottom-navigation header-bottom-pointer">
-              <div>Products</div>
+    <>
+      <SWrapper>
+        <SHeaderTop>
+          <div className="header-top"></div>
+        </SHeaderTop>
+        <SHeader>
+          <div className="header-bottom">
+            <button
+              className="header-bottom-logo-container header-bottom-pointer"
+              onClick={handleClickHome}
+            >
+              <StackOverFlow />
             </button>
+            <div className="header-bottom-navigation-container">
+              <button className="header-bottom-navigation header-bottom-pointer">
+                <div>Products</div>
+              </button>
+            </div>
+            <form>
+              <Search className="header-bottom-search-icon" fill="#808080" />
+              <input
+                className="header-bottom-search"
+                type="search"
+                placeholder="Search..."
+                onClick={handleSearch}
+              ></input>
+              {isClicked && <SearchTips />}
+            </form>
+            <div className="header-bottom-profile-container">
+              <img
+                className="header-bottom-profile header-bottom-pointer"
+                src="https://avatars.githubusercontent.com/u/111413253?v=4"
+                alt="my profile"
+              />
+            </div>
+            <div className="header-bottom-topbar-container">
+              <div className="header-bottom-topbar-background">
+                <Inbox className="header-bottom-pointer" fill="#404040" />
+              </div>
+              <div className="header-bottom-topbar-background">
+                <Achievements
+                  className="header-bottom-pointer"
+                  fill="#404040"
+                />
+              </div>
+              <div className="header-bottom-topbar-background">
+                <Help className="header-bottom-pointer" fill="#404040" />
+              </div>
+              <div className="header-bottom-topbar-background">
+                <WinterBash className="header-bottom-pointer" fill="#404040" />
+              </div>
+              <div className="header-bottom-topbar-background">
+                <Logout className="header-bottom-pointer" fill="#404040" />
+              </div>
+            </div>
           </div>
-          <form>
-            <Search className="header-bottom-search-icon" fill="#808080" />
-            <input
-              className="header-bottom-search"
-              type="search"
-              placeholder="Search..."
-            ></input>
-          </form>
-          <div className="header-bottom-profile-container">
-            <img
-              className="header-bottom-profile header-bottom-pointer"
-              src="https://avatars.githubusercontent.com/u/111413253?v=4"
-              alt="my profile"
-            />
-          </div>
-          <div className="header-bottom-topbar-container">
-            <div className="header-bottom-topbar-background">
-              <Inbox className="header-bottom-pointer" fill="#404040" />
-            </div>
-            <div className="header-bottom-topbar-background">
-              <Achievements className="header-bottom-pointer" fill="#404040" />
-            </div>
-            <div className="header-bottom-topbar-background">
-              <Help className="header-bottom-pointer" fill="#404040" />
-            </div>
-            <div className="header-bottom-topbar-background">
-              <WinterBash className="header-bottom-pointer" fill="#404040" />
-            </div>
-            <div className="header-bottom-topbar-background">
-              <Logout className="header-bottom-pointer" fill="#404040" />
-            </div>
-          </div>
-        </div>
-      </SHeader>
-    </SWrapper>
+        </SHeader>
+      </SWrapper>
+    </>
   );
 };
 

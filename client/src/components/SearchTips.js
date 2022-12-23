@@ -1,9 +1,13 @@
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import searchSlice from '../redux/modules/searchSlice';
 
 const STips = styled.div`
   position: absolute;
+  height: 100vh;
   left: 0;
   right: 0;
+  top: 40px;
   z-index: 2000;
 
   .search-tips-container::before {
@@ -34,13 +38,12 @@ const STips = styled.div`
     display: flex;
     flex-direction: column;
     min-width: fit-content;
-    max-width: 44%;
+    max-width: 100%;
     background-color: #fff;
     border: 1px solid hsl(210, 8%, 85%);
     border-radius: 5px;
     box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.06), 0 2px 6px hsla(0, 0%, 0%, 0.06),
       0 3px 8px hsla(0, 0%, 0%, 0.09);
-    margin: auto;
     margin-top: 5px;
   }
 
@@ -91,8 +94,14 @@ const STips = styled.div`
 `;
 
 const SearchTips = () => {
+  const dispatch = useDispatch();
+
+  const handleSearch = () => {
+    dispatch(searchSlice.actions.setIsClicked());
+  };
+
   return (
-    <STips>
+    <STips onClick={handleSearch}>
       <div className="search-tips-container">
         <div className="search-tips-text-container">
           <div className="search-tips-text-column">
