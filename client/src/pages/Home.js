@@ -50,7 +50,7 @@ export const Home = () => {
   );
 };
 
-const SHomeWrap = styled.div`
+export const SHomeWrap = styled.div`
   display: flex;
   .content {
     max-width: 700px;
@@ -87,7 +87,7 @@ const SHomeWrap = styled.div`
   }
 `;
 
-const SQuestionSummary = styled.div`
+export const SQuestionSummary = styled.div`
   transform: translate(0px, -30px);
   .singleBox {
     width: 50vw;
@@ -99,7 +99,7 @@ const SQuestionSummary = styled.div`
   }
 `;
 
-const STopBoxList = styled.div`
+export const STopBoxList = styled.div`
   width: 25vw;
   height: 30px;
   transform: translate(310px, -40px);
@@ -109,6 +109,7 @@ const STopBoxList = styled.div`
     display: inline-flex;
   }
   .top-btnList {
+    font-size: 13px;
     background-color: white;
     border: 0.5px solid gray;
     border-radius: 5px;
