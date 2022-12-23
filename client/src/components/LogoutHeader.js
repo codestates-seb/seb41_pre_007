@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as StackOverFlow } from '../image/StackOverFlow.svg';
 import { ReactComponent as Search } from '../image/Search.svg';
 import { useState } from 'react';
-// import Login from './Login';
+import Login from './Login';
 import Signup from './Signup';
 import { useDispatch, useSelector } from 'react-redux';
 import searchSlice from '../redux/modules/searchSlice';
@@ -99,7 +99,7 @@ const SHeader = styled.header`
   }
 
   .header-bottom-ls-button {
-    width: 68px;
+    width: 72px;
     height: 32px;
     border-radius: 3px;
     margin: 2px;
@@ -129,13 +129,13 @@ const SHeader = styled.header`
 `;
 
 const LogoutHeader = () => {
-  // const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isSignOpen, setIsSignOpen] = useState(false);
   const dispatch = useDispatch();
 
-  // const handleIsOpen = () => {
-  //   setIsOpen((prev) => !prev);
-  // };
+  const handleIsOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
   const handleIsSignOpen = () => {
     setIsSignOpen((prev) => !prev);
   };
@@ -178,7 +178,7 @@ const LogoutHeader = () => {
           <div>
             <button
               className="header-bottom-ls-button header-bottom-login header-bottom-pointer"
-              // onClick={onIsOpen}
+              onClick={handleIsOpen}
             >
               Log in
             </button>
@@ -191,7 +191,7 @@ const LogoutHeader = () => {
           </div>
         </div>
       </SHeader>
-      {/* {isOpen && <Login onIsOpen={handlleIsOpen} />} */}
+      {isOpen && <Login onIsOpen={handleIsOpen} />}
       {isSignOpen && <Signup onIsSignOpen={handleIsSignOpen} />}
     </SWrapper>
   );
