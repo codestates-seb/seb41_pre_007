@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
 
 const SWrapper = styled.div`
@@ -26,7 +27,7 @@ const SContainer = styled.div`
     font-weight: bold;
   }
 
-  p {
+  .question-card > p {
     font-size: 15px;
     line-height: 0.3;
   }
@@ -53,7 +54,7 @@ const SContainer = styled.div`
   }
 
   input,
-  textarea {
+  question-board {
     width: 100%;
   }
 
@@ -121,9 +122,7 @@ export const QuestionPost = () => {
             Be specific and imagine {`you're`} asking a question to another
             person.
           </p>
-          <form>
-            <input placeholder="e.g. Is there an R function for finding the index of an element in a vector?"></input>
-          </form>
+          <input placeholder="e.g. Is there an R function for finding the index of an element in a vector?"></input>
         </div>
         <div className="question-card white-card">
           <h6>What are the details of your problem?</h6>
@@ -131,9 +130,7 @@ export const QuestionPost = () => {
             Introduce the problem and expand on what you put in the title.
             Minimum 20 characters.
           </p>
-          <form>
-            <textarea></textarea>
-          </form>
+          <ToastEditor />
         </div>
         <div className="question-card white-card">
           <h6>What did you try and what were you expecting?</h6>
@@ -141,9 +138,7 @@ export const QuestionPost = () => {
             Describe what you tried, what you expected to happen, and what
             actually resulted. Minimum 20 characters.
           </p>
-          <form>
-            <textarea></textarea>
-          </form>
+          <ToastEditor />
         </div>
         <div className="question-card white-card">
           <h6>Tags</h6>
