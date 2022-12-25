@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Sidebar } from '../components/Sidebar';
 import { ReactComponent as Search } from '../image/Search.svg';
-// import { STopBoxList } from './Home';
+import dummyTags from '../db/dummyTags.json';
 
 export const Tags = () => {
   return (
@@ -50,7 +50,24 @@ export const Tags = () => {
               </button>
             </div>
           </STagsSearchBox>
-          <div id="tags_list"></div>
+          <STagBoxList>
+            <div id="box-row">
+              {dummyTags.tags.map((tag) => (
+                <div
+                  id="tags_list"
+                  className="grid--item s-card js-tag-cell d-flex fd-column"
+                  key={tag.id}
+                >
+                  <div className="d-flex jc-space-between ai-center mb12">
+                    <p className="font100 post-tag">{tag.label}</p>
+                  </div>
+                  <div className="flex--item fc-medium mb12 v-truncate4 font100">
+                    <p className="font100">{tag.contents}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </STagBoxList>
         </div>
       </div>
     </STagsWrap>
@@ -162,6 +179,41 @@ const STagsSearchBox = styled.div`
     margin-bottom: 12px !important;
   }
   .ml-auto {
-    margin-left: auto !important;
+    margin-left: 640px !important;
+  }
+`;
+
+const STagBoxList = styled.div`
+  #tags_list {
+    width: 250px;
+    height: 170px;
+    margin-bottom: 12px;
+    margin-right: 12px;
+    float: left;
+  }
+  .fd-column {
+    flex-direction: column !important;
+    border: 1px solid hsl(210deg 8% 85%);
+    background-color: white;
+    border-radius: 3px;
+    padding: 12px;
+  }
+  .font100 {
+    font-size: 13px;
+  }
+  .post-tag {
+    color: hsl(205deg 47% 42%);
+    background-color: hsl(205deg 46% 92%);
+    border-color: transparent;
+    display: inline-block;
+    padding: 0.4em 0.5em;
+    margin: 2px;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
   }
 `;
