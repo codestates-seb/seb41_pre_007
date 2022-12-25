@@ -22,12 +22,19 @@ export const Sidebar = () => {
             className="hover_events padding"
             onClick={() => navigate('/allQuestions')}
           >
-            <span className="hover_events" role="presentation">
+            <span className="hover_events">
               <QuestionIcon />
               Questions
             </span>
           </SWrapQuestion>
-          <p className="hover_events padding">Tags</p>
+          <p
+            className="hover_events padding"
+            role="presentation"
+            onClick={() => navigate('/tags')}
+          >
+            Tags
+          </p>
+
           <p className="hover_events padding">Users</p>
           <p className="hover_events padding">Companies</p>
         </div>
