@@ -2,21 +2,21 @@ package com.pre007.server.member.entity;
 
 import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.audit.Auditable;
-import com.pre007.server.comment.entity.Comment;
+import com.pre007.server.comment.AnswerComment.AnswerComment;
+import com.pre007.server.comment.QuestionComment.QuestionComment;
 import com.pre007.server.question.entity.Question;
-import com.pre007.server.vote.entity.Vote;
-import lombok.Getter;
-import lombok.Setter;
+import com.pre007.server.vote.AnswerVote.AnswerVote;
+import com.pre007.server.vote.QuestionVote.QuestionVote;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@Slf4j
 @Entity
+@Getter
+@Slf4j
 public class Member extends Auditable {
     /*
     TODO
@@ -52,9 +52,64 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
     @OneToMany(mappedBy = "member")
-    private List<Comment> comments = new ArrayList<>();
+    private List<QuestionComment> questionComments = new ArrayList<>();
     @OneToMany(mappedBy = "member")
-    private List<Vote> votes = new ArrayList<>();
+    private List<AnswerComment> answerComments = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<AnswerVote> answerVotes = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<QuestionVote> questionVotes = new ArrayList<>();
+
+    public void addAnswer(Answer answer) {
+        this.answers.add(answer);
+
+        if (answer.getMember() != this) {
+            answer.setMember(this);
+        }
+    }
+
+    public void addQuestion(Question question) {
+        this.questions.add(question);
+
+        if (question.getMember() != this) {
+            question.setMember(this);
+        }
+    }
+
+    public void addQuestionComment(QuestionComment questionComment) {
+        this.questionComments.add(questionComment);
+
+        if (questionComment.getMember() != this) {
+            questionComment.setMember(this);
+        }
+    }
+    public void addAnswerComment(AnswerComment answerComment) {
+        this.answerComments.add(answerComment);
+
+        if (answerComment.getMember() != this) {
+            answerComment.setMember(this);
+        }
+    }
+
+    public void addAnswerVote(AnswerVote answerVote) {
+        this.answerVotes.add(answerVote);
+
+        if (answerVote.getMember() != this) {
+            answerVote.setMember(this);
+        }
+    }
+
+    public void addQuestionVote(QuestionVote questionVote) {
+        this.questionVotes.add(questionVote);
+
+        if (questionVote.getMember() != this) {
+            questionVote.setMember(this);
+        }
+    }
+
+    public void setPassword(String name) {
+    }
+
 
     //Member(회원)의 상태 목록
     public enum MemberStatus {

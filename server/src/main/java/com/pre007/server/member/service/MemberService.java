@@ -5,7 +5,6 @@ import com.pre007.server.exception.ExceptionCode;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.member.repository.MemberRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,10 +15,10 @@ import java.util.Optional;
 @Service
 @Transactional
 public class MemberService {
-    private MemberRepository memberRepository;
+    private static MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+        MemberService.memberRepository = memberRepository;
     }
     //TODO createMember
     public Member createMember(Member member){
@@ -69,13 +68,11 @@ public class MemberService {
 
     //validation 영역
     @Transactional(readOnly = true)
-    private Member findVerifiedMember(long memberId) {
+    public static Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
                 memberRepository.findById(memberId);
-        Member findMember =
-                optionalMember.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return findMember;
+        return optionalMember.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
     private void verifyExistsEmail(String email, String password) {
@@ -86,4 +83,5 @@ public class MemberService {
         if (memberByPassword.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
+
 }

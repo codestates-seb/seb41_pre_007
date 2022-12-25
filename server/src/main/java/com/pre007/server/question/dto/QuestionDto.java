@@ -1,24 +1,26 @@
 package com.pre007.server.question.dto;
 
-import com.pre007.server.member.entity.Member;
+import com.pre007.server.answer.entity.Answer;
+import com.pre007.server.comment.QuestionComment.QuestionComment;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class QuestionDto {
     // post
     @Getter
     @Setter
     public static class Post {
+        private Long memberId;
         @NotBlank(message = "제목 영역은 공백이 불가합니다.")
         private String title;
 
         @NotBlank(message = "질문 영역은 공백이 불가합니다")
-        private String content;
+        private String questionContent;
     }
 
     // patch
@@ -26,16 +28,15 @@ public class QuestionDto {
     @Setter
     @AllArgsConstructor
     public static class Patch {
-        public Patch() {
-        }
+        private Long memberId;
 
         private long questionId;
 
         @NotBlank(message = "수정할 제목 영역은 공백이 아니어야 합니다.")
-        private String Title;
+        private String title;
 
         @NotBlank(message = "수정할 질문 영역은 공백이 아니어야 합니다.")
-        private String content;
+        private String questionContent;
 
     }
 
@@ -44,32 +45,18 @@ public class QuestionDto {
     public static class Response {
         private Long questionId;
         private String title;
-        private String content;
+        private String questionContent;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-        private MemberSimple member;
+        private int view;
+        private boolean checkAdopted;
 
-        @Builder
-        public Response(Long questionId, String title, String content,
-                        LocalDateTime createdAt, LocalDateTime modifiedAt, Member member) {
-            this.questionId = questionId;
-            this.title = title;
-            this.content = content;
-            this.createdAt = createdAt;
-            this.modifiedAt = modifiedAt;
-            this.member = new MemberSimple(member.getMemberId(), member.getNickname());
-        }
+        private String questionUsername;
 
-        // 작성자를 표시할 때, nickName?
-        @Getter
-        public static class MemberSimple {
-            private Long memberId;
-            private String memberNickName;
+        private int totalVotes;
 
-            public MemberSimple(Long memberId, String memberNickName) {
-                this.memberId = memberId;
-                this.memberNickName = memberNickName;
-            }
-        }
+        private List<Answer> answers;
+
+        private List<QuestionComment> questionComments;
     }
 }
