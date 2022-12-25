@@ -1,13 +1,13 @@
 // import axios from 'axios';
 import styled from 'styled-components';
 import Pagination from 'react-js-pagination';
-import dummyData from '../db/dummyData.json';
+import dummyQuestion from '../db/dummyQuestions.json';
 import { useState } from 'react';
 import { SQuestionSummary } from '../pages/Home';
 
 export const AllQuestionPageNation = () => {
   const [page, setPage] = useState(1);
-  const data = dummyData.allQuestions;
+  const data = dummyQuestion.allQuestions;
   const items = 10;
 
   //서버에서 메소드 받아오면 구현할 코드!
