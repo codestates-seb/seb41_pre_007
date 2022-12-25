@@ -130,7 +130,7 @@ const SBottomCon = styled.div`
 const ViewPage = () => {
   const navigate = useNavigate();
   const filteredData = dummyData.questions.filter(
-    (questions) => questions.userNickname === 'nayul'
+    (questions) => questions.id === 1
   );
   return (
     <SViewWrap>
