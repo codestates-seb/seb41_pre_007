@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.tag.entity;
 
 
@@ -13,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Slf4j
 @Entity
 public class Tag {
     @Id
@@ -34,3 +34,4 @@ public class Tag {
         this.questionTags.add(questionTag);
     }
 }
+*/

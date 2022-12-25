@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.comment.mapper;
 
 import com.pre007.server.comment.dto.CommentDto;
@@ -10,3 +11,4 @@ public interface CommentMapper {
     Comment commentPatchToComment(Long commentId, CommentDto.Patch commentPatchDto);
     CommentDto.Response commentToCommentResponse(Comment comment);
 }
+*/

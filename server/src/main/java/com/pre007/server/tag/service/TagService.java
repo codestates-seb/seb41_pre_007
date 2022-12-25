@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.tag.service;
 
 import com.pre007.server.tag.entity.Tag;
@@ -14,3 +15,4 @@ public interface TagService {
 
     public Tag findVerifiedTag(String tagName);
 }
+*/

@@ -1,5 +1,7 @@
+/*
 package com.pre007.server.comment.controller;
 
+import com.pre007.server.audit.Auditable;
 import com.pre007.server.comment.dto.CommentDto;
 import com.pre007.server.comment.entity.Comment;
 import com.pre007.server.comment.mapper.CommentMapper;
@@ -57,3 +59,4 @@ public class CommentController {
     }
 
 }
+*/

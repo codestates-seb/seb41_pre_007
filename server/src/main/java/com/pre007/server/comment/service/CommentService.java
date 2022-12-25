@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.comment.service;
 
 import com.pre007.server.comment.entity.Comment;
@@ -41,3 +42,4 @@ public class CommentService {
                 () -> new BusinessLogicException(ExceptionCode.TODOS_NOT_FOUND)); // Exception 뱐경 및 코드 수정 필요
     }
 }
+*/

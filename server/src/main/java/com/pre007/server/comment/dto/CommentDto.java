@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.comment.dto;
 
 import lombok.*;
@@ -10,15 +11,13 @@ public class CommentDto {
     @Getter
     @Setter
     public static class Post {
-
-        @NotBlank
+        @NotBlank(message = "답변을 입력해주세요.")
         private String content;
     }
 
     @Getter
     @AllArgsConstructor
     public static  class Patch {
-
         @NotBlank
         private String content;
     }
@@ -44,3 +43,4 @@ public class CommentDto {
         }
     }
 }
+*/

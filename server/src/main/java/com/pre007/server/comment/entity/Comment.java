@@ -1,10 +1,11 @@
+/*
 package com.pre007.server.comment.entity;
 
 import com.pre007.server.answer.entity.Answer;
+import com.pre007.server.audit.Auditable;
 import com.pre007.server.member.entity.Member;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -12,10 +13,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Builder
+@Data
 @NoArgsConstructor
-public class Comment {
+@AllArgsConstructor
+@Slf4j
+public class Comment extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,20 +26,23 @@ public class Comment {
 
     @Column(columnDefinition = "TEXT")
     private String Content;
-
+*/
+/*
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime modifiedAt;
+    private LocalDateTime modifiedAt;*//*
+
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "answer_id")
+    @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
 
 }
+*/

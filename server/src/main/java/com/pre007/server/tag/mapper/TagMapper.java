@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.tag.mapper;
 
 import com.pre007.server.tag.entity.Tag;
@@ -16,3 +17,4 @@ public class TagMapper {
         return result;
     }
 }
+*/
