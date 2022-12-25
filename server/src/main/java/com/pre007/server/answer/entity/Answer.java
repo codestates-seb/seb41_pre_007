@@ -1,66 +1,118 @@
 package com.pre007.server.answer.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pre007.server.audit.Auditable;
-import com.pre007.server.comment.entity.Comment;
+import com.pre007.server.comment.AnswerComment.AnswerComment;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.question.entity.Question;
-import com.pre007.server.vote.entity.Vote;
+import com.pre007.server.vote.AnswerVote.AnswerVote;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
-@Getter
-@Setter
-@Slf4j
 @Entity
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Answer extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
+    private String answerNickname;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
+    @Column(columnDefinition = "TEXT")
+    private String answerContent;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "STATUS")
-    private AnswerStatus answerStatus = AnswerStatus.ANSWER_EXIST;
-
-    /*@Column(nullable = false)
-    private int vote = 0;*/
+    @Column(columnDefinition = "TINYINT", length = 1)
+    private boolean adopted;
+    private int totalVotes;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+    @JsonIgnore // json data null https://m.blog.naver.com/writer0713/221587351970
     private Member member;
 
-
+    @JsonBackReference // 순환참조 방어 자식 클래스 측
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
-    private List<Vote> votes = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
+    private List<AnswerVote> answerVotes = new ArrayList<>();
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
+    private List<AnswerComment> answerComments = new ArrayList<>();
 
+    public Answer(String answerContent/*, LocalDateTime createdAt, LocalDateTime modifiedAt*/) {
+        this.answerContent = answerContent;/*
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;*/
+    }
 
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
-
-    public enum AnswerStatus {
-        ANSWER_NOT_EXIST("존재하지 않는 답변"),
-        ANSWER_EXIST("존재하는 답볍");
-        @Getter
-        private String status;
-
-        AnswerStatus(String status) {
-            this.status = status;
+    public void setMember(Member member) {
+        if (this.member != null) {
+            this.member.getAnswers().remove(this);
+        }
+        this.member = member;
+        if (!member.getAnswers().contains(this)) {
+            member.addAnswer(this);
         }
     }
 
+    public void setQuestion(Question question) {
+        if (this.question != null) {
+            this.question.getAnswers().remove(this);
+        }
+        this.question = question;
+        if (!question.getAnswers().contains(this)) {
+            question.addAnswer(this);
+        }
+    }
 
+    public void addAnswerComments(AnswerComment answerComment) {
+        this.answerComments.add(answerComment);
 
+        if (answerComment.getAnswer() != this) {
+            answerComment.setAnswer(this);
+        }
+    }
 
+    public void addAnswerVotes(AnswerVote answerVote) {
+        this.answerVotes.add(answerVote);
+
+        if (answerVote.getAnswer() != this) {
+            answerVote.setAnswer(this);
+        }
+    }
+
+    public void setAnswerNickname(String answerNickname) {
+        this.answerNickname = answerNickname;
+    }
+
+    public void setAnswerContent(String answerContent) {
+        this.answerContent = answerContent;
+    }
+/*
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }*/
+
+    public void setAdopted(boolean adopted) {
+        this.adopted = adopted;
+    }
+
+    public void setTotalVotes(int totalVotes) {
+        this.totalVotes = totalVotes;
+    }
 }
