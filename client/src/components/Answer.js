@@ -3,6 +3,7 @@ import { ReactComponent as Upicon } from '../image/Upicon.svg';
 import { ReactComponent as Downicon } from '../image/Downicon.svg';
 import { ReactComponent as Save } from '../image/Save.svg';
 import { ReactComponent as Showact } from '../image/Showact.svg';
+
 const Answer = () => {
   return (
     <AnswerWrap>
@@ -13,10 +14,7 @@ const Answer = () => {
           </div>
           <div className="answer-list top-right">
             <p>Sorted by:</p>
-            <button>
-              Highest scre (default)
-              {/* <Upicon /> <Downicon /> */}
-            </button>
+            <button>Highest score (default)</button>
           </div>
         </div>
         <div className="answer-list bottom">
@@ -28,7 +26,19 @@ const Answer = () => {
             <Save />
             <Showact />
           </div>
-          <div className="answer-list bottom-right"></div>
+          <div className="answer-list bottom-right">
+            <div className="body">hiiiiii</div>
+            <div className="guide-zone">
+              <div className="guide-zone left">
+                <span>Share</span>
+                <span>Edit</span>
+                <span>Follow</span>
+              </div>
+              <div className="guide-zone right">
+                <div className="profil box"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </AnswerList>
       <YourWrap>
@@ -81,11 +91,34 @@ const AnswerList = styled.div`
 
   .bottom {
     margin-top: 15px;
+    display: flex;
     .bottom-left {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 50px;
+    }
+    .bottom-right {
+      margin-left: 20px;
+      margin-top: 10px;
+      .body {
+        height: 80%;
+      }
+      .guide-zone {
+        display: flex;
+        justify-content: space-between;
+        span {
+          margin-right: 10px;
+          font-size: 12px;
+          color: #6f7881;
+        }
+        .box {
+          background-color: #d9e9f7;
+          width: 150px;
+          height: 50px;
+          margin-left: 200px;
+        }
+      }
     }
   }
 `;
@@ -100,7 +133,7 @@ const YourWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 30px;
   padding-top: 20px;
   border: 1px solid #e3e6e8;
   border-top-width: 1px;
