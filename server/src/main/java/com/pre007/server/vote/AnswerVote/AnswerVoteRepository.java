@@ -1,13 +1,10 @@
-package com.pre007.server.vote.repository;
+package com.pre007.server.vote.AnswerVote;
 
-import com.pre007.server.vote.entity.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
-public interface VoteRepository extends JpaRepository<Vote, Long> {
-    Optional<Vote> findByMemberIdAndQuestionId(Long memberId, Long questionId);
+public interface AnswerVoteRepository extends JpaRepository<AnswerVote, Long> {
 }
+
 
 /*
 기본 Methods
