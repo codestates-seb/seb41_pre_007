@@ -1,14 +1,20 @@
 import { Sidebar } from '../components/Sidebar';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-// import dummyData from '../db/dummyData';
+import { SidebarRight } from '../components/SidebarRight';
+import { ReactComponent as Upicon } from '../image/Upicon.svg';
+import { ReactComponent as Downicon } from '../image/Downicon.svg';
+import { ReactComponent as Save } from '../image/Save.svg';
+import { ReactComponent as Showact } from '../image/Showact.svg';
+import Answer from '../components/Answer';
+import dummyData from '../db/dummyData.json';
 
 const SViewWrap = styled.div`
   display: flex;
   box-sizing: border-box;
 `;
 const SContent = styled.div`
-  width: 65vw;
+  width: 73vw;
   display: flex;
   border: 1px solid #e3e6e8;
   border-top-width: 0;
@@ -21,7 +27,7 @@ const SContent = styled.div`
 const STopCon = styled.div`
   display: flex;
   height: 20%;
-  width: 65vw;
+  width: 73vw;
   word-break: break-all;
   border: 1px solid #e3e6e8;
   border-top-width: 0;
@@ -31,8 +37,8 @@ const STopCon = styled.div`
   margin-top: 20px;
   padding-left: 20px;
   .top-left {
-    width: 84%;
-    padding-right: 20px;
+    width: 80%;
+
     .three {
       color: #6a737c;
       font-size: 13px;
@@ -47,52 +53,92 @@ const STopCon = styled.div`
     font-size: 27px;
   }
   .top-right {
-    padding-top: 1%;
+    padding-top: 0.3%;
   }
 `;
 const SBottomCon = styled.div`
   display: flex;
   flex-direction: row;
   width: 65vw;
-  .bottom-left {
-    width: 47vw;
-  }
-  .bottom-right {
-    margin-top: 20px;
+  height: 100%;
+  .bottom-content-left {
     display: flex;
-
-    /* ul {
+    flex-direction: column;
+  }
+  .top {
+    display: flex;
+    .btop-left {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      list-style: none;
-      background-color: #fdf7e2;
-      width: 280px;
-      height: 400px;
-      padding-left: 0px;
-      .top {
-        background-color: #fbf3d5;
-        height: 30px;
-        width: 280px;
-        font-size: 14px;
+      padding-top: 16px;
+      height: 200px;
+      svg {
+        margin-top: 5px;
+        margin-bottom: 5px;
       }
-      .bot {
-        height: 49px;
+    }
+    .btop-right {
+      width: 47vw;
+      display: flex;
+      flex-direction: column;
+      padding-left: 30px;
+
+      .body {
+        margin-top: 20px;
+
+        height: 80%;
       }
-    } */
+      .tag-zone {
+        button {
+          border: none;
+          margin-right: 10px;
+          background-color: #e1ecf4;
+          color: #4a7fa5;
+          border-radius: 4px;
+        }
+      }
+      .guide-zone {
+        display: flex;
+
+        justify-content: space-between;
+        span {
+          margin-right: 10px;
+          font-size: 12px;
+          color: #6f7881;
+        }
+        .box {
+          background-color: #d9e9f7;
+          width: 170px;
+          height: 60px;
+          margin-left: -30px;
+        }
+      }
+      .add {
+        height: 10%;
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    width: 300px;
+    transform: translate(100px, 0px);
   }
 `;
 
 const ViewPage = () => {
   const navigate = useNavigate();
+  const filteredData = dummyData.questions.filter(
+    (questions) => questions.id === 1
+  );
   return (
     <SViewWrap>
       <Sidebar />
       <SContent>
         <STopCon>
           <div className=" top content top-left">
-            <span className="title">What do you eat?</span>
+            <span className="title">{filteredData[0].title}</span>
             <div>
               <span className="three">Asked</span>
               <span className="val">today</span>
@@ -113,35 +159,44 @@ const ViewPage = () => {
           </div>
         </STopCon>
         <SBottomCon>
-          <div className="bottom content bottom-left"></div>
-          <div className="bottom content bottom-right">
-            {/* <ul className="yellow-box">
-              <li className="yellow top">The Overflow Blog</li>
-              <li className="yellow bot">
-                I spent tow years trying to do what Backstage does for free
-              </li>
-              <li className="yellow bot">
-                The complete guide to protecting your APIs with OAuth2 (part 1)
-              </li>
-              <li className="yellow top">Featured on Meta</li>
-              <li className="yellow bot">
-                Navigation and UI research starting soon
-              </li>
-              <li className="yellow bot">
-                2022 Community Moderator Election Results - now with two more
-                mods!
-              </li>
-              <li className="yellow bot">
-                Temporary policy: ChatGPT is banned
-              </li>
-              <li className="yellow bot">
-                I&apos;m standing down as a moderator
-              </li>
-              <li className="yellow bot">
-                Proposing a Community-Specific Closure Reason for non-English
-                content
-              </li>
-            </ul> */}
+          <div className="bottom-content-left">
+            <div className="bottom-content top">
+              <div className="bottom-content btop-left">
+                <Upicon />
+                <div className="count-num">0</div>
+                <Downicon />
+                <Save />
+                <Showact />
+              </div>
+              <div className="bottom content btop-right">
+                <div className="body">{filteredData[0].content}</div>
+                <div className="tag-zone">
+                  <button>flutter</button>
+                  <button>dart</button>
+                </div>
+                <div className="guide-zone">
+                  <div className="guide-zone left">
+                    <span>Share</span>
+                    <span>Edit</span>
+                    <span>Follow</span>
+                  </div>
+                  <div className="guide-zone right">
+                    <div className="profil box">
+                      {filteredData[0].userNickname}
+                    </div>
+                  </div>
+                </div>
+                <div className="add comment"></div>
+              </div>
+            </div>
+            <div className="bottom-content bottom">
+              <div className="answer">
+                <Answer />
+              </div>
+            </div>
+          </div>
+          <div className="bottom-content right">
+            <SidebarRight />
           </div>
         </SBottomCon>
       </SContent>

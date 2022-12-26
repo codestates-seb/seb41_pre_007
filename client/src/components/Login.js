@@ -152,18 +152,18 @@ export const Setc = styled.div`
   }
 `;
 
-const Login = ({ onIsOpen }) => {
+const Login = ({ handleIsOpen }) => {
   return (
     <>
       {/* {isOpen === true ? ( */}
       <div>
-        <SModalBack onClick={onIsOpen}>
+        <SModalBack onClick={handleIsOpen}>
           {/* <button onClick={() => setIsOpen(false)}>닫아</button> */}
         </SModalBack>
 
         <SModal>
           <SModalView>
-            <button onClick={onIsOpen}>x</button>
+            <button onClick={handleIsOpen}>x</button>
             <StackOver />
             <SSocialButton>
               <button className="GoogleLogin">
