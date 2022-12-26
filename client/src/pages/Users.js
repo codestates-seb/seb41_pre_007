@@ -21,9 +21,11 @@ const SUsers = styled.main`
   }
 
   .users-title {
-    display: block;
-    font: inherit;
     font-size: 2rem;
+    margin: 0 0 1em;
+    line-height: 1.3;
+    padding: 0;
+    border: 0;
     margin-bottom: 30px;
   }
 
