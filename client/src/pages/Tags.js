@@ -76,6 +76,8 @@ export const Tags = () => {
 
 const STagsWrap = styled.div`
   display: flex;
+  justify-content: center;
+  width: 1680px;
   #content {
     max-width: 1100px;
     width: 1100px;
