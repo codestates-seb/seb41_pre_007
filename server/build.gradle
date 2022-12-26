@@ -57,6 +57,9 @@ dependencies {
 	//.yml 부가 설정 필요(많이)
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc' //`spring-restdocs-core`와 `spring-restdocs-mockmvc` 라이브러리 추가
 	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor' //`spring-restdocs-asciidoctor` 라이브러리 추가
+	//Spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
 	//jjwt 라이브러리(JWT 사용)
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'

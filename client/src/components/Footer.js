@@ -3,6 +3,7 @@ import { ReactComponent as StackOverFlowLogo } from '../image/StackOverFlowLogo.
 import { ReactComponent as GithubLogo } from '../image/GithubLogo.svg';
 
 const SFooter = styled.footer`
+  z-index: 5;
   box-sizing: border-box;
   width: 100vw;
   height: 360px;
