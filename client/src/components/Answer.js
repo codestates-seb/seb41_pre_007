@@ -117,7 +117,7 @@ const AnswerList = styled.div`
   }
 `;
 const AnswerWrap = styled.div`
-  width: 752px;
+  width: 1052px;
   display: flex;
   flex-direction: column;
 `;
