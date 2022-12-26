@@ -86,10 +86,11 @@ export const SHomeWrap = styled.div`
     height: 40px;
   }
   #top-h1 {
-    max-width: 800px;
-    display: block;
-    font: inherit;
     font-size: 2rem;
+    margin: 0 0 1em;
+    line-height: 1.3;
+    padding: 0;
+    border: 0;
   }
 `;
 
