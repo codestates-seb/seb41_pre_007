@@ -79,7 +79,7 @@ export const SHomeWrap = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 30px;
+    margin: 24px;
   }
 
   .top-btn {
@@ -95,7 +95,7 @@ export const SHomeWrap = styled.div`
 
 export const SQuestionSummary = styled.div`
   .singleBox {
-    width: 670px;
+    width: 676px;
   }
   .singleBox {
     border: 1px solid #ececec;
@@ -108,7 +108,7 @@ export const STopBoxList = styled.div`
   display: flex;
   justify-content: flex-end;
   height: 40px;
-  margin-right: 30px;
+  margin-right: 24px;
   margin-bottom: 16px;
 
   .btn-outline-primary {
