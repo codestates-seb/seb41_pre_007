@@ -106,15 +106,12 @@ const UsersProfile = () => {
             </div>
           </div>
           <div className="user-button-container">
-            <button className="user-button">
+            <button
+              className="user-button"
+              onClick={() => navigate('/editProfile')}
+            >
               <Pencil fill="hsl(210,8%,60%)" />
-              <span
-                className="color-gray font-size-12"
-                onClick={() => navigate('/editProfile')}
-                role="presentation"
-              >
-                Edit profile
-              </span>
+              <span className="color-gray font-size-12">Edit profile</span>
             </button>
             <button className="user-button">
               <Network />
