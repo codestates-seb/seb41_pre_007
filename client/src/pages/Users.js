@@ -6,6 +6,7 @@ import Avatar from '../components/Avatar';
 
 const SWrapper = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const SUsers = styled.main`
@@ -16,13 +17,15 @@ const SUsers = styled.main`
   border-width: 0 0 0 1px;
 
   .users-content-container {
-    margin: 30px;
+    margin: 24px;
   }
 
   .users-title {
-    display: block;
-    font: inherit;
     font-size: 2rem;
+    margin: 0 0 1em;
+    line-height: 1.3;
+    padding: 0;
+    border: 0;
     margin-bottom: 30px;
   }
 

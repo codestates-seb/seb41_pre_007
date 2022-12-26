@@ -13,8 +13,6 @@ export const AllQuestions = () => {
       <div className="top-content content">
         <div className="top-title">
           <h1 id="top-h1">All Questions</h1>
-        </div>
-        <div>
           <button
             type="button"
             className="btn btn-primary top-btn"

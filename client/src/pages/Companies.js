@@ -9,27 +9,29 @@ const Companies = () => {
     <SViewWrap>
       <Sidebar />
       <SContent>
-        <h2>Companies</h2>
-        <p>Learn about what it&apos;s like to work at companies</p>
-        <div className="searchbox">
-          <input
-            className="all-search"
-            type="search"
-            placeholder="Search all companies"
-          ></input>
-          <input
-            className="location-search"
-            type="search"
-            placeholder="Search company by location"
-          ></input>
-          <button className="search-button">Search</button>
-          <div className="right-line">
-            <button>Filter by tag</button>
+        <div className="content">
+          <h2>Companies</h2>
+          <p>Learn about what it&apos;s like to work at companies</p>
+          <div className="searchbox">
+            <input
+              className="all-search"
+              type="search"
+              placeholder="Search all companies"
+            ></input>
+            <input
+              className="location-search"
+              type="search"
+              placeholder="Search company by location"
+            ></input>
+            <button className="search-button">Search</button>
+            <div className="right-line">
+              <button>Filter by tag</button>
+            </div>
+          </div>
+          <div className="count-company">
+            {dummyData.companies.length} companies
           </div>
         </div>
-        <span className="count-company">
-          {dummyData.companies.length} companies
-        </span>
         <SCompanies>
           <div className="company-list">
             {dummyData.companies.map((companies) => (
@@ -57,37 +59,34 @@ const Companies = () => {
 
 const SViewWrap = styled.div`
   display: flex;
-  box-sizing: border-box;
+  justify-content: center;
 `;
+
 const SContent = styled.div`
-  width: 73vw;
+  width: 1100px;
   display: flex;
-  border: 1px solid #e3e6e8;
-  border-top-width: 0;
-  border-bottom-width: 0;
-  border-left-width: 1px;
-  border-right-width: 0;
-  padding-top: 25px;
   flex-direction: column;
-  h2 {
-    padding-left: 20px;
+  border-radius: 0;
+  border: 1px solid #ececec;
+  border-width: 0 0 0 1px;
+
+  .content {
+    margin: 24px 24px 0 24px;
   }
+
   p {
     color: #6a737c;
     margin-top: -5px;
-    padding-left: 20px;
   }
 
   .count-company {
-    margin-top: 15px;
-    padding-left: 20px;
+    padding-top: 10px;
   }
   .searchbox {
     display: flex;
     height: 40px;
     color: #babfc3;
     margin-top: -5px;
-    padding-left: 20px;
     .all-search {
       flex-grow: 4;
       margin-right: 2px;
@@ -95,7 +94,7 @@ const SContent = styled.div`
       border-radius: 5px;
       &:focus {
         outline: 4px solid #ddeaf7;
-        border: 1px solid#58a4de;
+        border: 1px solid #58a4de;
       }
     }
     .location-search {
@@ -106,7 +105,7 @@ const SContent = styled.div`
       border-radius: 5px;
       &:focus {
         outline: 4px solid #ddeaf7;
-        border: 1px solid#58a4de;
+        border: 1px solid #58a4de;
       }
     }
     .search-button {
@@ -119,7 +118,6 @@ const SContent = styled.div`
       border-radius: 5px;
     }
     .right-line {
-      flex-grow: 2;
       padding-left: 10px;
       border: 1px solid #babfc3;
       border-top-width: 0;
@@ -127,7 +125,6 @@ const SContent = styled.div`
       border-left-width: 1px;
       border-right-width: 0;
       & button {
-        width: 130px;
         background-color: white;
         border: 1px solid #babfc3;
         height: 40px;
@@ -147,6 +144,7 @@ const SCompanies = styled.div`
       padding-left: 20px;
       padding-top: 20px;
       margin-bottom: 20px;
+      width: 1076px;
       border: 1px solid #d6d9dc;
       border-top-width: 1px;
       border-bottom-width: 0;
