@@ -66,7 +66,7 @@ export const SHomeWrap = styled.div`
   display: flex;
   justify-content: center;
   .content {
-    width: 700px;
+    width: 800px;
     background-color: white;
     border-radius: 0;
     border: 1px solid #ececec;
@@ -86,7 +86,7 @@ export const SHomeWrap = styled.div`
     height: 40px;
   }
   #top-h1 {
-    max-width: 700px;
+    max-width: 800px;
     display: block;
     font: inherit;
     font-size: 2rem;
@@ -95,7 +95,7 @@ export const SHomeWrap = styled.div`
 
 export const SQuestionSummary = styled.div`
   .singleBox {
-    width: 676px;
+    width: 776px;
   }
   .singleBox {
     border: 1px solid #ececec;
