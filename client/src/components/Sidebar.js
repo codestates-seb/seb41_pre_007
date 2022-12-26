@@ -41,9 +41,9 @@ export const Sidebar = () => {
           >
             Users
           </p>
-           <p
+          <p
             className="hover_events padding"
-          role="presentation"
+            role="presentation"
             onClick={() => navigate('/companies')}
           >
             Companies
