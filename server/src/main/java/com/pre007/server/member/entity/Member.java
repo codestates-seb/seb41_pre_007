@@ -37,6 +37,10 @@ public class Member extends Auditable {
     private int age; // post, patch, response|
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE; // patch, response|
 
+    // 추가
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
     public Member() {}
 
     public Member(String profileImage, String nickname, String name, int age) {
@@ -70,3 +74,21 @@ public class Member extends Auditable {
         }
     }
 }
+
+/*
+# 전체개요
+
+## 1. User 권한 정보를 위한 테이블 생성
+: JPA 를 이용하여 Table 을 생성할 예정.
+: 테이블 연관 관계 (User : Authority = 1 : N)
+
+- (1)
+: `@ElementCollection`애너테이션을 사용하면, 별도로 User Authority 에 관한 엔티티를 생성하지 않아도 자동으로 생성된다.
+: 1대N 관계이므로 List<>로 필드를 구현
+
+//MEMBER_ROLES
+: 자동으로 생성된 테이블의 명칭
+: 해당 테이블이 갖는 Column 은 `MEMBER_MEMBER_ID`와 `ROLES`가 될 것이다.
+: Member 회원 정보가 저장될 때, `MEMBER_MEMBER_ID`에는 MEMBER 테이블의 기본 키 값이 저장되고 `ROLES`에는 권한 정보가 저장될 것이다.
+
+ */

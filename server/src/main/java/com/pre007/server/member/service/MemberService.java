@@ -1,5 +1,6 @@
 package com.pre007.server.member.service;
 
+import com.pre007.server.auth.authority.CustomAuthorityUtils;
 import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
 import com.pre007.server.member.entity.Member;
@@ -8,22 +9,37 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class MemberService {
     private MemberRepository memberRepository;
+    //추가; 패스워드, 사용자 권한 관련
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils authorityUtils) {
         this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authorityUtils = authorityUtils;
     }
+
     //TODO createMember
     public Member createMember(Member member){
         verifyExistsEmail(member.getEmail(), member.getPassword());
+        //추가: Password 암호화
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
+        // 추가: DB에 User Role 저장
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
+
         Member savedMember = memberRepository.save(member);
         return savedMember;
     }
@@ -31,8 +47,8 @@ public class MemberService {
     public Member updateMember(Member member){
         Member findMember = findVerifiedMember(member.getMemberId());
 
-        Optional.ofNullable(member.getPassword())
-                .ifPresent(name -> findMember.setPassword(name));
+//        Optional.ofNullable(member.getPassword())
+//                .ifPresent(name -> findMember.setPassword(name));
         Optional.ofNullable(member.getAddress())
                 .ifPresent(address -> findMember.setAddress(address));
         Optional.ofNullable(member.getProfileImage())
