@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
 import { useNavigate } from 'react-router-dom';
-import dummyQuestion from '../db/dummyQuestions.json';
+import dummyData from '../db/dummyData.json';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export const Home = () => {
 
         <SQuestionSummary>
           <div className="singleBoxContainer">
-            {dummyQuestion.questions.map((question) => (
+            {dummyData.questions.map((question) => (
               <div className="singleBox" key={question.id}>
                 <div>
                   <div>{question.title}</div>
