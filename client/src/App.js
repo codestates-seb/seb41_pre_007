@@ -9,6 +9,7 @@ import { EditProfile } from './pages/EditProfile';
 import UsersProfile from './pages/UsersProfile';
 import Companies from './pages/Companies';
 import Users from './pages/Users';
+import ViewPage from './pages/ViewPage';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/users/profile" element={<UsersProfile />} />
         <Route path="/Companies" element={<Companies />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/viewpage" element={<ViewPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
