@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import LoginHeader from './components/LoginHeader';
 import { AllQuestions } from './pages/AllQuestions';
 import { Tags } from './pages/Tags';
+import { EditProfile } from './pages/EditProfile';
+import UsersProfile from './pages/UsersProfile';
 
 const App = () => {
   return (
@@ -15,6 +17,8 @@ const App = () => {
         <Route path="/questionPost" element={<QuestionPost />} />
         <Route path="/allQuestions" element={<AllQuestions />} />
         <Route path="/tags" element={<Tags />} />
+        <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/users/profile" element={<UsersProfile />} />
       </Routes>
       <Footer />
     </BrowserRouter>

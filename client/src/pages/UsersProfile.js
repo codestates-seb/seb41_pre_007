@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import Avatar from '../components/Avatar';
 import { ReactComponent as Cake } from '../image/Cake.svg';
@@ -71,6 +72,7 @@ const SProfile = styled.main`
 
 const UsersProfile = () => {
   const recentUser = dummyUsers.users.filter((user) => user.id === 1);
+  const navigate = useNavigate();
 
   return (
     <SWrapper>
@@ -106,7 +108,13 @@ const UsersProfile = () => {
           <div className="user-button-container">
             <button className="user-button">
               <Pencil fill="hsl(210,8%,60%)" />
-              <span className="color-gray font-size-12">Edit profile</span>
+              <span
+                className="color-gray font-size-12"
+                onClick={() => navigate('/editProfile')}
+                role="presentation"
+              >
+                Edit profile
+              </span>
             </button>
             <button className="user-button">
               <Network />

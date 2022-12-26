@@ -182,7 +182,11 @@ const LoginHeader = () => {
               ></input>
               {isClicked && <SearchTips />}
             </form>
-            <div className="header-bottom-profile-container">
+            <div
+              className="header-bottom-profile-container"
+              onClick={() => navigate('/users/profile')}
+              aria-hidden="true"
+            >
               <Avatar
                 image="https://avatars.githubusercontent.com/u/111413253?v=4"
                 size="24"
