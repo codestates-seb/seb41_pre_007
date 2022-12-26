@@ -12,8 +12,6 @@ export const Home = () => {
       <div className="top-content content">
         <div className="top-title">
           <h1 id="top-h1">Top Questions</h1>
-        </div>
-        <div>
           <button
             type="button"
             className="btn btn-primary top-btn"
@@ -45,7 +43,6 @@ export const Home = () => {
             </button>
           </div>
         </STopBoxList>
-
         <SQuestionSummary>
           <div className="singleBoxContainer">
             {dummyData.questions.map((question) => (
@@ -67,8 +64,8 @@ export const Home = () => {
 
 export const SHomeWrap = styled.div`
   display: flex;
+  justify-content: center;
   .content {
-    max-width: 700px;
     width: 700px;
     background-color: white;
     border-radius: 0;
@@ -79,33 +76,26 @@ export const SHomeWrap = styled.div`
     display: block;
   }
   .top-title {
-    width: 300px;
-    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px;
   }
+
   .top-btn {
-    margin-left: 12px;
-    width: 10vw;
-    transform: translate(550px, -65px);
-    margin: 0;
+    height: 40px;
   }
   #top-h1 {
-    max-width: 800px;
+    max-width: 700px;
     display: block;
     font: inherit;
     font-size: 2rem;
-    margin: 0 0 3em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    margin-left: 5%;
   }
 `;
 
 export const SQuestionSummary = styled.div`
-  transform: translate(0px, -30px);
   .singleBox {
-    width: 50vw;
+    width: 670px;
   }
   .singleBox {
     border: 1px solid #ececec;
@@ -115,9 +105,10 @@ export const SQuestionSummary = styled.div`
 `;
 
 export const STopBoxList = styled.div`
-  width: 465;
+  display: flex;
+  justify-content: flex-end;
   height: 40px;
-  transform: translate(350px, -40px);
+  margin-right: 30px;
   margin-bottom: 16px;
 
   .btn-outline-primary {
