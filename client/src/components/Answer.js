@@ -64,6 +64,7 @@ const AnswerList = styled.div`
   margin-top: 20px;
   border: 1px solid #e3e6e8;
   border-width: 0 0 1px 0;
+  margin-right: 24px;
   svg {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -79,7 +80,7 @@ const AnswerList = styled.div`
     .top-right {
       display: flex;
       flex-direction: row;
-      margin-right: 24px;
+
       button {
         background-color: white;
         border: 1px solid #dcdfe1;
@@ -127,6 +128,7 @@ const YourWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 30px;
+  margin-right: 24px;
   padding-top: 20px;
   .answer-top {
     font-size: 20px;
