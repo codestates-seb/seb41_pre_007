@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
+import { useState } from 'react';
 
 const SWrapper = styled.div`
   box-sizing: border-box;
@@ -87,6 +88,19 @@ const SContainer = styled.div`
 `;
 
 export const QuestionPost = () => {
+  const [TitleValue, setTitleValue] = useState('');
+  const [ContentValue, setContentValue] = useState('');
+  const handleTitleChange = (e) => {
+    setTitleValue(e.currentTarget.value);
+  };
+  console.log(TitleValue);
+  const handleContentChange = (e) => {
+    setContentValue(e.currentTarget.value);
+  };
+  console.log(ContentValue);
+  const handleAddQuestion = (e) => {
+    e.preventDefault();
+  };
   return (
     <SWrapper>
       <SContainer>
@@ -122,7 +136,11 @@ export const QuestionPost = () => {
             Be specific and imagine {`you're`} asking a question to another
             person.
           </p>
-          <input placeholder="e.g. Is there an R function for finding the index of an element in a vector?"></input>
+          <input
+            placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+            value={TitleValue}
+            onChange={handleTitleChange}
+          ></input>
         </div>
         <div className="question-card white-card">
           <h6>What are the details of your problem?</h6>
@@ -130,7 +148,7 @@ export const QuestionPost = () => {
             Introduce the problem and expand on what you put in the title.
             Minimum 20 characters.
           </p>
-          <ToastEditor />
+          <ToastEditor value={ContentValue} onChange={handleContentChange} />
         </div>
         <div className="question-card white-card">
           <h6>What did you try and what were you expecting?</h6>
@@ -154,7 +172,9 @@ export const QuestionPost = () => {
           <button className="question-upload-button">
             Review your question
           </button>
-          <button className="question-draft-button">Discard draft</button>
+          <button className="question-draft-button" onClick={handleAddQuestion}>
+            Discard draft
+          </button>
         </div>
       </SContainer>
     </SWrapper>
