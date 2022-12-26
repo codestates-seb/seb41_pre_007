@@ -3,6 +3,7 @@ import { ReactComponent as Upicon } from '../image/Upicon.svg';
 import { ReactComponent as Downicon } from '../image/Downicon.svg';
 import { ReactComponent as Save } from '../image/Save.svg';
 import { ReactComponent as Showact } from '../image/Showact.svg';
+import ToastEditor from './ToastEditor';
 
 const Answer = () => {
   return (
@@ -44,12 +45,12 @@ const Answer = () => {
         </div>
         <div className="answer-top white-card">
           <form>
-            <textarea></textarea>
+            <ToastEditor />
           </form>
           <button className="create-answer">Post Your Answer</button>
           <p>
             {' '}
-            Not the answer you&apos;re lokking for? Browse other quesetions
+            Not the answer you&apos;re looking for? Browse other quesetions
             tagged android reactnative rn-fetch-blob or ask your own questions.{' '}
           </p>
         </div>
@@ -61,6 +62,8 @@ const AnswerList = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  border: 1px solid #e3e6e8;
+  border-width: 0 0 1px 0;
   svg {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -88,12 +91,12 @@ const AnswerList = styled.div`
 
   .bottom {
     margin-top: 15px;
+    padding-bottom: 24px;
     display: flex;
     .bottom-left {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 50px;
     }
     .bottom-right {
       margin-left: 20px;
@@ -114,8 +117,7 @@ const AnswerList = styled.div`
   }
 `;
 const AnswerWrap = styled.div`
-  position: sticky;
-  width: 47vw;
+  width: 752px;
   display: flex;
   flex-direction: column;
 `;
@@ -123,22 +125,16 @@ const AnswerWrap = styled.div`
 const YourWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin-top: 30px;
   padding-top: 20px;
-  border: 1px solid #e3e6e8;
-  border-top-width: 1px;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;
   .answer-top {
     font-size: 20px;
   }
   textarea {
-    width: 47vw;
+    width: 100%;
     height: 250px;
   }
-  button {
+  .create-answer {
     background-color: #0995ff;
     color: white;
     margin-top: 15px;
