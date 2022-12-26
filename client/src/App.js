@@ -8,6 +8,7 @@ import { Tags } from './pages/Tags';
 import { EditProfile } from './pages/EditProfile';
 import UsersProfile from './pages/UsersProfile';
 import Companies from './pages/Companies';
+import Users from './pages/Users';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/users/profile" element={<UsersProfile />} />
         <Route path="/Companies" element={<Companies />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
       <Footer />
     </BrowserRouter>
