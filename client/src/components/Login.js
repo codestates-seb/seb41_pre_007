@@ -114,7 +114,7 @@ export const SLoginForm = styled.form`
       height: 28px;
       &:focus {
         outline: 4px solid #ddeaf7;
-        border: 1px solid#58a4de;
+        border: 1px solid #58a4de;
       }
     }
     > button {
@@ -155,11 +155,8 @@ export const Setc = styled.div`
 const Login = ({ handleIsOpen }) => {
   return (
     <>
-      {/* {isOpen === true ? ( */}
       <div>
-        <SModalBack onClick={handleIsOpen}>
-          {/* <button onClick={() => setIsOpen(false)}>닫아</button> */}
-        </SModalBack>
+        <SModalBack onClick={handleIsOpen}></SModalBack>
 
         <SModal>
           <SModalView>
@@ -201,7 +198,6 @@ const Login = ({ handleIsOpen }) => {
           </SModalView>
         </SModal>
       </div>
-      {/* ) : null} */}
     </>
   );
 };

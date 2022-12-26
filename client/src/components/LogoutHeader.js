@@ -191,8 +191,8 @@ const LogoutHeader = () => {
           </div>
         </div>
       </SHeader>
-      {isOpen && <Login onIsOpen={handleIsOpen} />}
-      {isSignOpen && <Signup onIsSignOpen={handleIsSignOpen} />}
+      {isOpen && <Login handleIsOpen={handleIsOpen} />}
+      {isSignOpen && <Signup handleIsSignOpen={handleIsSignOpen} />}
     </SWrapper>
   );
 };
