@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Sidebar } from '../components/Sidebar';
-import dummyData from '../db/dummyData.json';
+import dummyData from '../db/dummyCompanies.json';
+import Avatar from '../components/Avatar';
+import { ReactComponent as Location } from '../image/Location.svg';
 
 const Companies = () => {
   return (
@@ -8,7 +10,7 @@ const Companies = () => {
       <Sidebar />
       <SContent>
         <h2>Companies</h2>
-        <p>Learn about what it&aps;s like to work at companies</p>
+        <p>Learn about what it&apos;s like to work at companies</p>
         <div className="searchbox">
           <input
             className="all-search"
@@ -25,13 +27,24 @@ const Companies = () => {
             <button>Filter by tag</button>
           </div>
         </div>
-        <span className="count-company">142 companies</span>
+        <span className="count-company">
+          {dummyData.companies.length} companies
+        </span>
         <SCompanies>
-          <div className="single-company">
-            {dummyData.questions.map((question) => (
-              <div className="singleBox" key={question.id}>
-                <div>
-                  <p>{question.company}</p>
+          <div className="company-list">
+            {dummyData.companies.map((companies) => (
+              <div className="singleBox" key={companies.id}>
+                <div className="companies-logo">
+                  <Avatar image={companies.logo} size="80" />
+                </div>
+                <div className="companies-info">
+                  <span className="name">{companies.companyName}</span>
+                  <div className="location">
+                    <Location fill="RGB(208, 211, 213)" />
+                    <p>{companies.companyRegion}</p>
+                  </div>
+                  <span className="explain">{companies.explanation}</span>
+                  <button>{companies.tags}</button>
                 </div>
               </div>
             ))}
@@ -126,17 +139,52 @@ const SContent = styled.div`
 `;
 
 const SCompanies = styled.div`
-  .single-company {
+  .company-list {
     margin-top: 10px;
 
     .singleBox {
+      display: flex;
       padding-left: 20px;
       padding-top: 20px;
+      margin-bottom: 20px;
       border: 1px solid #d6d9dc;
       border-top-width: 1px;
       border-bottom-width: 0;
       border-left-width: 0;
       border-right-width: 0;
+      .companies-info {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        .name {
+          color: #0074cc;
+          font-size: 1.1rem;
+        }
+        .location {
+          color: #6a737c;
+          font-size: 0.9rem;
+          display: flex;
+          margin-top: 2px;
+
+          p {
+            padding-left: 5px;
+            padding-top: 3px;
+          }
+        }
+      }
+      .explain {
+        font-size: 0.9rem;
+        margin-top: -10px;
+        margin-bottom: 5px;
+      }
+      button {
+        border: none;
+        width: fit-content;
+        border-radius: 4px;
+        background-color: #e1ecf4;
+        color: #5485a9;
+        font-size: 0.8rem;
+      }
     }
   }
 `;

@@ -1,0 +1,134 @@
+{
+  "companies": [
+    {
+      "id": 1,
+      "logo": "https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "rust"
+    },
+    {
+      "id": 2,
+      "logo": "https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags":  "exlixir"
+    },
+    {
+      "id": 3,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "open-source"
+    },
+    {
+      "id": 4,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "rust"
+    },
+    {
+      "id": 5,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "rust"
+    },
+    {
+      "id": 6,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags":  "exlixir"
+    },
+    {
+      "id": 7,
+      "logo": "https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags":  "exlixir"
+    },
+    {
+      "id": 8,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "open-source"
+    },
+    {
+      "id": 9,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "rust"
+    },
+    {
+      "id": 10,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "exlixir"
+    },
+    {
+      "id": 11,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "open-source"
+    },
+    {
+      "id": 12,
+      "logo": "https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "rust"
+    },
+    {
+      "id": 13,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags":  "exlixir"
+    },
+    {
+      "id": 14,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "open-source"
+    },
+    {
+      "id": 15,
+      "logo": "https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyName": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags": "rust"
+    },
+    {
+      "id": 16,
+      "logo":"https://cdn.pixabay.com/photo/2022/02/08/01/08/gold-heart-7000551__480.jpg",
+      "companyN6ame": "Ockam",
+      "companyRegion": "No office location",
+      "explanation": "Ocakm is a fully-distributed hugh performance team. We are Open source and build in Rust and Elixir. Join the Ockam Team!",
+      "tags":  "exlixir"
+    }
+   
+   
+  ]
+}
