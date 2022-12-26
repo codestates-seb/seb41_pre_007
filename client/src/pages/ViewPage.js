@@ -201,14 +201,10 @@ const ViewPage = () => {
               </div>
             </div>
             <div className="bottom-content bottom">
-              <div className="answer">
-                <Answer />
-              </div>
+              <Answer />
             </div>
           </div>
-          <div className="bottom-content right">
-            <SidebarRight />
-          </div>
+          <SidebarRight />
         </SBottomCon>
       </SContent>
     </SViewWrap>
