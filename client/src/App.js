@@ -7,6 +7,7 @@ import { AllQuestions } from './pages/AllQuestions';
 import { Tags } from './pages/Tags';
 import { EditProfile } from './pages/EditProfile';
 import UsersProfile from './pages/UsersProfile';
+import Companies from './pages/Companies';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/tags" element={<Tags />} />
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/users/profile" element={<UsersProfile />} />
+        <Route path="/Companies" element={<Companies />} />
       </Routes>
       <Footer />
     </BrowserRouter>
