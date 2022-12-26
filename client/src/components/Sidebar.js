@@ -34,7 +34,6 @@ export const Sidebar = () => {
           >
             Tags
           </p>
-
           <p
             className="hover_events padding"
             role="presentation"
@@ -42,7 +41,13 @@ export const Sidebar = () => {
           >
             Users
           </p>
-          <p className="hover_events padding">Companies</p>
+           <p
+            className="hover_events padding"
+          role="presentation"
+            onClick={() => navigate('/companies')}
+          >
+            Companies
+          </p>
         </div>
         <div>
           <p className="font_size_small padding ">COLLECTIVES</p>

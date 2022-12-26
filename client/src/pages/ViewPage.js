@@ -8,6 +8,7 @@ import { ReactComponent as Save } from '../image/Save.svg';
 import { ReactComponent as Showact } from '../image/Showact.svg';
 import Answer from '../components/Answer';
 import dummyData from '../db/dummyData.json';
+import Avatar from '../components/Avatar';
 
 const SViewWrap = styled.div`
   display: flex;
@@ -104,18 +105,23 @@ const SBottomCon = styled.div`
         justify-content: space-between;
         span {
           margin-right: 10px;
-          font-size: 12px;
+          font-size: 14px;
           color: #6f7881;
         }
         .box {
+          display: flex;
           background-color: #d9e9f7;
           width: 170px;
           height: 60px;
-          margin-left: -30px;
+          margin-left: -10px;
+          align-items: center;
+          padding-left: 15px;
+
+          .user-name {
+            margin-left: 10px;
+            color: #237ed0;
+          }
         }
-      }
-      .add {
-        height: 10%;
       }
     }
   }
@@ -124,6 +130,7 @@ const SBottomCon = styled.div`
     display: flex;
     width: 300px;
     transform: translate(100px, 0px);
+    margin-left: -140px;
   }
 `;
 
@@ -132,6 +139,7 @@ const ViewPage = () => {
   const filteredData = dummyData.questions.filter(
     (questions) => questions.id === 1
   );
+
   return (
     <SViewWrap>
       <Sidebar />
@@ -176,17 +184,20 @@ const ViewPage = () => {
                 </div>
                 <div className="guide-zone">
                   <div className="guide-zone left">
-                    <span>Share</span>
                     <span>Edit</span>
-                    <span>Follow</span>
+                    <span>Delete</span>
                   </div>
                   <div className="guide-zone right">
                     <div className="profil box">
-                      {filteredData[0].userNickname}
+                      <div className="user-picture">
+                        <Avatar image={filteredData[0].avatar} size="48" />
+                      </div>
+                      <div className="user-name">
+                        {filteredData[0].userNickname}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="add comment"></div>
               </div>
             </div>
             <div className="bottom-content bottom">

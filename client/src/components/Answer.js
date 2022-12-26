@@ -34,9 +34,6 @@ const Answer = () => {
                 <span>Edit</span>
                 <span>Follow</span>
               </div>
-              <div className="guide-zone right">
-                <div className="profil box"></div>
-              </div>
             </div>
           </div>
         </div>
@@ -111,12 +108,6 @@ const AnswerList = styled.div`
           margin-right: 10px;
           font-size: 12px;
           color: #6f7881;
-        }
-        .box {
-          background-color: #d9e9f7;
-          width: 150px;
-          height: 50px;
-          margin-left: 200px;
         }
       }
     }
