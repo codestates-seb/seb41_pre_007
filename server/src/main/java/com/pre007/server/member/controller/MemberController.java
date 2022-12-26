@@ -79,12 +79,4 @@ public class MemberController {
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
-    //TODO DELETE ALL
-/*    @DeleteMapping
-    public ResponseEntity deleteAllMembers(){
-        memberService.deleteAllMembers();
-
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }*/
 }

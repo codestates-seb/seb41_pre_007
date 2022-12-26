@@ -6,80 +6,75 @@ import com.pre007.server.question.dto.QuestionDto;
 import com.pre007.server.question.entity.Question;
 import com.pre007.server.question.mapper.QuestionMapper;
 import com.pre007.server.question.service.QuestionService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
-@Validated
-@AllArgsConstructor
 @Slf4j
+@Validated
 public class QuestionController {
-private final QuestionService questionService;
-private final QuestionMapper questionMapper;
+    private QuestionService questionService;
+    private QuestionMapper questionMapper;
 
-    // 질문 등록
+    public QuestionController(QuestionService questionService, QuestionMapper questionMapper) {
+        this.questionService = questionService;
+        this.questionMapper = questionMapper;
+    }
+
+    //Todo 1 : 작성하기(생성하기) -> POST
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody) {
+    public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postRequest){
+        Question questionForService = questionMapper.questionPostDtoToQuestion(postRequest);
+        Question questionForResponse = questionService.createQuestion(questionForService);
+        QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(questionForResponse);
 
-        Question question = questionMapper.questionPostToQuestion(requestBody);
-        Question createdQuestion = questionService.createQuestion(question, requestBody.getMemberId());
-
-        return new ResponseEntity<>(new SingleResponseDto<>(questionMapper.questionToQuestionResponseDto(createdQuestion)), HttpStatus.CREATED);
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
 
-    // 질문 수정
-   @PatchMapping("/{question-id}")
-   public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
-                                       @Valid @RequestBody QuestionDto.Patch requestBody) {
+    //Todo 2 : 수정하기 -> PATCH
+    @PatchMapping("/{question-id}")
+    public ResponseEntity patchQuestion(@RequestBody QuestionDto.Patch patchRequest,
+                                        @PathVariable("question-id") long questionId){
+        Question questionForService = questionMapper.questionPatchDtoToQuestion(patchRequest);
+        questionForService.setQuestionId(questionId);
+        Question questionForResponse = questionService.updateQuestion(questionForService);
+        QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(questionForResponse);
 
-       Question question = questionMapper.questionPatchToQuestion(requestBody);
-       question.setQuestionId(questionId);
-
-       Question updateQuestion = questionService.updateQuestion(question, requestBody.getMemberId());
-
-       return new ResponseEntity<>(new SingleResponseDto<>(questionMapper.questionToQuestionResponseDto(updateQuestion)),HttpStatus.OK);
-   }
-
-   // 특정 질문 찾기
-   @GetMapping("/{question-id}")
-   public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId) {
-       Question question = questionService.findQuestion(questionId);
-
-       return new ResponseEntity<>(
-               new SingleResponseDto<>(questionMapper.questionToQuestionResponseDto(question)),
-               HttpStatus.OK);
-   }
-
-    @GetMapping("/search")
-    public ResponseEntity findQuestions(@RequestParam String q, @RequestParam String sort, @RequestParam int page) {
-        MultiResponseDto questions = questionService.findAllQuestion(q, sort, page - 1);
-        return new ResponseEntity(questions, HttpStatus.OK);
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
-   // 모든 질문 조회
-   @GetMapping
-   public ResponseEntity getQuestions(@RequestParam int page,
-                                      @RequestParam String sort,
-                                      @RequestParam(value = "filters", required = false) String filters) {
-       MultiResponseDto filterAndSortQuestions = questionService.getFilterAndSortQuestions(page - 1, sort, filters);
+    //Todo 3 : 모든 질문 조회 -> GET All
+    @GetMapping
+    public ResponseEntity getAllQuestion(@RequestParam int page,
+                                         @RequestParam int size){
+        Page<Question> pageQuestion = questionService.findAllQuestion(page-1, size);
+        List<Question> questionListForResponse = pageQuestion.getContent();
+        List<QuestionDto.Response> responses = questionMapper.questionListToQuestionListResponseDto(questionListForResponse);
 
-       return  new ResponseEntity<>(filterAndSortQuestions, HttpStatus.OK);
-   }
+        return new ResponseEntity(new MultiResponseDto<>(responses, pageQuestion), HttpStatus.OK);
+    }
 
-    // 특정 질문 삭제
-   @DeleteMapping("/{question-id}")
-    public ResponseEntity<String> deleteQuestion(@PathVariable("question-id") @Positive long questionId) {
-        questionService.delete(questionId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-   }
+    //Todo 4 : 특정 질문 조회 -> GET One
+    @GetMapping("/{question-id}")
+    public ResponseEntity getOneQuestion(@PathVariable("question-id") long questionId){
+        Question questionForResponse = questionService.findOneQuestion(questionId);
+        QuestionDto.Response response  = questionMapper.questionToQuestionResponseDto(questionForResponse);
 
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
+    }
+
+    //Todo 5 : 질문 삭제하기 -> DELETE ONE
+    @DeleteMapping("/{question-id}")
+    public ResponseEntity deleteOneQuestion(@PathVariable("question-id") long questionId){
+        questionService.deleteOneQuestion(questionId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }
-
