@@ -34,11 +34,16 @@ export const Sidebar = () => {
           >
             Tags
           </p>
-
-          <p className="hover_events padding">Users</p>
           <p
             className="hover_events padding"
             role="presentation"
+            onClick={() => navigate('/users')}
+          >
+            Users
+          </p>
+           <p
+            className="hover_events padding"
+          role="presentation"
             onClick={() => navigate('/companies')}
           >
             Companies
