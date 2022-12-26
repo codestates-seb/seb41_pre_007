@@ -12,34 +12,28 @@ import Avatar from '../components/Avatar';
 
 const SViewWrap = styled.div`
   display: flex;
-  box-sizing: border-box;
+  justify-content: center;
 `;
+
 const SContent = styled.div`
-  width: 73vw;
+  width: 1100px;
   display: flex;
   border: 1px solid #e3e6e8;
-  border-top-width: 0;
-  border-bottom-width: 0;
-  border-left-width: 1px;
-  border-right-width: 0;
-  padding-left: 20px;
+  border-width: 0 0 0 1px;
   flex-direction: column;
 `;
-const STopCon = styled.div`
-  display: flex;
-  height: 20%;
-  width: 73vw;
-  word-break: break-all;
-  border: 1px solid #e3e6e8;
-  border-top-width: 0;
-  border-bottom-width: 1px;
-  border-left-width: 0;
-  border-right-width: 0;
-  margin-top: 20px;
-  padding-left: 20px;
-  .top-left {
-    width: 80%;
 
+const STopCon = styled.div`
+  padding: 24px 24px 0 24px;
+
+  .top-title-container {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #e3e6e8;
+    border-width: 0 0 1px 0;
+  }
+
+  .top-left {
     .three {
       color: #6a737c;
       font-size: 13px;
@@ -56,15 +50,26 @@ const STopCon = styled.div`
   .top-right {
     padding-top: 0.3%;
   }
+
+  .top-content-inform {
+    padding-bottom: 20px;
+  }
+
+  button {
+    width: max-content;
+  }
 `;
+
 const SBottomCon = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 65vw;
-  height: 100%;
+  width: 1100px;
+  margin: 24px;
+
   .bottom-content-left {
+    width: 752px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
   }
   .top {
     display: flex;
@@ -72,7 +77,6 @@ const SBottomCon = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 16px;
       height: 200px;
       svg {
         margin-top: 5px;
@@ -80,14 +84,12 @@ const SBottomCon = styled.div`
       }
     }
     .btop-right {
-      width: 47vw;
       display: flex;
+      width: 100%;
       flex-direction: column;
-      padding-left: 30px;
+      margin: 24px;
 
       .body {
-        margin-top: 20px;
-
         height: 80%;
       }
       .tag-zone {
@@ -101,9 +103,9 @@ const SBottomCon = styled.div`
       }
       .guide-zone {
         display: flex;
-
         justify-content: space-between;
         span {
+          margin-top: 24px;
           margin-right: 10px;
           font-size: 14px;
           color: #6f7881;
@@ -113,7 +115,6 @@ const SBottomCon = styled.div`
           background-color: #d9e9f7;
           width: 170px;
           height: 60px;
-          margin-left: -10px;
           align-items: center;
           padding-left: 15px;
 
@@ -128,9 +129,6 @@ const SBottomCon = styled.div`
 
   .right {
     display: flex;
-    width: 300px;
-    transform: translate(100px, 0px);
-    margin-left: -140px;
   }
 `;
 
@@ -145,25 +143,27 @@ const ViewPage = () => {
       <Sidebar />
       <SContent>
         <STopCon>
-          <div className=" top content top-left">
-            <span className="title">{filteredData[0].title}</span>
-            <div>
-              <span className="three">Asked</span>
-              <span className="val">today</span>
-              <span className="three">Modified</span>
-              <span className="val">today</span>
-              <span className="three">Viewed</span>
-              <span className="val">6times</span>
+          <div className="top-title-container">
+            <div className=" top content top-left">
+              <span className="title">{filteredData[0].title}</span>
+              <div className="top-content-inform">
+                <span className="three">Asked</span>
+                <span className="val">today</span>
+                <span className="three">Modified</span>
+                <span className="val">today</span>
+                <span className="three">Viewed</span>
+                <span className="val">6times</span>
+              </div>
             </div>
-          </div>
-          <div className="top content top-right">
-            <button
-              type="button"
-              className="btn btn-primary top-btn"
-              onClick={() => navigate('/questionPost')}
-            >
-              Ask Question
-            </button>
+            <div className="top content top-right">
+              <button
+                type="button"
+                className="btn btn-primary top-btn"
+                onClick={() => navigate('/questionPost')}
+              >
+                Ask Question
+              </button>
+            </div>
           </div>
         </STopCon>
         <SBottomCon>
