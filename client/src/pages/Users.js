@@ -55,15 +55,6 @@ const SUsers = styled.main`
     cursor: text;
   }
 
-  .users-filter-button {
-    background-color: white;
-    border: 0.5px solid gray;
-    border-radius: 5px;
-    :hover {
-      background-color: #ececec;
-    }
-  }
-
   .users-period-container {
     display: flex;
     justify-content: flex-end;
@@ -143,12 +134,26 @@ const Users = () => {
                 placeholder="Filter by user"
               ></input>
             </form>
-            <div className="users-filter-button-container">
-              <button className="users-filter-button">Reputation</button>
-              <button className="users-filter-button">New users</button>
-              <button className="users-filter-button">Voters</button>
-              <button className="users-filter-button">Editors</button>
-              <button className="users-filter-button">Moderators</button>
+            <div
+              className="btn-group ml-auto mb12 h100"
+              role="group"
+              aria-label="Basic outlined example"
+            >
+              <button type="button" className="btn btn-outline-primary">
+                Reputation
+              </button>
+              <button type="button" className="btn btn-outline-primary">
+                New users
+              </button>
+              <button type="button" className="btn btn-outline-primary">
+                Voters
+              </button>
+              <button type="button" className="btn btn-outline-primary">
+                Editors
+              </button>
+              <button type="button" className="btn btn-outline-primary">
+                Moderators
+              </button>
             </div>
           </div>
           <div className="users-period-container">
