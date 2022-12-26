@@ -79,6 +79,7 @@ const AnswerList = styled.div`
     .top-right {
       display: flex;
       flex-direction: row;
+      margin-right: 24px;
       button {
         background-color: white;
         border: 1px solid #dcdfe1;
@@ -117,7 +118,7 @@ const AnswerList = styled.div`
   }
 `;
 const AnswerWrap = styled.div`
-  width: 1052px;
+  width: 752px;
   display: flex;
   flex-direction: column;
 `;
