@@ -67,6 +67,9 @@ const SProfile = styled.main`
     border-radius: 3px;
     padding: 4px 8px;
     margin: 0 3px;
+    :hover {
+      background-color: hsl(210, 8%, 97.5%);
+    }
   }
 `;
 
