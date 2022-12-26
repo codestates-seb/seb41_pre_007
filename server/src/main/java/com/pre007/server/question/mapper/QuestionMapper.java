@@ -8,10 +8,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface QuestionMapper {
-    Question questionPostToQuestion(QuestionDto.Post requestBody);
-    Question questionPatchToQuestion(QuestionDto.Patch requestBody);
+    Question questionPostDtoToQuestion(QuestionDto.Post postRequest);
+    Question questionPatchDtoToQuestion(QuestionDto.Patch patchRequest);
     QuestionDto.Response questionToQuestionResponseDto(Question question);
-    List<QuestionDto.Response> questionsToQuestionResponseDtos(List<Question> questions);
 
-
+    List<QuestionDto.Response> questionListToQuestionListResponseDto(List<Question> questionList);
 }
