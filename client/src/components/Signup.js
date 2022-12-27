@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as Google } from '../image/Google.svg';
 import { ReactComponent as Github } from '../image/Github.svg';
 import { ReactComponent as Naver } from '../image/Naver.svg';
-// import { useState } from 'react';
 
 export const SModalBack = styled.div`
   position: fixed;
@@ -22,7 +24,7 @@ export const SModal = styled.div`
 `;
 export const SModalView = styled.div`
   width: 350px;
-  height: 700px;
+  height: 750px;
   background-color: #f1f2f3;
   margin: 0px 30px;
   display: flex;
@@ -93,7 +95,7 @@ export const SSocialButton = styled.div`
   }
 `;
 export const SLoginForm = styled.form`
-  height: 450px;
+  height: 500px;
   width: 280px;
   background-color: white;
   border: 2px solid #eaebeb;
@@ -139,6 +141,13 @@ export const SLoginForm = styled.form`
       margin-bottom: 7px;
       color: #6b747d;
     }
+    .validationText {
+      font-size: 13px;
+      font-weight: 700;
+      color: red;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
   }
 `;
 export const Check = styled.div`
@@ -175,6 +184,123 @@ export const Setc = styled.div`
 `;
 
 const SignUp = ({ handleIsSignOpen }) => {
+  // 이름,이메일,비밀번호 전송
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // const [loading, setLoading] = useState(false);
+
+  //유효성 검사
+  const [isValidNickNameErr, setIsValidNickNameErr] = useState({
+    status: false,
+    text: '',
+  });
+  const [isValidEmailErr, setIsValidEmailErr] = useState({
+    status: false,
+    text: '',
+  });
+  const [isValidPasswordErr, setIsValidPasswordErr] = useState({
+    status: false,
+    text: '',
+  });
+  //회원가입 성공 시 이동할 화면
+  const navigate = useNavigate();
+
+  //base url
+  const url = 'http://localhost8080';
+  //서버에 회원가입 데이터 전송
+  const handleSignupAxios = async () => {
+    try {
+      await axios
+        .post(url + '/user/singup', {
+          email,
+          password,
+          nickname,
+        })
+        .then(() => navigate('/main'));
+    } catch (err) {
+      window.alert('회원가입에 실패했습니다. 다시 시도해주세요!');
+    }
+  };
+
+  // input값 이벤트 전달
+  const handleChangeNickname = (e) => {
+    setNickname(e.target.value);
+    console.log(e.target.value);
+  };
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+    console.log(e.target.value);
+  };
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+    console.log(e.target.value);
+  };
+
+  //유효성 검사 함수 작성
+  //1. nickname 유효성 검사
+  const handleValidationNickname = (e) => {
+    if (e.target.value.length <= 0) {
+      setIsValidNickNameErr({
+        status: true,
+        text: '필수 정보입니다',
+      });
+    } else if (e.target.value.length === 1) {
+      setIsValidNickNameErr({
+        status: true,
+        text: '올바른 이름을 입력하십시오',
+      });
+    } else {
+      setIsValidNickNameErr({
+        status: false,
+        text: '',
+      });
+    }
+  };
+  //2. email 유효성 검사
+  const handleValidationEmail = (e) => {
+    const emailRegex =
+      // eslint-disable-next-line
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    if (e.target.value <= 0) {
+      setIsValidEmailErr({
+        status: true,
+        text: '필수 정보입니다',
+      });
+    } else if (e.target.value.length > 0 && !emailRegex.test(email)) {
+      setIsValidEmailErr({
+        status: true,
+        text: '올바른 형태의 이메일이 아닙니다',
+      });
+    } else {
+      setIsValidEmailErr({
+        status: false,
+        text: '',
+      });
+    }
+  };
+  //3. password 유효성 검사
+  const handleValidationPassword = (e) => {
+    const passwordRegex =
+      /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+    if (e.target.value <= 0) {
+      setIsValidPasswordErr({
+        status: true,
+        text: '필수 정보입니다',
+      });
+    } else if (e.target.value.length > 0 && !passwordRegex.test(password)) {
+      setIsValidPasswordErr({
+        status: true,
+        text: '문자와 숫자를 포함한 8자 이상이어야 합니다.',
+      });
+    } else {
+      setIsValidPasswordErr({
+        status: false,
+        text: '',
+      });
+    }
+  };
+
   return (
     <>
       <div>
@@ -199,11 +325,45 @@ const SignUp = ({ handleIsSignOpen }) => {
             <SLoginForm>
               <div className="input-field">
                 <span>Display name</span>
-                <input type="text" className="InputName"></input>
+                <input
+                  type="text"
+                  className="InputName"
+                  // value={nickname}
+                  placeholder="닉네임"
+                  onChange={handleChangeNickname}
+                  onBlur={handleValidationNickname}
+                ></input>
+                {isValidNickNameErr.status && (
+                  <span className="validationText">
+                    {isValidNickNameErr.text}
+                  </span>
+                )}
                 <span>Email</span>
-                <input type="text" className="InputEmail"></input>
+                <input
+                  type="text"
+                  className="InputEmail"
+                  // value={email}
+                  placeholder="이메일"
+                  onChange={handleChangeEmail}
+                  onBlur={handleValidationEmail}
+                ></input>
+                {isValidEmailErr.status && (
+                  <span className="validationText">{isValidEmailErr.text}</span>
+                )}
                 <span>Password</span>
-                <input type="text" className="InputPassword"></input>
+                <input
+                  type="text"
+                  className="InputPassword"
+                  // value={password}
+                  placeholder="패스워드"
+                  onChange={handleChangePassword}
+                  onBlur={handleValidationPassword}
+                ></input>
+                {isValidPasswordErr.status && (
+                  <span className="validationText">
+                    {isValidPasswordErr.text}
+                  </span>
+                )}
                 <p>
                   Passwords must contain at least eight characters, including at
                   least 1 letter and 1 number.
@@ -215,7 +375,9 @@ const SignUp = ({ handleIsSignOpen }) => {
                     invitations, company announcements, and digests.
                   </p>
                 </Check>
-                <button className="signupbtn">Sign up</button>
+                <button className="signupbtn" onClick={handleSignupAxios}>
+                  Sign up
+                </button>
                 <p>
                   By clicking &apos;Sign up&apos;, you agree to our terms of
                   service, privacy policy and cookie policy
