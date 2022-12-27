@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-export const questsionSlice = createSlice({
+export const questionSlice = createSlice({
   name: 'questionReducer',
   initialState: { render: false },
   reducers: {
@@ -8,5 +8,5 @@ export const questsionSlice = createSlice({
     },
   },
 });
-export default questsionSlice;
-export const { rendering } = questsionSlice.actions;
+export default questionSlice;
+export const { rendering } = questionSlice.actions;

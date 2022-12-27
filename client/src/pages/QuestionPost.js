@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
 import { useState } from 'react';
-import { rendering } from '../redux/modules/questionSlice';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
+// import { rendering } from '../redux/modules/questionSlice';
+// import { useDispatch } from 'react-redux';
+// import axios from 'axios';
 
 const SWrapper = styled.div`
   box-sizing: border-box;
@@ -99,30 +99,44 @@ export const QuestionPost = () => {
   };
   console.log(titleValue);
   console.log(contentValue);
-  // const getLocalStorage = () => {
-  //   return JSON.parse(localStorage.getItem('id'));
-  // };
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const handleSubmit = (title, content) => {
-    const data = { title, content };
-    axios('http', {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json',
-        // Authorization: getLocalStorage().token,
-      },
-      data,
-    })
-      .then((res) => {
-        if (res.ok) {
-          alert('추가가 완료되었습니다.');
-        }
-      })
-      .catch((err) => console.log('Error', err.message));
-    dispatch(rendering());
-    location.href = '/home';
+    if (!titleValue || !contentValue) {
+      alert('제목과 내용을 입력해주세요.');
+      return;
+    } else {
+      fetch('http/questions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          content,
+        }),
+      });
+      location.href = '/home';
+    }
   };
+
+  // axios
+  //   .post('http/questions', {
+  //     title: title,
+  //     content: content,
+  //   })
+
+  //   .then((res) => {
+  //     if (res.ok) {
+  //       alert('추가가 완료되었습니다.');
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     window.alert('추가를 실패했습니다.', err.message);
+  //   });
+  // navigate(`/allQuestions`);
+  // dispatch(rendering());
+
   return (
     <SWrapper>
       <SContainer>

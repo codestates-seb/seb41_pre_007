@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchSlice from './modules/searchSlice';
-import questionSlice from './modules/questionSlice';
+import { questionSlice } from './modules/questionSlice';
 
 const store = configureStore({
   reducer: {
