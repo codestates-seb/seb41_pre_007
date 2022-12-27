@@ -12,6 +12,7 @@ import dummyUsers from '../db/dummyUsers.json';
 const SWrapper = styled.div`
   display: flex;
   justify-content: center;
+  width: 100vw;
 `;
 
 const SProfile = styled.main`

@@ -7,6 +7,7 @@ import Avatar from '../components/Avatar';
 const SWrapper = styled.div`
   display: flex;
   justify-content: center;
+  width: 100vw;
 `;
 
 const SUsers = styled.main`

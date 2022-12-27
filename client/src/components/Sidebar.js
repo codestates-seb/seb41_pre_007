@@ -73,14 +73,11 @@ export const Sidebar = () => {
 };
 
 const SWrap = styled.div`
-  /* position: sticky; */
   z-index: 3;
-  /* top: 100px; */
   border-right: #4e4e4e;
   width: 164px;
   display: block;
   text-align: left;
-  margin-left: 80px;
   transform: translate(0px, 30px);
 
   .padding {
