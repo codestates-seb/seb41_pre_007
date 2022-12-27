@@ -1,24 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-export const questionSlice = createSlice({
-  name: 'question',
-  initialState: { id: 0, title: '', content: '' },
+export const questsionSlice = createSlice({
+  name: 'questionReducer',
+  initialState: { render: false },
   reducers: {
-    addQuestion: (state, question) => {
-      console.log(question);
-      return {
-        ...question,
-        id: state.id,
-      };
-    },
-    addQuestionAsync: (state, { payload }) => {
-      console.log(payload);
-      // deburgger;
-      return {
-        ...state,
-        id: payload.id,
-      };
+    rendering: (state) => {
+      state.render = !state.render;
     },
   },
 });
-export const questionReducers = questionSlice.reducer;
-export const questionActions = questionSlice.actions;
+export default questsionSlice;
+export const { rendering } = questsionSlice.actions;
