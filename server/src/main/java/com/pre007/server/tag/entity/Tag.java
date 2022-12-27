@@ -2,6 +2,9 @@
 package com.pre007.server.tag.entity;
 
 
+import com.pre007.server.audit.Auditable;
+import com.pre007.server.question.entity.QuestionTag;
+import com.sun.xml.bind.v2.runtime.unmarshaller.TagName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,17 +14,16 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+@Entity
 @Getter
 @Setter
-@Entity
-public class Tag {
+@Slf4j
+public class Tag extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
 
-    @Column(nullable = false, unique = true)
-    private String tagName;
+    private String TagName;
 
     @OneToMany(mappedBy = "tag")
     private List<QuestionTag> questionTags = new ArrayList<>();

@@ -3,8 +3,8 @@
 //import com.pre007.server.exception.BusinessLogicException;
 //import com.pre007.server.exception.ExceptionCode;
 //import com.pre007.server.question.service.QuestionService;
-//import com.pre007.server.tag.entity.QuestionTag;
-//import com.pre007.server.tag.repository.QuestionTagRepository;
+//import com.pre007.server.question.entity.QuestionTag;
+//import com.pre007.server.question.repository.QuestionTagRepository;
 //import com.pre007.server.tag.entity.Tag;
 //import com.pre007.server.tag.repository.TagRepository;
 //import lombok.AllArgsConstructor;
