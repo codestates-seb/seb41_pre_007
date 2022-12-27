@@ -1,16 +1,18 @@
 package com.pre007.server.member.service;
 
+import com.pre007.server.auth.authority.CustomAuthorityUtils;
 import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.member.repository.MemberRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service

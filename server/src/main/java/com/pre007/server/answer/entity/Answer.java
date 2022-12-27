@@ -1,61 +1,61 @@
 package com.pre007.server.answer.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pre007.server.audit.Auditable;
-import com.pre007.server.comment.AnswerComment.AnswerComment;
+import com.pre007.server.comment.entity.Comment;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.question.entity.Question;
-import com.pre007.server.vote.AnswerVote.AnswerVote;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Getter
+
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter
+@Setter
+@Entity
 public class Answer extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
     private String answerNickname;
-
     @Column(columnDefinition = "TEXT")
     private String answerContent;
 
-    @Column(columnDefinition = "TINYINT", length = 1)
-    private boolean adopted;
-    private int totalVotes;
-
+    //Todo 연관 관계 매핑 필요
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
-    @JsonIgnore // json data null https://m.blog.naver.com/writer0713/221587351970
+   // @JsonIgnore
     private Member member;
 
-    @JsonBackReference // 순환참조 방어 자식 클래스 측
+    //@JsonBackReference
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
+    /*@OneToMany(mappedBy = "answer")
+    private List<Vote> votes = new ArrayList<>();*/
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
-    private List<AnswerVote> answerVotes = new ArrayList<>();
+    //@JsonManagedReference
+    @OneToMany(mappedBy = "answer")
+    private List<Comment> comments = new ArrayList<>();
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
-    private List<AnswerComment> answerComments = new ArrayList<>();
 
+
+    //테스트용 생성자
     public Answer(String answerContent/*, LocalDateTime createdAt, LocalDateTime modifiedAt*/) {
-        this.answerContent = answerContent;/*
-        this.createdAt = createdAt;
+        this.answerContent = answerContent;
+        /*this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;*/
     }
+    public void addMember(Member member) {
+        this.member = member;
+    }
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
 
+
+/*
     public void setMember(Member member) {
         if (this.member != null) {
             this.member.getAnswers().remove(this);
@@ -76,19 +76,11 @@ public class Answer extends Auditable {
         }
     }
 
-    public void addAnswerComments(AnswerComment answerComment) {
-        this.answerComments.add(answerComment);
+    public void addComments(Comment comment) {
+        this.comments.add(comment);
 
-        if (answerComment.getAnswer() != this) {
-            answerComment.setAnswer(this);
-        }
-    }
-
-    public void addAnswerVotes(AnswerVote answerVote) {
-        this.answerVotes.add(answerVote);
-
-        if (answerVote.getAnswer() != this) {
-            answerVote.setAnswer(this);
+        if (comment.getAnswer() != this) {
+            comment.setAnswer(this);
         }
     }
 
@@ -99,20 +91,15 @@ public class Answer extends Auditable {
     public void setAnswerContent(String answerContent) {
         this.answerContent = answerContent;
     }
-/*
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 
-    public void setModifiedAt(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }*/
+*/
 
-    public void setAdopted(boolean adopted) {
-        this.adopted = adopted;
+    /*public void addVote(Vote vote) {
+        this.votes.add(vote);
+        if (vote.getAnswer() != this) {
+            vote.addAnswer(this);
+        }
     }
+*/
 
-    public void setTotalVotes(int totalVotes) {
-        this.totalVotes = totalVotes;
-    }
 }

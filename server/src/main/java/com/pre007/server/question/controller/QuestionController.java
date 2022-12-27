@@ -31,6 +31,7 @@ public class QuestionController {
     //Todo 1 : 작성하기(생성하기) -> POST
     @PostMapping
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postRequest){
+        log.info("test--------------");
         Question questionForService = questionMapper.questionPostDtoToQuestion(postRequest);
         Question questionForResponse = questionService.createQuestion(questionForService);
         QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(questionForResponse);
@@ -56,6 +57,7 @@ public class QuestionController {
                                          @RequestParam int size){
         Page<Question> pageQuestion = questionService.findAllQuestion(page-1, size);
         List<Question> questionListForResponse = pageQuestion.getContent();
+        //questionListForResponse.stream().forEach(question -> question.setQuestionTags(questionTagService.findverifiedQuestionTags(question)));
         List<QuestionDto.Response> responses = questionMapper.questionListToQuestionListResponseDto(questionListForResponse);
 
         return new ResponseEntity(new MultiResponseDto<>(responses, pageQuestion), HttpStatus.OK);

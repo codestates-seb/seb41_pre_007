@@ -4,81 +4,85 @@ import com.pre007.server.answer.dto.AnswerDto;
 import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.answer.mapper.AnswerMapper;
 import com.pre007.server.answer.service.AnswerService;
+import com.pre007.server.dtoUtils.MultiResponseDto;
 import com.pre007.server.dtoUtils.SingleResponseDto;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/answers")
-@RequiredArgsConstructor
+@Slf4j
 @Validated
 public class AnswerController {
-    private final AnswerService answerService;
-    private final AnswerMapper mapper;
+    private AnswerService answerService;
+    private AnswerMapper answerMapper;
 
-    // 답변 작성
+    public AnswerController(AnswerService answerService, AnswerMapper answerMapper) {
+        this.answerService = answerService;
+        this.answerMapper = answerMapper;
+    }
+
+    //Todo 1 : 작성하기(생성하기) -> POST
     @PostMapping
-    public ResponseEntity addAnswer(@RequestBody @Valid AnswerDto.Post postRequest) {
-        Answer answerForService = mapper.answerPostDtoToAnswer(postRequest);
-        Answer answerForResponse = answerService.createAnswer(postRequest.getMemberId(), answerForService);
-        AnswerDto.Response response = mapper.answerToAnswerResponse(answerForResponse);
+    public ResponseEntity postAnswer(@RequestBody AnswerDto.Post postRequest) {
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(response),HttpStatus.CREATED);
+
+        Answer answerForService = answerMapper.answerPostDtoToAnswer(postRequest);
+        log.info("test--------2");
+        Answer answerForResponse = answerService.createAnswer(answerForService);
+        log.info("test--------3");
+        AnswerDto.Response response = answerMapper.answerToAnswerResponseDto(answerForResponse);
+
+        log.info("test--------4");
+
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
 
-    // 본인 작성 답변 수정
+    //Todo 2 : 수정하기 -> PATCH
     @PatchMapping("/{answer-id}")
-    public ResponseEntity patchAnswer(@PathVariable("answer-id") long answerId,
-                                     @Valid @RequestBody AnswerDto.Patch patchRequest) {
-        patchRequest.setAnswerId(answerId);
-        Answer answerForService = mapper.answerPatchDtoToAnswer(patchRequest);
-        Answer answerForResponse = answerService.updateAnswer(patchRequest.getMemberId(), answerForService);
-        AnswerDto.Response response = mapper.answerToAnswerResponse(answerForResponse);
+    public ResponseEntity patchAnswer(@RequestBody AnswerDto.Patch patchRequest,
+                                      @PathVariable("answer-id") long answerId) {
+        Answer answerForService = answerMapper.answerPatchDtoToAnswer(patchRequest);
+        answerForService.setAnswerId(answerId);
+        Answer answerForResponse = answerService.updateAnswer(answerForService);
+        AnswerDto.Response response = answerMapper.answerToAnswerResponseDto(answerForResponse);
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.OK);
-    }
-/*
-    @GetMapping("/{answer-id}")
-    public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId) {
-        Answer answerForResponse = answerService.findAnswer(answerId);
-        AnswerDto.Response response = mapper.answerToAnswerResponse(answerForResponse);
-
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
-    // ?
+    //Todo 3 : 모든 질문 조회 -> GET All
     @GetMapping
-    public ResponseEntity getFindAnswers(@Positive @RequestParam int page,
-                                         @Positive @RequestParam int size) {
-        Page<Answer> pageAnswers = answerService.findAnswers(page - 1, size);
-        List<Answer> answerListForResponse = pageAnswers.getContent();
-        List<AnswerDto.Response> responses = mapper.answerListToAnswerResponsesList(answerListForResponse);
+    public ResponseEntity getAllAnswer(@RequestParam int page,
+                                       @RequestParam int size) {
+        Page<Answer> pageAnswer = answerService.findAllAnswer(page - 1, size);
+        List<Answer> answerListForResponse = pageAnswer.getContent();
+        List<AnswerDto.Response> responses = answerMapper.answerListToAnswerListResponseDto(answerListForResponse);
 
-        return new ResponseEntity<>(new MultiResponseDto<>(responses, pageAnswers), HttpStatus.OK);
-    }*/
+        return new ResponseEntity(new MultiResponseDto<>(responses, pageAnswer), HttpStatus.OK);
+    }
 
-    // 삭제할 답변
+    //Todo 4 : 특정 질문 조회 -> GET One
+    @GetMapping("/{answer-id}")
+    public ResponseEntity getOneAnswer(@PathVariable("answer-id") long answerId) {
+        Answer answerForResponse = answerService.findOneAnswer(answerId);
+        AnswerDto.Response response = answerMapper.answerToAnswerResponseDto(answerForResponse);
+
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
+    }
+
+    //Todo 5 : 질문 삭제하기 -> DELETE ONE
     @DeleteMapping("/{answer-id}")
-    public ResponseEntity deleteAnswer(@PathVariable("answer-id") long answerId) {
-        answerService.deleteAnswer(answerId);
+    public ResponseEntity deleteOneAnswer(@PathVariable("answer-id") long answerId) {
+        answerService.deleteOneAnswer(answerId);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    // 채택
-    @PostMapping("/{answer-id}/adopt/{question-id}")
-    public ResponseEntity adoptAnswer(@PathVariable("answer-id") Long answerId, @PathVariable("question-id") Long questionId) {
-        answerService.adoptAnswer(answerId, questionId);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
 
 }
 

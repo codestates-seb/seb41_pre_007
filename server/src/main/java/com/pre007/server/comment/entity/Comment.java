@@ -1,4 +1,3 @@
-/*
 package com.pre007.server.comment.entity;
 
 import com.pre007.server.answer.entity.Answer;
@@ -6,18 +5,14 @@ import com.pre007.server.audit.Auditable;
 import com.pre007.server.member.entity.Member;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
-@Entity
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @Slf4j
+@Entity
+@NoArgsConstructor
 public class Comment extends Auditable {
 
     @Id
@@ -25,16 +20,7 @@ public class Comment extends Auditable {
     private Long commentId;
 
     @Column(columnDefinition = "TEXT")
-    private String Content;
-*/
-/*
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;*//*
-
+    private String commentContent;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
@@ -43,6 +29,15 @@ public class Comment extends Auditable {
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
+    public Comment(String commentContent) {
+        this.commentContent = commentContent;
+    }
+
+ /*   public void addAnswer(Answer answer) {
+        this.answer = answer;
+        if (!this.answer.getComments().contains(this)) {
+            this.answer.addComment(this);
+        }
+    }*/
 
 }
-*/

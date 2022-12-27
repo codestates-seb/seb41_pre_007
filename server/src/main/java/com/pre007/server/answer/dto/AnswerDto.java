@@ -1,63 +1,47 @@
 package com.pre007.server.answer.dto;
 
-import com.pre007.server.audit.Auditable;
-import com.pre007.server.comment.AnswerComment.AnswerComment;
-import com.pre007.server.question.entity.Question;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.pre007.server.comment.entity.Comment;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
 import java.util.List;
 
-
 public class AnswerDto {
-    @Getter
     @AllArgsConstructor
     @NoArgsConstructor
+    @Getter
     @Builder
     public static class Post {
-        @Positive
-        private Long memberId;
-        @NotNull
-        private Question question;
-        @NotBlank(message = "답변을 입력해주세요.")
-        // @Range(max= 500)
         private String answerContent;
-
     }
 
-    @Getter
     @AllArgsConstructor
     @NoArgsConstructor
+    @Getter
     @Builder
     public static class Patch {
-        @Positive
-        private Long memberId;
-        @NotNull
-        private Question question;
-        @Positive
         private Long answerId;
-        @NotBlank(message = "답변을 입력해주세요.")
         private String answerContent;
-
-        public void setAnswerId(long answerId) {
+        public void setAnswerId(Long answerId) {
             this.answerId = answerId;
         }
     }
 
-    @Getter
     @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Getter
     @Builder
-    public static class Response extends Auditable {
+    public static class Response {
         private Long answerId;
         private String answerNickname;
         private String answerContent;
-
-        private List<AnswerComment> answerComments;
-
-        private boolean adopted;
-        private int totalVotes;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+        private List<Comment> comments;
 
     }
 }
