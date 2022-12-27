@@ -1,13 +1,15 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import Avatar from '../components/Avatar';
+import { EditProfile } from './EditProfile';
 import { ReactComponent as Cake } from '../image/Cake.svg';
 import { ReactComponent as Time } from '../image/Time.svg';
 import { ReactComponent as Location } from '../image/Location.svg';
 import { ReactComponent as Pencil } from '../image/Pencil.svg';
 import { ReactComponent as Network } from '../image/Network.svg';
 import dummyUsers from '../db/dummyUsers.json';
+import { useState } from 'react';
 
 const SWrapper = styled.div`
   display: flex;
@@ -77,7 +79,8 @@ const SProfile = styled.main`
 
 const UsersProfile = () => {
   const recentUser = dummyUsers.users.filter((user) => user.id === 1);
-  const navigate = useNavigate();
+  const [isEdit, setIsEdit] = useState(false);
+  // const navigate = useNavigate();
 
   return (
     <SWrapper>
@@ -113,7 +116,10 @@ const UsersProfile = () => {
           <div className="user-button-container">
             <button
               className="user-button"
-              onClick={() => navigate('/editProfile')}
+              onClick={() => {
+                // navigate('/editProfile');
+                setIsEdit((prev) => !prev);
+              }}
             >
               <Pencil fill="hsl(210,8%,60%)" />
               <span className="color-gray font-size-12">Edit profile</span>
@@ -124,6 +130,7 @@ const UsersProfile = () => {
             </button>
           </div>
         </div>
+        {isEdit && <EditProfile image={recentUser[0].avatar} size="164" />}
       </SProfile>
     </SWrapper>
   );
