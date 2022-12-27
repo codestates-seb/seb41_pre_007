@@ -235,7 +235,6 @@ const SignUp = ({ handleIsSignOpen }) => {
           </SModalView>
         </SModal>
       </div>
-      {/* ) : null} */}
     </>
   );
 };
