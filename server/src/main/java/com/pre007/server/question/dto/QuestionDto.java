@@ -32,7 +32,7 @@ public class QuestionDto {
     public static class Response {
         private Long questionId;
         private String title;
-        private String content;
+        /*private String content;*/
 
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

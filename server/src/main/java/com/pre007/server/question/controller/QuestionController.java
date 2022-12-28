@@ -31,7 +31,6 @@ public class QuestionController {
     //Todo 1 : 작성하기(생성하기) -> POST
     @PostMapping
     public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postRequest){
-        log.info("test--------------");
         Question questionForService = questionMapper.questionPostDtoToQuestion(postRequest);
         Question questionForResponse = questionService.createQuestion(questionForService);
         QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(questionForResponse);
