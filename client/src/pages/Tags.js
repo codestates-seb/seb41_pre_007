@@ -77,10 +77,9 @@ export const Tags = () => {
 const STagsWrap = styled.div`
   display: flex;
   justify-content: center;
-  width: 1680px;
+  width: 100vw;
   #content {
     max-width: 1100px;
-    width: 1100px;
     background-color: white;
     border-radius: 0;
     border: 1px solid #ececec;
@@ -95,7 +94,6 @@ const STagsWrap = styled.div`
     margin: 0px;
   }
   #mainbar-full {
-    width: 100%;
     padding: 0;
     box-sizing: inherit;
     display: block;

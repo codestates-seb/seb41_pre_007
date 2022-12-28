@@ -1,7 +1,15 @@
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { useRef } from 'react';
 
 const ToastEditor = () => {
+  const editorRef = useRef();
+
+  const handleChange = () => {
+    const content = editorRef.current.getInstance().getHTML();
+    console.log(content);
+  };
+
   return (
     <Editor
       initialValue=" "
@@ -16,6 +24,8 @@ const ToastEditor = () => {
         ['link', 'quote', 'codeblock', 'image', 'table'],
         ['ol', 'ul', 'hr'],
       ]}
+      onChange={handleChange}
+      ref={editorRef}
     />
   );
 };
