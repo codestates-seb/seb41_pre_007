@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.comment.controller;
 
 import com.pre007.server.comment.dto.CommentDto;
@@ -80,3 +81,4 @@ public class CommentController {
     }
 
 }
+*/
