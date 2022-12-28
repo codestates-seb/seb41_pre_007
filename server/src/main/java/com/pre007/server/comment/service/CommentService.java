@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.comment.service;
 
 import com.pre007.server.comment.entity.Comment;
@@ -65,3 +66,4 @@ public class CommentService {
         return findComment;
     }
 }
+*/

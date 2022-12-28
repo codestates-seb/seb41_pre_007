@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.testForAPI.answerForTest;
 
 import com.google.gson.Gson;
@@ -217,7 +218,8 @@ public class AnswerForTest {
                         // (10) API 문서 스펙 정보 추가
                 ));
     }
-    @Test
+    */
+/*@Test
     public void getAllAnswersTest() throws Exception{
         //given
         //1. stub post request
@@ -272,7 +274,8 @@ public class AnswerForTest {
                                 )
                         )
                 ));
-    }
+    }*//*
+
     @Test
     public void deleteOneAnswerTest() throws Exception{
         //given
@@ -295,3 +298,4 @@ public class AnswerForTest {
     }
 
 }
+*/
