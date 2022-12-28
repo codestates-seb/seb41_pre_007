@@ -4,16 +4,12 @@ import com.pre007.server.answer.dto.AnswerDto;
 import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.answer.mapper.AnswerMapper;
 import com.pre007.server.answer.service.AnswerService;
-import com.pre007.server.dtoUtils.MultiResponseDto;
 import com.pre007.server.dtoUtils.SingleResponseDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/answers")
@@ -31,15 +27,9 @@ public class AnswerController {
     //Todo 1 : 작성하기(생성하기) -> POST
     @PostMapping
     public ResponseEntity postAnswer(@RequestBody AnswerDto.Post postRequest) {
-
-
         Answer answerForService = answerMapper.answerPostDtoToAnswer(postRequest);
-        log.info("test--------2");
         Answer answerForResponse = answerService.createAnswer(answerForService);
-        log.info("test--------3");
         AnswerDto.Response response = answerMapper.answerToAnswerResponseDto(answerForResponse);
-
-        log.info("test--------4");
 
         return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
@@ -57,6 +47,7 @@ public class AnswerController {
     }
 
     //Todo 3 : 모든 질문 조회 -> GET All
+    /* 모든 질문 조회 삭제
     @GetMapping
     public ResponseEntity getAllAnswer(@RequestParam int page,
                                        @RequestParam int size) {
@@ -66,7 +57,7 @@ public class AnswerController {
 
         return new ResponseEntity(new MultiResponseDto<>(responses, pageAnswer), HttpStatus.OK);
     }
-
+*/
     //Todo 4 : 특정 질문 조회 -> GET One
     @GetMapping("/{answer-id}")
     public ResponseEntity getOneAnswer(@PathVariable("answer-id") long answerId) {
