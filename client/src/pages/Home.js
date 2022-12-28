@@ -80,6 +80,7 @@ export const Home = () => {
 export const SHomeWrap = styled.div`
   display: flex;
   justify-content: center;
+  width: 100vw;
   .content {
     width: 800px;
     background-color: white;

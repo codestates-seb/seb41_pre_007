@@ -13,6 +13,7 @@ import Avatar from '../components/Avatar';
 const SViewWrap = styled.div`
   display: flex;
   justify-content: center;
+  width: 100vw;
 `;
 
 const SContent = styled.div`

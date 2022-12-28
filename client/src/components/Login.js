@@ -1,9 +1,13 @@
 /* eslint-disable react/prop-types */
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as StackOver } from '../image/StackOver.svg';
 import { ReactComponent as Google } from '../image/Google.svg';
 import { ReactComponent as Github } from '../image/Github.svg';
 import { ReactComponent as Naver } from '../image/Naver.svg';
+import { loginAction } from '../redux/modules/action';
 
 export const SModalBack = styled.div`
   width: 100%;
@@ -153,6 +157,45 @@ export const Setc = styled.div`
 `;
 
 const Login = ({ handleIsOpen }) => {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.loginReducer);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/main');
+    }
+  }, [user]);
+
+  const handleClickLogin = () => {
+    if (
+      emailRef.current.value === '' ||
+      passwordRef.current.value === '' ||
+      emailRef.current.value === ' ' ||
+      passwordRef.current.value === ' ' ||
+      emailRef.current.value === null ||
+      passwordRef.current.value === null
+    ) {
+      window.alert('아이디 또는 비밀번호를 모두 입력하세요!');
+      return false;
+    }
+    dispatch(loginAction(emailRef.current.value, passwordRef.current.value))
+      .then((res) => {
+        if (res === true) {
+          // setCookie('toked', res.data.token);
+          window.alert('로그인에 성공했습니다');
+          navigate('/main');
+        }
+      })
+      .catch(() => {
+        window.alert('로그인에 실패했습니다 다시 시도해주세요.');
+      });
+  };
+
   return (
     <>
       <div>
@@ -179,10 +222,18 @@ const Login = ({ handleIsOpen }) => {
             <SLoginForm>
               <div className="input-field">
                 <span>Email</span>
-                <input type="text" className="InputEmail"></input>
+                <input
+                  type="text"
+                  className="InputEmail"
+                  ref={emailRef}
+                ></input>
                 <span>Password</span>
-                <input type="text" className="InputPassword"></input>
-                <button>Login</button>
+                <input
+                  type="text"
+                  className="InputPassword"
+                  ref={passwordRef}
+                ></input>
+                <button onClick={handleClickLogin}>Login</button>
               </div>
             </SLoginForm>
             <Setc>

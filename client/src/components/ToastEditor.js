@@ -3,12 +3,14 @@ import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { useRef } from 'react';
 
+
 const ToastEditor = ({ onChangeHandler }) => {
   const editorRef = useRef();
   const handleContentChange = () => {
     const data = editorRef.current.getInstance().getMarkdown();
     onChangeHandler(data); //props로 받은 setContentvalue에 data 전달
   };
+
 
   return (
     <Editor
