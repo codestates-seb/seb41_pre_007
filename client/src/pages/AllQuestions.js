@@ -3,23 +3,25 @@ import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
 import { SHomeWrap, STopBoxList } from '../pages/Home';
 import { AllQuestionPageNation } from '../components/AllQuestionPageNation';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import { useEffect, useState } from 'react';
+// import axios from 'axios';
 
 export const AllQuestions = () => {
-  const [questions, setQuestions] = useState([]);
+  // const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https/questions?page=1&size=10');
-        setQuestions(response.data);
-      } catch {
-        window.alert('오류가 발생했습니다.');
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         'https/questions?page={page}&size={size}'
+  //       );
+  //       setQuestions(response.data);
+  //     } catch {
+  //       window.alert('오류가 발생했습니다.');
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <SHomeWrap>
@@ -58,7 +60,8 @@ export const AllQuestions = () => {
             </button>
           </div>
         </STopBoxList>
-        <AllQuestionPageNation questions={questions} />
+        {/*question={question} 적기*/}
+        <AllQuestionPageNation />
       </div>
       <SidebarRight />
     </SHomeWrap>

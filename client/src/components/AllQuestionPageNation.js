@@ -5,17 +5,14 @@ import Pagination from 'react-js-pagination';
 import dummyData from '../db/dummyData.json';
 import { useState } from 'react';
 import { SQuestionSummary } from '../pages/Home';
+import { Link } from 'react-router-dom';
 //props로 questions 받아오기
 export const AllQuestionPageNation = () => {
   const [page, setPage] = useState(1);
-  const data = dummyData.allQuestions;
+  const data = dummyData.questions;
   // const question = questions.data;
   const items = 10;
 
-  //서버에서 메소드 받아오면 구현할 코드!
-  //   const getClick = () => {
-  //     axios.get('').then((res) => setData(res.data));
-  //   };
   const handlePageChange = (page) => {
     setPage(page);
   };
@@ -31,7 +28,9 @@ export const AllQuestionPageNation = () => {
             .map((data) => (
               <div className="singleBox" key={data.id}>
                 <div>
-                  <div>{data.title}</div>
+                  <Link to={`/viewpage/${data.id}`} className="title">
+                    {data.title}
+                  </Link>
                   <p>{data.createdAt}</p>
                   <p>{data.userNickname}</p>
                 </div>
