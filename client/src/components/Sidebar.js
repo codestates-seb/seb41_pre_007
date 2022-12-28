@@ -7,57 +7,77 @@ export const Sidebar = () => {
   const navigate = useNavigate();
   return (
     <SWrap>
-      <div
-        role="presentation"
-        onClick={() => {
-          navigate('/home');
-        }}
-      >
-        <p className="hover_events padding">Home</p>
-      </div>
-      <div>
-        <p className="font_size_small padding">PUBLIC</p>
-        <SWrapQuestion className="hover_events padding">
-          <span role="presentation" onClick={() => navigate('/allQuestions')}>
-            <QuestionIcon />
-            Questions
-          </span>
-        </SWrapQuestion>
-        <p className="hover_events padding">Tags</p>
-        <p className="hover_events padding">Users</p>
-        <p className="hover_events padding">Companies</p>
-      </div>
-      <div>
-        <p className="font_size_small padding ">COLLECTIVES</p>
-        <SWrapCollective className="hover_events">
-          <span className="padding">
-            <Collectives fill="#F48224" />
-            Explore Collectives
-          </span>
-        </SWrapCollective>
-      </div>
-      <div>
-        <p className="font_size_small padding">TEAMS</p>
-        <SWrapTeam className="hover_events">
-          <span className="padding">
-            <Teams fill="#F48224" />
-            Create free Team
-          </span>
-        </SWrapTeam>
-      </div>
+      <SSidebarBox>
+        <div
+          role="presentation"
+          onClick={() => {
+            navigate('/home');
+          }}
+        >
+          <p className="hover_events padding">Home</p>
+        </div>
+        <div>
+          <p className="font_size_small padding">PUBLIC</p>
+          <SWrapQuestion
+            className="hover_events padding"
+            onClick={() => navigate('/allQuestions')}
+          >
+            <span className="hover_events">
+              <QuestionIcon />
+              Questions
+            </span>
+          </SWrapQuestion>
+          <p
+            className="hover_events padding"
+            role="presentation"
+            onClick={() => navigate('/tags')}
+          >
+            Tags
+          </p>
+          <p
+            className="hover_events padding"
+            role="presentation"
+            onClick={() => navigate('/users')}
+          >
+            Users
+          </p>
+          <p
+            className="hover_events padding"
+            role="presentation"
+            onClick={() => navigate('/companies')}
+          >
+            Companies
+          </p>
+        </div>
+        <div>
+          <p className="font_size_small padding ">COLLECTIVES</p>
+          <SWrapCollective className="hover_events">
+            <span className="padding">
+              <Collectives fill="#F48224" />
+              Explore Collectives
+            </span>
+          </SWrapCollective>
+        </div>
+        <div>
+          <p className="font_size_small padding">TEAMS</p>
+          <SWrapTeam className="hover_events">
+            <span className="padding">
+              <Teams fill="#F48224" />
+              Create free Team
+            </span>
+          </SWrapTeam>
+        </div>
+      </SSidebarBox>
     </SWrap>
   );
 };
 
 const SWrap = styled.div`
-  position: sticky;
   z-index: 3;
-  /* top: 100px; */
   border-right: #4e4e4e;
-  width: 250px;
+  width: 164px;
   display: block;
   text-align: left;
-  margin-left: 100px;
   transform: translate(0px, 30px);
 
   .padding {
@@ -92,4 +112,10 @@ const SWrapCollective = styled.div`
 const SWrapTeam = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const SSidebarBox = styled.div`
+  position: sticky;
+  top: 53px;
+  margin-bottom: 40px;
 `;

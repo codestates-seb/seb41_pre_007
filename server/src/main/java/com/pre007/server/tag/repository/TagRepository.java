@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.tag.repository;
 
 
@@ -8,3 +9,4 @@ import java.util.Optional;
 public interface TagRepository extends JpaRepository<Tag, Long> {
     Optional<Tag> findByTagName(String tagName);
 }
+*/

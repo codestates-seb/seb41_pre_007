@@ -1,5 +1,10 @@
 import styled from 'styled-components';
+import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
+import { useState } from 'react';
+// import { rendering } from '../redux/modules/questionSlice';
+// import { useDispatch } from 'react-redux';
+// import axios from 'axios';
 
 const SWrapper = styled.div`
   box-sizing: border-box;
@@ -26,7 +31,7 @@ const SContainer = styled.div`
     font-weight: bold;
   }
 
-  p {
+  .question-card > p {
     font-size: 15px;
     line-height: 0.3;
   }
@@ -53,7 +58,7 @@ const SContainer = styled.div`
   }
 
   input,
-  textarea {
+  question-board {
     width: 100%;
   }
 
@@ -86,6 +91,52 @@ const SContainer = styled.div`
 `;
 
 export const QuestionPost = () => {
+  const [titleValue, setTitleValue] = useState('');
+  const [contentValue, setContentValue] = useState('');
+
+  const handleTitleChange = (e) => {
+    setTitleValue(e.currentTarget.value);
+  };
+  console.log(titleValue);
+  console.log(contentValue);
+
+  // const dispatch = useDispatch();
+  const handleSubmit = (title, content) => {
+    if (!titleValue || !contentValue) {
+      alert('제목과 내용을 입력해주세요.');
+      return;
+    } else {
+      fetch('http/questions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          content,
+        }),
+      });
+      location.href = '/home';
+    }
+  };
+
+  // axios
+  //   .post('http/questions', {
+  //     title: title,
+  //     content: content,
+  //   })
+
+  //   .then((res) => {
+  //     if (res.ok) {
+  //       alert('추가가 완료되었습니다.');
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     window.alert('추가를 실패했습니다.', err.message);
+  //   });
+  // navigate(`/allQuestions`);
+  // dispatch(rendering());
+
   return (
     <SWrapper>
       <SContainer>
@@ -121,9 +172,11 @@ export const QuestionPost = () => {
             Be specific and imagine {`you're`} asking a question to another
             person.
           </p>
-          <form>
-            <input placeholder="e.g. Is there an R function for finding the index of an element in a vector?"></input>
-          </form>
+          <input
+            placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+            value={titleValue}
+            onChange={handleTitleChange}
+          ></input>
         </div>
         <div className="question-card white-card">
           <h6>What are the details of your problem?</h6>
@@ -131,19 +184,16 @@ export const QuestionPost = () => {
             Introduce the problem and expand on what you put in the title.
             Minimum 20 characters.
           </p>
-          <form>
-            <textarea></textarea>
-          </form>
+          <ToastEditor onChangeHandler={setContentValue} />
         </div>
+
         <div className="question-card white-card">
           <h6>What did you try and what were you expecting?</h6>
           <p>
             Describe what you tried, what you expected to happen, and what
             actually resulted. Minimum 20 characters.
           </p>
-          <form>
-            <textarea></textarea>
-          </form>
+          <ToastEditor />
         </div>
         <div className="question-card white-card">
           <h6>Tags</h6>
@@ -159,7 +209,12 @@ export const QuestionPost = () => {
           <button className="question-upload-button">
             Review your question
           </button>
-          <button className="question-draft-button">Discard draft</button>
+          <button
+            className="question-draft-button"
+            onClick={() => handleSubmit(titleValue, contentValue)}
+          >
+            Discard draft
+          </button>
         </div>
       </SContainer>
     </SWrapper>

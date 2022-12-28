@@ -15,6 +15,13 @@ spring:
   #  => 데이터베이스 사용 시, 해당 경로(src/main/resources/db/h2/)에 있는 .sql 파일(schema.sql)을 자동으로 실행시킴
   #  => .sql 파일(schema.sql)의 스크립트를 읽어서 DB(h2)의 테이블을 자동으로 생성시킴.
   ##  => JPA 를 사용할 땐, 굳이 필요할까?
+  jpa:
+    hibernate:
+      ddl-auto: create  # (1) 스키마 자동 생성
+    show-sql: true      # (2) SQL 쿼리 출력
+    properties:
+      hibernate:
+        format_sql: true  # (3) SQL pretty print
   sql:
     init:
       schema-locations: classpath*:db/h2/schema.sql

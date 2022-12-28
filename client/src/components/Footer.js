@@ -133,7 +133,7 @@ const Footer = () => {
             <div>
               <a
                 className="footer-GithubLogo-team"
-                href="https://GithubLogo.com/nayul34"
+                href="https://github.com/nayul34"
               >
                 <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[FE]김나율</div>
@@ -142,7 +142,7 @@ const Footer = () => {
             <div>
               <a
                 className="footer-GithubLogo-team"
-                href="https://GithubLogo.com/SUBINSON"
+                href="https://github.com/SUBINSON"
               >
                 <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[FE]손수빈</div>
@@ -151,7 +151,7 @@ const Footer = () => {
             <div>
               <a
                 className="footer-GithubLogo-team"
-                href="https://GithubLogo.com/djWjfk"
+                href="https://github.com/djWjfk"
               >
                 <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[FE]최윤지</div>
@@ -160,7 +160,7 @@ const Footer = () => {
             <div>
               <a
                 className="footer-GithubLogo-team"
-                href="https://GithubLogo.com/keumbi"
+                href="https://github.com/keumbi"
               >
                 <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[BE]박금비</div>
@@ -169,7 +169,7 @@ const Footer = () => {
             <div>
               <a
                 className="footer-GithubLogo-team"
-                href="https://GithubLogo.com/YJCMS"
+                href="https://github.com/YJCMS"
               >
                 <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[BE]이승현</div>
@@ -178,7 +178,7 @@ const Footer = () => {
             <div>
               <a
                 className="footer-GithubLogo-team"
-                href="https://GithubLogo.com/hso8706"
+                href="https://github.com/hso8706"
               >
                 <GithubLogo fill="hsl(210, 8%, 60%)" />
                 <div>[BE]하정호</div>

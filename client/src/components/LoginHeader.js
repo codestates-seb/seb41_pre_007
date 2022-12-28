@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import searchSlice from '../redux/modules/searchSlice';
 import SearchTips from './SearchTips';
+import Avatar from './Avatar';
 
 const SWrapper = styled.div`
   position: sticky;
@@ -181,11 +182,14 @@ const LoginHeader = () => {
               ></input>
               {isClicked && <SearchTips />}
             </form>
-            <div className="header-bottom-profile-container">
-              <img
-                className="header-bottom-profile header-bottom-pointer"
-                src="https://avatars.githubusercontent.com/u/111413253?v=4"
-                alt="my profile"
+            <div
+              className="header-bottom-profile-container"
+              onClick={() => navigate('/users/profile')}
+              aria-hidden="true"
+            >
+              <Avatar
+                image="https://avatars.githubusercontent.com/u/111413253?v=4"
+                size="24"
               />
             </div>
             <div className="header-bottom-topbar-container">

@@ -4,63 +4,102 @@ import com.pre007.server.audit.Auditable;
 import com.pre007.server.comment.entity.Comment;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.question.entity.Question;
-import com.pre007.server.vote.entity.Vote;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @NoArgsConstructor
 @Getter
 @Setter
-@Slf4j
 @Entity
 public class Answer extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
+    private String answerNickname;
+    @Column(columnDefinition = "TEXT")
+    private String answerContent;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "STATUS")
-    private AnswerStatus answerStatus = AnswerStatus.ANSWER_EXIST;
-
-    /*@Column(nullable = false)
-    private int vote = 0;*/
-
+    //Todo 연관 관계 매핑 필요
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+   // @JsonIgnore
     private Member member;
 
-
+    //@JsonBackReference
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
+    /*@OneToMany(mappedBy = "answer")
+    private List<Vote> votes = new ArrayList<>();*/
 
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
-    private List<Vote> votes = new ArrayList<>();
-
-
-
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
+    //@JsonManagedReference
+    @OneToMany(mappedBy = "answer")
     private List<Comment> comments = new ArrayList<>();
 
-    public enum AnswerStatus {
-        ANSWER_NOT_EXIST("존재하지 않는 답변"),
-        ANSWER_EXIST("존재하는 답볍");
-        @Getter
-        private String status;
 
-        AnswerStatus(String status) {
-            this.status = status;
-        }
+
+    //테스트용 생성자
+    public Answer(String answerContent/*, LocalDateTime createdAt, LocalDateTime modifiedAt*/) {
+        this.answerContent = answerContent;
+        /*this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;*/
+    }
+    public void addMember(Member member) {
+        this.member = member;
+    }
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 
 
+/*
+    public void setMember(Member member) {
+        if (this.member != null) {
+            this.member.getAnswers().remove(this);
+        }
+        this.member = member;
+        if (!member.getAnswers().contains(this)) {
+            member.addAnswer(this);
+        }
+    }
 
+    public void setQuestion(Question question) {
+        if (this.question != null) {
+            this.question.getAnswers().remove(this);
+        }
+        this.question = question;
+        if (!question.getAnswers().contains(this)) {
+            question.addAnswer(this);
+        }
+    }
+
+    public void addComments(Comment comment) {
+        this.comments.add(comment);
+
+        if (comment.getAnswer() != this) {
+            comment.setAnswer(this);
+        }
+    }
+
+    public void setAnswerNickname(String answerNickname) {
+        this.answerNickname = answerNickname;
+    }
+
+    public void setAnswerContent(String answerContent) {
+        this.answerContent = answerContent;
+    }
+
+*/
+
+    /*public void addVote(Vote vote) {
+        this.votes.add(vote);
+        if (vote.getAnswer() != this) {
+            vote.addAnswer(this);
+        }
+    }
+*/
 
 }

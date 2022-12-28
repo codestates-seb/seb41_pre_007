@@ -2,18 +2,31 @@ import styled from 'styled-components';
 import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
 import { useNavigate } from 'react-router-dom';
-import dummyData from '../db/dummyData.json';
+// import dummyData from '../db/dummyData.json';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const Home = () => {
+  const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https/questions');
+        setQuestions(response.data);
+      } catch {
+        window.alert('오류가 발생했습니다.');
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <SHomeWrap>
       <Sidebar />
       <div className="top-content content">
         <div className="top-title">
           <h1 id="top-h1">Top Questions</h1>
-        </div>
-        <div>
           <button
             type="button"
             className="btn btn-primary top-btn"
@@ -23,18 +36,32 @@ export const Home = () => {
           </button>
         </div>
         <STopBoxList>
-          <div className="top-boxList">
-            <button className="top-btnList">Interesting</button>
-            <button className="top-btnList">Bountied</button>
-            <button className="top-btnList">Hot</button>
-            <button className="top-btnList">Week</button>
-            <button className="top-btnList">Month</button>
+          <div
+            className="btn-group"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button type="button" className="btn btn-outline-primary">
+              Interestion
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Bountied
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Hot
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Week
+            </button>
+            <button type="button" className="btn btn-outline-primary">
+              Month
+            </button>
           </div>
         </STopBoxList>
         <SQuestionSummary>
           <div className="singleBoxContainer">
-            {dummyData.questions.map((question) => (
-              <div className="singleBox" key={question.id}>
+            {questions?.map((question) => (
+              <div className="singleBox" key={question.questionId}>
                 <div>
                   <div>{question.title}</div>
                   <p>{question.createdAt}</p>
@@ -50,11 +77,12 @@ export const Home = () => {
   );
 };
 
-const SHomeWrap = styled.div`
+export const SHomeWrap = styled.div`
   display: flex;
+  justify-content: center;
+  width: 100vw;
   .content {
-    max-width: 1100px;
-    width: 1100px;
+    width: 800px;
     background-color: white;
     border-radius: 0;
     border: 1px solid #ececec;
@@ -64,33 +92,27 @@ const SHomeWrap = styled.div`
     display: block;
   }
   .top-title {
-    width: 300px;
-    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 24px;
   }
+
   .top-btn {
-    margin-left: 12px;
-    width: 10vw;
-    transform: translate(500px, -65px);
-    margin: 0;
+    height: 40px;
   }
   #top-h1 {
-    max-width: 800px;
-    display: block;
-    font: inherit;
     font-size: 2rem;
-    margin: 0 0 3em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    margin-left: 5%;
+    margin: 0 0 1em;
+    line-height: 1.3;
+    padding: 0;
+    border: 0;
   }
 `;
 
-const SQuestionSummary = styled.div`
-  transform: translate(0px, -30px);
+export const SQuestionSummary = styled.div`
   .singleBox {
-    width: 50vw;
+    width: 776px;
   }
   .singleBox {
     border: 1px solid #ececec;
@@ -99,21 +121,14 @@ const SQuestionSummary = styled.div`
   }
 `;
 
-const STopBoxList = styled.div`
-  width: 25vw;
-  height: 30px;
-  transform: translate(310px, -40px);
-  /* display: flex; */
+export const STopBoxList = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  height: 40px;
+  margin-right: 24px;
   margin-bottom: 16px;
-  .top-boxList {
-    display: inline-flex;
-  }
-  .top-btnList {
-    background-color: white;
-    border: 0.5px solid gray;
-    border-radius: 5px;
-    :hover {
-      background-color: #ececec;
-    }
+
+  .btn-outline-primary {
+    font-size: 13px;
   }
 `;

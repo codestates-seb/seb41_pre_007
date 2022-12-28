@@ -1,10 +1,11 @@
+/*
 package com.pre007.server.tag.service;
 
 import com.pre007.server.tag.entity.Tag;
 import java.util.List;
 
 
-public interface TagService {
+public clsass TagService {
     //CR
     public List<Tag> createTag(List<String> tags, Long questionId);
     public Tag findTag(long tagId);
@@ -14,3 +15,4 @@ public interface TagService {
 
     public Tag findVerifiedTag(String tagName);
 }
+*/
