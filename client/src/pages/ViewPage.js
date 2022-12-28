@@ -169,7 +169,12 @@ const ViewPage = () => {
     (question) => question.id === Number(id)
   );
   //if(questionData){} 데이터가 있을떄로 변경하고 questionData로 랜더링
-
+  const handleDelete = () => {
+    if (window.confirm('삭제 하시겠습니까?')) {
+      fetch(`url`, { method: 'DELET' });
+    }
+    navigate('/home');
+  };
   return (
     <SViewWrap>
       <Sidebar />
@@ -218,7 +223,7 @@ const ViewPage = () => {
                   <div className="guide-zone">
                     <div className="guide-zone left">
                       <span>Edit</span>
-                      <button>Delete</button>
+                      <button onClick={handleDelete}>Delete</button>
                     </div>
                     <div className="guide-zone right">
                       <div className="profil box">
