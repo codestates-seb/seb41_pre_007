@@ -1,13 +1,15 @@
+/* eslint-disable react/prop-types */
 // import axios from 'axios';
 import styled from 'styled-components';
 import Pagination from 'react-js-pagination';
 import dummyData from '../db/dummyData.json';
 import { useState } from 'react';
 import { SQuestionSummary } from '../pages/Home';
-
+//props로 questions 받아오기
 export const AllQuestionPageNation = () => {
   const [page, setPage] = useState(1);
   const data = dummyData.allQuestions;
+  // const question = questions.data;
   const items = 10;
 
   //서버에서 메소드 받아오면 구현할 코드!
@@ -26,12 +28,12 @@ export const AllQuestionPageNation = () => {
         <div className="singleBoxContainer">
           {data
             .slice(items * (page - 1), items * (page - 1) + items)
-            .map((question) => (
-              <div className="singleBox" key={question.id}>
+            .map((data) => (
+              <div className="singleBox" key={data.id}>
                 <div>
-                  <div>{question.title}</div>
-                  <p>{question.createdAt}</p>
-                  <p>{question.userNickname}</p>
+                  <div>{data.title}</div>
+                  <p>{data.createdAt}</p>
+                  <p>{data.userNickname}</p>
                 </div>
               </div>
             ))}
