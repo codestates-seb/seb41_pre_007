@@ -19,14 +19,11 @@ import java.util.Optional;
 @Slf4j
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    //private final MemberService memberService;
-    public AnswerService(AnswerRepository answerRepository, MemberService memberService) {
+    public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
-        //this.memberService = memberService;
     }
 
     public Answer createAnswer(Answer answer) {
-        // memberService.findOneMember(answer.getMember().getMemberId());
         Answer savedAnswer = answerRepository.save(answer);
         log.info("========test===============" + savedAnswer);
         return savedAnswer;

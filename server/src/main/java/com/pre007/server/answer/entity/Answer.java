@@ -36,7 +36,7 @@ public class Answer extends Auditable {
     private List<Vote> votes = new ArrayList<>();*/
 
     //@JsonManagedReference
-    @OneToMany(mappedBy = "answer")
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
 

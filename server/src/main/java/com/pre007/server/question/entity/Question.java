@@ -33,7 +33,7 @@ public class Question extends Auditable {
 
     //@JsonManagedReference
     // 이 엔티티를 json 으로 출력할 때 순환참조를 막기 위한 애너테이션
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
 
