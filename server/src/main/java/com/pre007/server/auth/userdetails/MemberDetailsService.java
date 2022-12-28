@@ -5,6 +5,7 @@ import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.member.repository.MemberRepository;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Optional;
-
+@Data
 @Component
 public class MemberDetailsService implements UserDetailsService { //(1)
     //(2)

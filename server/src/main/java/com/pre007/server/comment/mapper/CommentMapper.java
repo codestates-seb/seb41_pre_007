@@ -4,9 +4,15 @@ import com.pre007.server.comment.dto.CommentDto;
 import com.pre007.server.comment.entity.Comment;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
-    Comment commentPostToComment(CommentDto.Post commentPostDto);
-    Comment commentPatchToComment(Long commentId, CommentDto.Patch commentPatchDto);
-    CommentDto.Response commentToCommentResponse(Comment comment);
+    Comment commentPostDtoToComment(CommentDto.Post postRequest);
+
+    Comment commentPatchDtoToComment(CommentDto.Patch PatchRequest);
+
+    CommentDto.Response commentToCommentResponseDto(Comment comment);
+
+    List<CommentDto.Response> commentListToCommentListResponseDto(List<Comment> commentList);
 }

@@ -6,7 +6,6 @@ import com.pre007.server.exception.ExceptionCode;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.member.repository.MemberRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -2,9 +2,9 @@ package com.pre007.server.question.service;
 
 import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
-import com.pre007.server.member.entity.Member;
 import com.pre007.server.question.entity.Question;
 import com.pre007.server.question.repository.QuestionRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
@@ -24,6 +25,7 @@ public class QuestionService {
     public Question createQuestion(Question question){
         Question savedQuestion = questionRepository.save(question);
 
+        log.info("========test===============" + savedQuestion);
         return savedQuestion;
     }
     public Question updateQuestion(Question question){

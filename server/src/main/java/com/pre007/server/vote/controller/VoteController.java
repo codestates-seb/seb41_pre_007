@@ -1,19 +1,17 @@
+/*
 package com.pre007.server.vote.controller;
-
 import com.pre007.server.vote.entity.Vote;
 import com.pre007.server.vote.service.VoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
+@RequestMapping("/questions")
 @Validated
 @Slf4j
 public class VoteController {
@@ -23,7 +21,8 @@ public class VoteController {
         this.voteService = voteService;
     }
 
-    @PostMapping
+   */
+/* @PostMapping
     public ResponseEntity createVote(){
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -41,5 +40,7 @@ public class VoteController {
         Vote response = voteService.minusVote(pathVarMap);
 
         return new ResponseEntity(response.getVoteCount(), HttpStatus.OK);
-    }
+    }*//*
+
 }
+*/
