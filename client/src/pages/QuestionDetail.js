@@ -9,8 +9,8 @@ import { ReactComponent as Showact } from '../image/Showact.svg';
 import Answer from '../components/Answer';
 import dummyData from '../db/dummyData.json';
 import Avatar from '../components/Avatar';
-// import { useState, useEf fect } from 'react';
-// import axios from 'axios';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const SViewWrap = styled.div`
   display: flex;
@@ -148,20 +148,21 @@ const QuestionDetail = () => {
   //id는 주석처리
   const id = params.id;
 
-  // const url = 'http/questions/' + [params.id];
-  // const [questionData, setQuestionData] = useState(null);
+  const url = 'http://54.180.127.165:8080/questions/' + [params.id];
+  const [questionData, setQuestionData] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(url);
-  //       setQuestionData({ ...response.data });
-  //     } catch (err) {
-  //       window.alert('오류가 발생했습니다.');
-  //     }
-  //   };
-  //   fetchData();
-  // }, [url]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url);
+        setQuestionData({ ...response.data });
+        console.log(response.data);
+      } catch (err) {
+        window.alert('오류가 발생했습니다.');
+      }
+    };
+    fetchData();
+  }, [url]);
 
   const navigate = useNavigate();
   //이것도 주석처리
@@ -183,7 +184,7 @@ const QuestionDetail = () => {
           <STopCon>
             <div className="top-title-container">
               <div className=" top content top-left">
-                <span className="title">{filteredData[0].title}</span>
+                <span className="title">{questionData.title}</span>
                 <div className="top-content-inform">
                   <span className="three">Asked</span>
                   <span className="val">{filteredData[0].createdAt}</span>
