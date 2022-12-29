@@ -1,6 +1,5 @@
-package com.pre007.server.auth.authority;
+package com.pre007.server.auth.utils.authority;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

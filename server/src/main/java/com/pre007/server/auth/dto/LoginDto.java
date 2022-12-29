@@ -1,4 +1,4 @@
-package com.pre007.server.dtoUtils;
+package com.pre007.server.auth.dto;
 
 import lombok.Getter;
 
