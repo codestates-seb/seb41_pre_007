@@ -25,15 +25,15 @@ export const EditProfile = ({ image, size }) => {
   const handleClickSubmit = () => {
     axios
       .patch(url + `/members/${id}`, {
+        profileImage,
         name,
         address,
-        profileImage,
       })
       .then((res) => {
+        setProfileImage(res.data.data.profileImage);
         setName(res.data.data.name);
         setAddress(res.data.data.address);
-        setProfileImage(res.data.data.profileImage);
-        // navigate(`/users/${params.id}`);
+        // navigate(`/users/${id}`);
         window.alert('수정이 완료되었습니다!');
       })
       .catch(() => {

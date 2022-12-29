@@ -145,9 +145,10 @@ const SHeader = styled.header`
 `;
 
 const LoginHeader = () => {
-  const [idData, setIdData] = useState([]);
+  const [idData, setIdData] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const { id } = useParams();
 
   const handleClickHome = () => {
     navigate(`/`);

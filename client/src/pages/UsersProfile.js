@@ -84,7 +84,7 @@ const UsersProfile = () => {
   // const navigate = useNavigate();
   // const { memberId } = useParams();
   const { id } = useParams();
-  const [idData, setIdData] = useState([]);
+  const [idData, setIdData] = useState('');
 
   useEffect(() => {
     axios
@@ -105,7 +105,7 @@ const UsersProfile = () => {
         <div className="profile-content-wrapper">
           <div className="profile-content-container">
             <div className="user-profile-avatar">
-              <Avatar idData={idData} image={idData?.profileImage} size="128" />
+              <Avatar image={idData?.profileImage} size="128" />
             </div>
             <div className="user-inform-container">
               <div className="user-inform-nickname">
