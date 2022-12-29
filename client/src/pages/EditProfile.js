@@ -1,33 +1,34 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
-import ToastEditor from '../components/ToastEditor';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const EditProfile = ({ image, size }) => {
-  // const [profile, setProfile] = useState('');
+  // const [idData, setIdData] = useState(idData?.profileImage);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
-  const [about, setAbout] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
 
   const { memberId } = useParams();
 
   const handleClickSubmit = () => {
-    const formData = new FormData();
-    // formData.append('profile', profile);
-    formData.append('address', address);
-    formData.append('username', name);
-    formData.append('about', about);
-
+    // const formData = new FormData();
+    // // formData.append('profile', profile);
+    // formData.append('address', address);
+    // formData.append('username', name);
+    // formData.append('about', about);
     axios
       .patch(`http://54.180.127.165:8080/members/${memberId}`, {
         // headers: {
         //   // 'Content-Type': 'multipart/form-data;charset=UTF-8',
         //   Authorization: `${sessionStorage.access_token}`,
         // },
-        body: formData,
+        // body: formData,
+        name,
+        address,
+        profileImage,
       })
       .then((res) => {
         if (!res.ok) {
@@ -59,7 +60,7 @@ export const EditProfile = ({ image, size }) => {
   };
 
   const handleChangeAbout = (e) => {
-    setAbout(e.target.value);
+    setProfileImage(e.target.value);
     console.log(e.target.value);
   };
   return (
@@ -71,7 +72,25 @@ export const EditProfile = ({ image, size }) => {
       <div className="pd-24 bd-r-3 user-edit-container">
         <form id="user-edit-form">
           <div className="fw-600">Profile image</div>
-          <img src={image} width={size} height={size} alt="change profile" />
+          <img
+            src={image}
+            width={size}
+            height={size}
+            alt="change profile"
+            onChange={handleChangeAbout}
+          />
+          <form>
+            <div className="mb-3">
+              <label htmlFor="formFileSm" className="form-label mt-5">
+                ⬇️⬇️ 변경할 프로필을 업로드 해주세요!
+              </label>
+              <input
+                className="form-control form-control-sm"
+                id="formFileSm"
+                type="file"
+              />
+            </div>
+          </form>
           <div className="mg-t-12 fw-600">Display name</div>
           <input
             className="pd-l-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"
@@ -84,13 +103,12 @@ export const EditProfile = ({ image, size }) => {
             value={address}
             onChange={handleChangeAddress}
           />
-          <div className="mg-t-12 fw-600">Title</div>
+          {/* <div className="mg-t-12 fw-600">Title</div>
           <input
             className="pd-l-12 pd-r-12 fs-12 bd-r-3 input-style input-style-50p"
             placeholder="No title has been set"
           />
-          <div className="mg-t-12 fw-600">About me</div>
-          <ToastEditor value={about} onChange={handleChangeAbout} />
+          <div className="mg-t-12 fw-600">About me</div> */}
         </form>
       </div>
       <div className="mg-t-36 fs-26">Links</div>
@@ -257,4 +275,7 @@ const SEditProfileWrap = styled.div`
       background-color: hsl(206, 100%, 97%);
     }
   }
+  /* .mt-5 {
+    padding-top: 5px;
+  } */
 `;
