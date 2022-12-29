@@ -8,35 +8,37 @@ import { useNavigate, useParams } from 'react-router-dom';
 export const EditProfile = ({ image, size }) => {
   // const [profile, setProfile] = useState('');
   const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
+  const [address, setAddress] = useState('');
   const [about, setAbout] = useState('');
   const navigate = useNavigate();
 
-  const { id } = useParams();
+  const { memberId } = useParams();
 
   const handleClickSubmit = () => {
     const formData = new FormData();
     // formData.append('profile', profile);
-    formData.append('location', location);
+    formData.append('address', address);
     formData.append('username', name);
     formData.append('about', about);
 
     axios
-      .post(`/accounts/${id}`, {
-        headers: {
-          // 'Content-Type': 'multipart/form-data;charset=UTF-8',
-          Authorization: `${sessionStorage.access_token}`,
-        },
+      .patch(`http://54.180.127.165:8080/members/${memberId}`, {
+        // headers: {
+        //   // 'Content-Type': 'multipart/form-data;charset=UTF-8',
+        //   Authorization: `${sessionStorage.access_token}`,
+        // },
         body: formData,
       })
       .then((res) => {
         if (!res.ok) {
-          if (res.status === 400) window.alert('Fill in the blanks');
-          throw Error('could not fetch the data for that resource');
+          if (res.status === 400) {
+            window.alert('Fill in the blanks');
+            throw Error('could not fetch the data for that resource');
+          }
         }
-        if (res.status === 201) {
+        if (res.status === 200) {
           alert('Congratulations! Your account has been successfully created!');
-          navigate(`/users/profile/${id}`);
+          navigate(`/users/:id/${memberId}`);
           return location.reload();
         }
         return res;
@@ -51,8 +53,8 @@ export const EditProfile = ({ image, size }) => {
     console.log(e.target.value);
   };
 
-  const handleChangeLocation = (e) => {
-    setLocation(e.target.value);
+  const handleChangeAddress = (e) => {
+    setAddress(e.target.value);
     console.log(e.target.value);
   };
 
@@ -79,8 +81,8 @@ export const EditProfile = ({ image, size }) => {
           <div className="mg-t-12 fw-600">Location</div>
           <input
             className="pd-1-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"
-            value={location}
-            onChange={handleChangeLocation}
+            value={address}
+            onChange={handleChangeAddress}
           />
           <div className="mg-t-12 fw-600">Title</div>
           <input
