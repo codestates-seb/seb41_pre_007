@@ -4,8 +4,20 @@ import { ReactComponent as Downicon } from '../image/Downicon.svg';
 import { ReactComponent as Save } from '../image/Save.svg';
 import { ReactComponent as Showact } from '../image/Showact.svg';
 import ToastEditor from './ToastEditor';
+import axios from 'axios';
+import { useState } from 'react';
 
 const Answer = () => {
+  const [answer, setAnswer] = useState('');
+  const requestBody = { answerContent: answer };
+
+  const postAnswer = () => {
+    axios
+      .post(`http://54.180.127.165:8080/answers`, requestBody)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+  console.log(answer);
   return (
     <AnswerWrap>
       <AnswerList>
@@ -45,9 +57,11 @@ const Answer = () => {
         </div>
         <div className="answer-top white-card">
           <form>
-            <ToastEditor />
+            <ToastEditor onChangeHandler={setAnswer} />
           </form>
-          <button className="create-answer">Post Your Answer</button>
+          <button className="create-answer" onClick={postAnswer}>
+            Post Your Answer
+          </button>
           <p>
             {' '}
             Not the answer you&apos;re looking for? Browse other quesetions

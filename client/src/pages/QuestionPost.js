@@ -116,7 +116,7 @@ export const QuestionPost = () => {
           content,
         }),
       });
-      location.href = '/';
+      location.href = '/questions';
     }
   };
 
@@ -186,15 +186,6 @@ export const QuestionPost = () => {
           </p>
           <ToastEditor onChangeHandler={setContentValue} />
         </div>
-
-        <div className="question-card white-card">
-          <h6>What did you try and what were you expecting?</h6>
-          <p>
-            Describe what you tried, what you expected to happen, and what
-            actually resulted. Minimum 20 characters.
-          </p>
-          <ToastEditor />
-        </div>
         <div className="question-card white-card">
           <h6>Tags</h6>
           <p>
@@ -206,15 +197,13 @@ export const QuestionPost = () => {
           </form>
         </div>
         <div>
-          <button className="question-upload-button">
-            Review your question
-          </button>
           <button
-            className="question-draft-button"
+            className="question-upload-button"
             onClick={() => handleSubmit(titleValue, contentValue)}
           >
-            Discard draft
+            Review your question
           </button>
+          <button className="question-draft-button">Discard draft</button>
         </div>
       </SContainer>
     </SWrapper>
