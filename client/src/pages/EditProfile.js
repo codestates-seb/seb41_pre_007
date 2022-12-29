@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 export const EditProfile = ({ image, size }) => {
+  const [profileImage, setProfileImage] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
-  const [profileImage, setProfileImage] = useState('');
   // const navigate = useNavigate();
-  const params = useParams();
+  const { id } = useParams();
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -24,7 +24,7 @@ export const EditProfile = ({ image, size }) => {
   const url = 'http://54.180.127.165:8080/';
   const handleClickSubmit = () => {
     axios
-      .patch(url + `/members/${params.id}`, {
+      .patch(url + `/members/${id}`, {
         name,
         address,
         profileImage,
@@ -43,7 +43,7 @@ export const EditProfile = ({ image, size }) => {
   //기존정보 불러오기
   useEffect(() => {
     axios
-      .get(url + `members/${params.id}`)
+      .get(url + `members/${id}`)
       .then((res) => {
         setName(res.data.data.name);
         setAddress(res.data.data.address);

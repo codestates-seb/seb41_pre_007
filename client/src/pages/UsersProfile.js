@@ -83,12 +83,12 @@ const UsersProfile = () => {
   const [isEdit, setIsEdit] = useState(false);
   // const navigate = useNavigate();
   // const { memberId } = useParams();
-  const params = useParams();
+  const { id } = useParams();
   const [idData, setIdData] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://54.180.127.165:8080/members/${params.id}`)
+      .get(`http://54.180.127.165:8080/members/${id}`)
       .then((res) => {
         console.log(res.data.data);
         setIdData(res.data.data);
