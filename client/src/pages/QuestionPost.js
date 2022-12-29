@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 // import { rendering } from '../redux/modules/questionSlice';
 // import { useDispatch } from 'react-redux';
 // import axios from 'axios';
@@ -92,7 +91,6 @@ const SContainer = styled.div`
 `;
 
 export const QuestionPost = () => {
-  const navigate = useNavigate();
   const [titleValue, setTitleValue] = useState('');
   const [contentValue, setContentValue] = useState('');
 
@@ -118,7 +116,7 @@ export const QuestionPost = () => {
           content,
         }),
       });
-      location.href = '/';
+      location.href = '/questions';
     }
   };
 
@@ -201,10 +199,7 @@ export const QuestionPost = () => {
         <div>
           <button
             className="question-upload-button"
-            onClick={() => {
-              handleSubmit(titleValue, contentValue);
-              navigate(`/questions`);
-            }}
+            onClick={() => handleSubmit(titleValue, contentValue)}
           >
             Review your question
           </button>
