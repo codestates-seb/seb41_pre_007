@@ -1,6 +1,6 @@
 import { Sidebar } from '../components/Sidebar';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SidebarRight } from '../components/SidebarRight';
 import { ReactComponent as Upicon } from '../image/Upicon.svg';
 import { ReactComponent as Downicon } from '../image/Downicon.svg';
@@ -9,6 +9,8 @@ import { ReactComponent as Showact } from '../image/Showact.svg';
 import Answer from '../components/Answer';
 import dummyData from '../db/dummyData.json';
 import Avatar from '../components/Avatar';
+// import { useState, useEf fect } from 'react';
+// import axios from 'axios';
 
 const SViewWrap = styled.div`
   display: flex;
@@ -111,6 +113,14 @@ const SBottomCon = styled.div`
           font-size: 14px;
           color: #6f7881;
         }
+        button {
+          margin-top: 10px;
+          margin-right: 10px;
+          font-size: 14px;
+          color: #6f7881;
+          background-color: white;
+          border: none;
+        }
         .box {
           display: flex;
           background-color: #d9e9f7;
@@ -134,80 +144,108 @@ const SBottomCon = styled.div`
 `;
 
 const ViewPage = () => {
-  const navigate = useNavigate();
-  const filteredData = dummyData.questions.filter(
-    (questions) => questions.id === 1
-  );
+  const params = useParams();
+  //id는 주석처리
+  const id = params.id;
 
+  // const url = 'http/questions/' + [params.id];
+  // const [questionData, setQuestionData] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(url);
+  //       setQuestionData({ ...response.data });
+  //     } catch (err) {
+  //       window.alert('오류가 발생했습니다.');
+  //     }
+  //   };
+  //   fetchData();
+  // }, [url]);
+
+  const navigate = useNavigate();
+  //이것도 주석처리
+  const filteredData = dummyData.questions.filter(
+    (question) => question.id === Number(id)
+  );
+  //if(questionData){} 데이터가 있을떄로 변경하고 questionData로 랜더링
+  const handleDelete = () => {
+    if (window.confirm('삭제 하시겠습니까?')) {
+      fetch(`url`, { method: 'DELET' });
+    }
+    navigate('/home');
+  };
   return (
     <SViewWrap>
       <Sidebar />
-      <SContent>
-        <STopCon>
-          <div className="top-title-container">
-            <div className=" top content top-left">
-              <span className="title">{filteredData[0].title}</span>
-              <div className="top-content-inform">
-                <span className="three">Asked</span>
-                <span className="val">today</span>
-                <span className="three">Modified</span>
-                <span className="val">today</span>
-                <span className="three">Viewed</span>
-                <span className="val">6times</span>
-              </div>
-            </div>
-            <div className="top content top-right">
-              <button
-                type="button"
-                className="btn btn-primary top-btn"
-                onClick={() => navigate('/questionPost')}
-              >
-                Ask Question
-              </button>
-            </div>
-          </div>
-        </STopCon>
-        <SBottomCon>
-          <div className="bottom-content-left">
-            <div className="bottom-content top">
-              <div className="bottom-content btop-left">
-                <Upicon />
-                <div className="count-num">0</div>
-                <Downicon />
-                <Save />
-                <Showact />
-              </div>
-              <div className="bottom content btop-right">
-                <div className="body">{filteredData[0].content}</div>
-                <div className="tag-zone">
-                  <button>flutter</button>
-                  <button>dart</button>
+      <div>
+        <SContent>
+          <STopCon>
+            <div className="top-title-container">
+              <div className=" top content top-left">
+                <span className="title">{filteredData[0].title}</span>
+                <div className="top-content-inform">
+                  <span className="three">Asked</span>
+                  <span className="val">{filteredData[0].createdAt}</span>
+                  <span className="three">Modified</span>
+                  <span className="val">today</span>
+                  <span className="three">Viewed</span>
+                  <span className="val">6times</span>
                 </div>
-                <div className="guide-zone">
-                  <div className="guide-zone left">
-                    <span>Edit</span>
-                    <span>Delete</span>
+              </div>
+              <div className="top content top-right">
+                <button
+                  type="button"
+                  className="btn btn-primary top-btn"
+                  onClick={() => navigate('/questionPost')}
+                >
+                  Ask Question
+                </button>
+              </div>
+            </div>
+          </STopCon>
+          <SBottomCon>
+            <div className="bottom-content-left">
+              <div className="bottom-content top">
+                <div className="bottom-content btop-left">
+                  <Upicon />
+                  <div className="count-num">0</div>
+                  <Downicon />
+                  <Save />
+                  <Showact />
+                </div>
+                <div className="bottom content btop-right">
+                  <div className="body">{filteredData[0].content}</div>
+                  <div className="tag-zone">
+                    <button>flutter</button>
+                    <button>dart</button>
                   </div>
-                  <div className="guide-zone right">
-                    <div className="profil box">
-                      <div className="user-picture">
-                        <Avatar image={filteredData[0].avatar} size="48" />
-                      </div>
-                      <div className="user-name">
-                        {filteredData[0].userNickname}
+                  <div className="guide-zone">
+                    <div className="guide-zone left">
+                      <span>Edit</span>
+                      <button onClick={handleDelete}>Delete</button>
+                    </div>
+                    <div className="guide-zone right">
+                      <div className="profil box">
+                        <div className="user-picture">
+                          <Avatar image={filteredData[0].avatar} size="48" />
+                        </div>
+                        <div className="user-name">
+                          {filteredData[0].userNickname}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className="bottom-content bottom">
+                <Answer />
+              </div>
             </div>
-            <div className="bottom-content bottom">
-              <Answer />
-            </div>
-          </div>
-          <SidebarRight />
-        </SBottomCon>
-      </SContent>
+            <SidebarRight />
+          </SBottomCon>
+        </SContent>
+      </div>
     </SViewWrap>
   );
 };
