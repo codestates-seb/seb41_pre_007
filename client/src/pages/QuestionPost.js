@@ -188,15 +188,6 @@ export const QuestionPost = () => {
           </p>
           <ToastEditor onChangeHandler={setContentValue} />
         </div>
-
-        <div className="question-card white-card">
-          <h6>What did you try and what were you expecting?</h6>
-          <p>
-            Describe what you tried, what you expected to happen, and what
-            actually resulted. Minimum 20 characters.
-          </p>
-          <ToastEditor />
-        </div>
         <div className="question-card white-card">
           <h6>Tags</h6>
           <p>
