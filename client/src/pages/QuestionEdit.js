@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import SidebarEdit from '../components/SidebarEdit';
 import ToastEditor from '../components/ToastEditor';
@@ -113,6 +114,7 @@ const SContent = styled.main`
 `;
 
 const QuestionEdit = () => {
+  const navigate = useNavigate();
   return (
     <SWrapper>
       <Sidebar />
@@ -145,7 +147,10 @@ const QuestionEdit = () => {
             />
           </form>
           <div className="mg-t-24">
-            <button className="mg-r-12 pd-10 bd-n bd-r-3 save-edits-button">
+            <button
+              className="mg-r-12 pd-10 bd-n bd-r-3 save-edits-button"
+              onClick={() => navigate('/questions/:id')}
+            >
               Save edits
             </button>
             <button className="pd-10 bd-n bd-r-3 cancel-button">Cancel</button>

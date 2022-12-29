@@ -143,7 +143,7 @@ const SBottomCon = styled.div`
   }
 `;
 
-const ViewPage = () => {
+const QuestionDetail = () => {
   const params = useParams();
   //id는 주석처리
   const id = params.id;
@@ -173,7 +173,7 @@ const ViewPage = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
       fetch(`url`, { method: 'DELET' });
     }
-    navigate('/home');
+    navigate('/');
   };
   return (
     <SViewWrap>
@@ -197,7 +197,7 @@ const ViewPage = () => {
                 <button
                   type="button"
                   className="btn btn-primary top-btn"
-                  onClick={() => navigate('/questionPost')}
+                  onClick={() => navigate('/questions/ask')}
                 >
                   Ask Question
                 </button>
@@ -222,7 +222,9 @@ const ViewPage = () => {
                   </div>
                   <div className="guide-zone">
                     <div className="guide-zone left">
-                      <span>Edit</span>
+                      <button onClick={() => navigate('/questions/edit/:id')}>
+                        Edit
+                      </button>
                       <button onClick={handleDelete}>Delete</button>
                     </div>
                     <div className="guide-zone right">
@@ -249,4 +251,4 @@ const ViewPage = () => {
     </SViewWrap>
   );
 };
-export default ViewPage;
+export default QuestionDetail;

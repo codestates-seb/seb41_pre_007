@@ -31,7 +31,7 @@ export const Home = () => {
           <button
             type="button"
             className="btn btn-primary top-btn"
-            onClick={() => navigate('/questionPost')}
+            onClick={() => navigate('/questions/ask')}
           >
             Ask Question
           </button>
@@ -64,7 +64,7 @@ export const Home = () => {
             {dummyData.questions.map((question) => (
               <div className="singleBox" key={question.id}>
                 <div>
-                  <Link to={`/viewpage/${question.id}`} className="title">
+                  <Link to={`/questions/${question.id}`} className="title">
                     {question.title}
                   </Link>
                   <p>{question.createdAt}</p>

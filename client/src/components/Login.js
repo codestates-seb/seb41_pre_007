@@ -167,7 +167,7 @@ const Login = ({ handleIsOpen }) => {
 
   useEffect(() => {
     if (user) {
-      navigate('/main');
+      navigate('/');
     }
   }, [user]);
 
@@ -188,7 +188,7 @@ const Login = ({ handleIsOpen }) => {
         if (res === true) {
           // setCookie('toked', res.data.token);
           window.alert('로그인에 성공했습니다');
-          navigate('/main');
+          navigate('/');
         }
       })
       .catch(() => {
