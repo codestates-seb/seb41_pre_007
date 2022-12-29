@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import Avatar from '../components/Avatar';
 import { EditProfile } from './EditProfile';
@@ -9,7 +9,8 @@ import { ReactComponent as Location } from '../image/Location.svg';
 import { ReactComponent as Pencil } from '../image/Pencil.svg';
 import { ReactComponent as Network } from '../image/Network.svg';
 import dummyUsers from '../db/dummyUsers.json';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const SWrapper = styled.div`
   display: flex;
@@ -81,6 +82,29 @@ const UsersProfile = () => {
   const recentUser = dummyUsers.users.filter((user) => user.id === 1);
   const [isEdit, setIsEdit] = useState(false);
   // const navigate = useNavigate();
+  const { id } = useParams();
+  const [idData, setIdData] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`/users/profile/${id}`, {
+        headers: {
+          Accept: 'application / json',
+        },
+      })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error('could not fetch the data for that resource');
+        }
+        return res.json();
+      })
+      .then((idData) => {
+        setIdData(idData);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }, []);
 
   return (
     <SWrapper>
@@ -89,7 +113,7 @@ const UsersProfile = () => {
         <div className="profile-content-wrapper">
           <div className="profile-content-container">
             <div className="user-profile-avatar">
-              <Avatar image={recentUser[0].avatar} size="128" />
+              <Avatar idData={idData} image={recentUser[0].avatar} size="128" />
             </div>
             <div className="user-inform-container">
               <div className="user-inform-nickname">
