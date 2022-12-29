@@ -82,12 +82,12 @@ const UsersProfile = () => {
   const recentUser = dummyUsers.users.filter((user) => user.id === 1);
   const [isEdit, setIsEdit] = useState(false);
   // const navigate = useNavigate();
-  const { id } = useParams();
+  const { memberId } = useParams();
   const [idData, setIdData] = useState(null);
 
   useEffect(() => {
     axios
-      .get(`/users/:id/${id}`, {
+      .get(`/users/:id/${memberId}`, {
         headers: {
           Accept: 'application / json',
         },
