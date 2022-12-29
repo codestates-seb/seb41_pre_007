@@ -2,26 +2,29 @@ import styled from 'styled-components';
 import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
 import { useNavigate, Link } from 'react-router-dom';
-import dummyData from '../db/dummyData.json';
+// import dummyData from '../db/dummyData.json';
 
-// import { useEffect, useState } from 'react';
-// import axios from 'axios';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const Home = () => {
-  // const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get('https/questions');
-  //       setQuestions(response.data);
-  //     } catch {
-  //       window.alert('오류가 발생했습니다.');
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          'http://54.180.127.165:8080/questions?page=1&size=10'
+        );
+        setQuestions(response.data.data);
+      } catch (err) {
+        window.alert('오류가 발생했습니다.');
+        return err;
+      }
+    };
+    fetchData();
+  }, []);
+  console.log('333', questions);
   return (
     <SHomeWrap>
       <Sidebar />
@@ -61,8 +64,8 @@ export const Home = () => {
         </STopBoxList>
         <SQuestionSummary>
           <div className="singleBoxContainer">
-            {dummyData.questions.map((question) => (
-              <div className="singleBox" key={question.id}>
+            {questions.map((question) => (
+              <div className="singleBox" key={question.questionId}>
                 <div>
                   <Link to={`/questions/${question.id}`} className="title">
                     {question.title}
