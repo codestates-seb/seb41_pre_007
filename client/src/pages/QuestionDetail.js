@@ -216,7 +216,7 @@ const QuestionDetail = () => {
                   <Showact />
                 </div>
                 <div className="bottom content btop-right">
-                  <div className="body">{questionData.content}</div>
+                  <div className="body">{filteredData[0].content}</div>
                   <div className="tag-zone">
                     <button>flutter</button>
                     <button>dart</button>

@@ -87,7 +87,7 @@ const UsersProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`/users/profile/${id}`, {
+      .get(`/users/:id/${id}`, {
         headers: {
           Accept: 'application / json',
         },
