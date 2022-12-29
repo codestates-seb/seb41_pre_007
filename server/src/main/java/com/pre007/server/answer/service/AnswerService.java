@@ -4,11 +4,7 @@ import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.answer.repository.AnswerRepository;
 import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
-import com.pre007.server.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,16 +15,13 @@ import java.util.Optional;
 @Slf4j
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    //private final MemberService memberService;
-    public AnswerService(AnswerRepository answerRepository, MemberService memberService) {
+    public AnswerService(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
-        //this.memberService = memberService;
     }
 
     public Answer createAnswer(Answer answer) {
-        // memberService.findOneMember(answer.getMember().getMemberId());
         Answer savedAnswer = answerRepository.save(answer);
-        log.info("========test===============" + savedAnswer);
+
         return savedAnswer;
     }
 
@@ -42,11 +35,11 @@ public class AnswerService {
 
         return savedAnswer;
     }
-
+/* 전체 질문 조회 기능 삭제
     public Page<Answer> findAllAnswer(int page, int size) {
         Page<Answer> pageAnswers = answerRepository.findAll(PageRequest.of(page, size, Sort.by("answerId").descending()));
         return pageAnswers;
-    }
+    }*/
 
     public Answer findOneAnswer(long answerId) {
         Answer findAnswer = findVerifiedAnswer(answerId);

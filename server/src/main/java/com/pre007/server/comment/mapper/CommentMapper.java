@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.comment.mapper;
 
 import com.pre007.server.comment.dto.CommentDto;
@@ -16,3 +17,4 @@ public interface CommentMapper {
 
     List<CommentDto.Response> commentListToCommentListResponseDto(List<Comment> commentList);
 }
+*/

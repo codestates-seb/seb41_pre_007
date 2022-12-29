@@ -25,7 +25,6 @@ public class QuestionService {
     public Question createQuestion(Question question){
         Question savedQuestion = questionRepository.save(question);
 
-        log.info("========test===============" + savedQuestion);
         return savedQuestion;
     }
     public Question updateQuestion(Question question){

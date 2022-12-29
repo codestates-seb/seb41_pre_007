@@ -2,7 +2,6 @@ package com.pre007.server.member.entity;
 
 import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.audit.Auditable;
-import com.pre007.server.comment.entity.Comment;
 import com.pre007.server.question.entity.Question;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,12 +50,12 @@ public class Member extends Auditable {
     }
 
     //Foreign Key 필드
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
-    @OneToMany(mappedBy = "member")
-    private List<Comment> comments = new ArrayList<>();
+    /*@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();*/
    /* @OneToMany(mappedBy = "member")
     private List<Vote> votes = new ArrayList<>();*/
 

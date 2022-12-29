@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.comment.dto;
 
 import lombok.*;
@@ -25,3 +26,4 @@ public class CommentDto {
         private String commentContent;
     }
 }
+*/

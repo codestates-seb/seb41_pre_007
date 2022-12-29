@@ -1,60 +1,50 @@
 package com.pre007.server.answer.entity;
 
 import com.pre007.server.audit.Auditable;
-import com.pre007.server.comment.entity.Comment;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.question.entity.Question;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-
-@NoArgsConstructor
 @Getter
 @Setter
+@Slf4j
 @Entity
 public class Answer extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
     private String answerNickname;
-    @Column(columnDefinition = "TEXT")
+    @Column
     private String answerContent;
 
     //Todo 연관 관계 매핑 필요
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
-   // @JsonIgnore
     private Member member;
 
-    //@JsonBackReference
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
+
     /*@OneToMany(mappedBy = "answer")
     private List<Vote> votes = new ArrayList<>();*/
 
     //@JsonManagedReference
-    @OneToMany(mappedBy = "answer")
-    private List<Comment> comments = new ArrayList<>();
+    /*@OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();*/
 
-
-
-    //테스트용 생성자
-    public Answer(String answerContent/*, LocalDateTime createdAt, LocalDateTime modifiedAt*/) {
-        this.answerContent = answerContent;
-        /*this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;*/
-    }
-    public void addMember(Member member) {
+    /*public void addMember(Member member) {
         this.member = member;
-    }
-    public void addComment(Comment comment) {
-        comments.add(comment);
-    }
+    }*/
+    public Answer() {
 
-
+    }
+    public Answer(String answerNickname) {
+        this.answerNickname = answerNickname;
+    }
 /*
     public void setMember(Member member) {
         if (this.member != null) {

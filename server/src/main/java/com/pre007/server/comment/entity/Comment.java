@@ -1,3 +1,4 @@
+/*
 package com.pre007.server.comment.entity;
 
 import com.pre007.server.answer.entity.Answer;
@@ -33,11 +34,14 @@ public class Comment extends Auditable {
         this.commentContent = commentContent;
     }
 
- /*   public void addAnswer(Answer answer) {
+ */
+/*   public void addAnswer(Answer answer) {
         this.answer = answer;
         if (!this.answer.getComments().contains(this)) {
             this.answer.addComment(this);
         }
-    }*/
+    }*//*
+
 
 }
+*/

@@ -1,47 +1,57 @@
 package com.pre007.server.answer.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.pre007.server.comment.entity.Comment;
+import com.pre007.server.member.entity.Member;
+import com.pre007.server.question.entity.Question;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class AnswerDto {
     @AllArgsConstructor
-    @NoArgsConstructor
     @Getter
-    @Builder
     public static class Post {
         private String answerContent;
-    }
+        private String answerNickname;
+        private Long memberId;
+        private Long questionId;
+        public Member getMember() {
+            Member member = new Member();
+            member.setMemberId(memberId);
+            return member;
+        }
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Builder
-    public static class Patch {
-        private Long answerId;
-        private String answerContent;
-        public void setAnswerId(Long answerId) {
-            this.answerId = answerId;
+        public Question getQuestion() {
+            Question question = new Question();
+            question.setQuestionId(questionId);
+            return question;
         }
     }
 
     @AllArgsConstructor
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Getter
-    @Builder
+    public static class Patch {
+        private Long answerId;
+        private String answerContent;
+    }
+
+    @AllArgsConstructor
+    @Getter
     public static class Response {
         private Long answerId;
         private String answerNickname;
         private String answerContent;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-        private List<Comment> comments;
+        private Long memberId;
+        private Long questionId;
+        public void setMember(Member member) {
+            this.memberId = member.getMemberId();
+        }
+
+        public void setQuestion(Question question) {
+            this.questionId = question.getQuestionId();
+        }
 
     }
 }
