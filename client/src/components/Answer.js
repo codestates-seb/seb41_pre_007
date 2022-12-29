@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import { ReactComponent as Upicon } from '../image/Upicon.svg';
 import { ReactComponent as Downicon } from '../image/Downicon.svg';
@@ -5,11 +6,16 @@ import { ReactComponent as Save } from '../image/Save.svg';
 import { ReactComponent as Showact } from '../image/Showact.svg';
 import ToastEditor from './ToastEditor';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ToastViewer from './ToastViewer';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const Answer = () => {
+const Answer = ({ params }) => {
+  console.log(params);
+  const navigate = useNavigate();
+  const paramA = useParams();
   const [answer, setAnswer] = useState('');
+  const [answered, setAnswered] = useState({});
 
   const postAnswer = async () => {
     try {
@@ -26,6 +32,20 @@ const Answer = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const getAnswer = async () => {
+      try {
+        await axios
+          .get(`http://54.180.127.165:8080/answers/1`)
+          .then((res) => res.data)
+          .then((data) => setAnswered(data.data));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getAnswer();
+  }, []);
 
   return (
     <AnswerWrap>
@@ -49,11 +69,18 @@ const Answer = () => {
             <Showact />
           </div>
           <div className="answer-list bottom-right">
-            <ToastViewer contents={'hiiiii'} />
+            <ToastViewer contents={answered.answerContent} />
             <div className="guide-zone">
               <div className="guide-zone left">
                 <span>Share</span>
-                <span>Edit</span>
+                <span
+                  onClick={() =>
+                    navigate(`/questions/${params}/answers/edit/${paramA.id}`)
+                  }
+                  role="presentation"
+                >
+                  Edit
+                </span>
                 <span>Follow</span>
               </div>
             </div>
