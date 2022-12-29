@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import SidebarEdit from '../components/SidebarEdit';
 import ToastEditor from '../components/ToastEditor';
-import ToastViewer from '../components/ToastViewer';
+import axios from 'axios';
 
 const SWrapper = styled.div`
   display: flex;
@@ -115,6 +116,47 @@ const SContent = styled.main`
 
 const QuestionEdit = () => {
   const navigate = useNavigate();
+  const params = useParams();
+
+  const url = 'http://54.180.127.165:8080/questions/' + [params.id];
+  const [questionData, setQuestionData] = useState([]);
+  const [editTitle, setEditTitle] = useState('');
+  const [editContent, setEditContent] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url);
+        setQuestionData(response.data.data);
+      } catch (err) {
+        window.alert('오류가 발생했습니다.');
+        return err;
+      }
+    };
+    fetchData();
+  }, []);
+
+  const patchQuestion = async () => {
+    try {
+      await axios(`http://54.180.127.165:8080/questions/${params.id}`, {
+        method: 'patch',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          title: editTitle,
+          content: editContent,
+        },
+      }).then(navigate(`/questions/${params.id}`));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleChangeTitle = (e) => {
+    setEditTitle(e.target.value);
+  };
+
   return (
     <SWrapper>
       <Sidebar />
@@ -134,10 +176,16 @@ const QuestionEdit = () => {
           </div>
           <form>
             <div className="mg-t-12 fw-600">Title</div>
-            <input className="w-100p pd-lr-12 bd-r-3 fs-12 input-style" />
+            <input
+              className="w-100p pd-lr-12 bd-r-3 fs-12 input-style"
+              value={questionData.title || ''}
+              onChange={handleChangeTitle}
+            />
             <div className="mg-t-12 fw-600">Body</div>
-            <ToastEditor />
-            <ToastViewer />
+            <ToastEditor
+              onChangeHandler={setEditContent}
+              value={questionData.content}
+            />
             <div className="mg-t-12 fw-600">Tags</div>
             <input className="w-100p pd-lr-12 fs-12 bd-r-3 input-style" />
             <div className="mg-t-12 fw-600">Edit Summery</div>
@@ -149,7 +197,7 @@ const QuestionEdit = () => {
           <div className="mg-t-24">
             <button
               className="mg-r-12 pd-10 bd-n bd-r-3 save-edits-button"
-              onClick={() => navigate('/questions/:id')}
+              onClick={() => patchQuestion()}
             >
               Save edits
             </button>
