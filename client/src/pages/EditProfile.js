@@ -2,15 +2,14 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export const EditProfile = ({ image, size }) => {
-  const [idData, setIdData] = useState(null);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
-  const [profileImage, setProfileImage] = useState(idData?.profileImage);
-  const navigate = useNavigate();
-  const { memberId } = useParams();
+  const [profileImage, setProfileImage] = useState('');
+  // const navigate = useNavigate();
+  const params = useParams();
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -25,43 +24,30 @@ export const EditProfile = ({ image, size }) => {
   const url = 'http://54.180.127.165:8080/';
   const handleClickSubmit = () => {
     axios
-      .patch(url + `${memberId}`, {
+      .patch(url + `/members/${params.id}`, {
         name,
         address,
         profileImage,
       })
       .then((res) => {
-        if (!res.ok) {
-          console.log(res);
-          if (res.status === 400) {
-            window.alert('Fill in the blanks');
-            throw Error('could not fetch the data for that resource');
-          }
-        }
-        if (res.status === 200) {
-          alert('축하합니다🎉 프로필 수정이 정상적으로 처리 되었습니다!');
-          navigate(`/users/:id/${memberId}`);
-          return location.reload();
-        }
-        return res;
+        setName(res.data.data.name);
+        setAddress(res.data.data.address);
+        setProfileImage(res.data.data.profileImage);
+        // navigate(`/users/${params.id}`);
+        window.alert('수정이 완료되었습니다!');
       })
-      .catch((error) => {
-        console.log(error.message);
+      .catch(() => {
+        window.alert('프로필 수정이 정상적으로 이루어지지 않았습니다.');
       });
   };
-
+  //기존정보 불러오기
   useEffect(() => {
     axios
-      .get(url + `${memberId}`)
+      .get(url + `members/${params.id}`)
       .then((res) => {
-        if (!res.ok) {
-          throw Error('이미지를 불러오는데 실패했습니다😢');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setProfileImage(data?.profileImage);
-        setIdData(data);
+        setName(res.data.data.name);
+        setAddress(res.data.data.address);
+        setProfileImage(res.data.data.profileImage);
       })
       .catch((err) => {
         console.error(err.message);

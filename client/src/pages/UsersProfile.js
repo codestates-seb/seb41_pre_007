@@ -82,24 +82,16 @@ const UsersProfile = () => {
   const recentUser = dummyUsers.users.filter((user) => user.id === 1);
   const [isEdit, setIsEdit] = useState(false);
   // const navigate = useNavigate();
-  const { memberId } = useParams();
-  const [idData, setIdData] = useState(null);
+  // const { memberId } = useParams();
+  const params = useParams();
+  const [idData, setIdData] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://54.180.127.165:8080/users/${memberId}`, {
-        headers: {
-          Accept: 'application / json',
-        },
-      })
+      .get(`http://54.180.127.165:8080/members/${params.id}`)
       .then((res) => {
-        if (!res.ok) {
-          throw Error('could not fetch the data for that resource');
-        }
-        return res.json();
-      })
-      .then((idData) => {
-        setIdData(idData);
+        console.log(res.data.data);
+        setIdData(res.data.data);
       })
       .catch((err) => {
         console.error(err.message);
