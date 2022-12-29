@@ -1,81 +1,87 @@
 package com.pre007.server.config;
 
 import com.pre007.server.auth.filter.JwtAuthenticationFilter;
+import com.pre007.server.auth.filter.JwtVerificationFilter;
+import com.pre007.server.auth.handler.MemberAccessDeniedHandler;
+import com.pre007.server.auth.handler.MemberAuthenticationEntryPoint;
+import com.pre007.server.auth.handler.MemberAuthenticationFailureHandler;
+import com.pre007.server.auth.handler.MemberAuthenticationSuccessHandler;
 import com.pre007.server.auth.jwt.JwtTokenizer;
+import com.pre007.server.auth.utils.authority.CustomAuthorityUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableWebSecurity(debug = true)
+@RequiredArgsConstructor
 public class SecurityConfiguration {
-    //(0)
     private final JwtTokenizer jwtTokenizer;
-
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer) {
-        this.jwtTokenizer = jwtTokenizer;
-    }
+    private final CustomAuthorityUtils authorityUtils;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers().frameOptions().sameOrigin() // (1)
+                .headers().frameOptions().disable()
                 .and()
-                .csrf().disable()        // (2)
-                .cors(withDefaults())    // (3)
-                .formLogin().disable()   // (4)
-                .httpBasic().disable()   // (5)
-                .apply(new CustomFilterConfigurer()) //(9)
+                .csrf().disable()
+                .cors().and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())  // 추가
+                .accessDeniedHandler(new MemberAccessDeniedHandler())            // 추가
+                .and()
+                .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()                // (6)
+                                .antMatchers(HttpMethod.POST, "/*/members").permitAll()
+                                .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
+                                .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
+//                    .mvcMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
+                                .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
+                                .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
+                                .anyRequest().permitAll()
                 );
         return http.build();
     }
 
-    // (7)
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    // (8)
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration(); // (8-1)
-        configuration.setAllowedOrigins(Arrays.asList("*"));   // (8-2)
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));  // (8-3)
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();   // (8-4)
-        source.registerCorsConfiguration("/**", configuration);      // (8-5)
-        return source;
-    }
-
-    //(10)
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
-            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class); //(10-1)
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer); //(10-2)
-            jwtAuthenticationFilter.setFilterProcessesUrl("/v11/auth/login"); //(10-3)
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            jwtAuthenticationFilter.setFilterProcessesUrl("/members/signup");
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
-            builder.addFilter(jwtAuthenticationFilter); //(10-4)
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+
+            builder
+                    .addFilter(jwtAuthenticationFilter)
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
-}
 
+}
 
 /*
 # 전체 개요
