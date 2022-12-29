@@ -1,6 +1,7 @@
 import { Sidebar } from '../components/Sidebar';
 import { ReactComponent as Search } from '../image/Search.svg';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import dummyUsers from '../db/dummyUsers.json';
 import Avatar from '../components/Avatar';
 
@@ -98,6 +99,7 @@ const SUsersContainer = styled.div`
 
   .users-inform-nickname {
     font-size: 15px;
+    cursor: pointer;
   }
 
   .users-inform-region,
@@ -121,6 +123,7 @@ const SUsersContainer = styled.div`
 `;
 
 const Users = () => {
+  const navigate = useNavigate();
   return (
     <SWrapper>
       <Sidebar />
@@ -174,7 +177,11 @@ const Users = () => {
                   <Avatar image={user.avatar} size="48" />
                 </div>
                 <div className="users-inform">
-                  <div className="users-inform-nickname">
+                  <div
+                    className="users-inform-nickname"
+                    role="presentation"
+                    onClick={() => navigate('/users/:id')}
+                  >
                     {user.userNickname}
                   </div>
                   <div className="users-inform-region">{user.userRegion}</div>

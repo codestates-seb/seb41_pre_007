@@ -11,7 +11,7 @@ export const Sidebar = () => {
         <div
           role="presentation"
           onClick={() => {
-            navigate('/home');
+            navigate('/');
           }}
         >
           <p className="hover_events padding">Home</p>
@@ -20,7 +20,7 @@ export const Sidebar = () => {
           <p className="font_size_small padding">PUBLIC</p>
           <SWrapQuestion
             className="hover_events padding"
-            onClick={() => navigate('/allQuestions')}
+            onClick={() => navigate('/questions')}
           >
             <span className="hover_events">
               <QuestionIcon />
@@ -91,6 +91,7 @@ const SWrap = styled.div`
   }
   .hover_events {
     font-size: 13px;
+    cursor: pointer;
   }
 
   .hover_events:hover {

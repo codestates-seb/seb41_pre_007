@@ -9,7 +9,7 @@ import { Tags } from './pages/Tags';
 import UsersProfile from './pages/UsersProfile';
 import Companies from './pages/Companies';
 import Users from './pages/Users';
-import ViewPage from './pages/ViewPage';
+import QuestionDetail from './pages/QuestionDetail';
 import QuestionEdit from './pages/QuestionEdit';
 
 const App = () => {
@@ -17,16 +17,16 @@ const App = () => {
     <BrowserRouter>
       <LoginHeader />
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/questionPost" element={<QuestionPost />} />
-        <Route path="/allQuestions" element={<AllQuestions />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/questions/ask" element={<QuestionPost />} />
+        <Route path="/questions" element={<AllQuestions />} />
         <Route path="/tags" element={<Tags />} />
         {/* <Route path="/editProfile" element={<EditProfile />} /> */}
-        <Route path="/users/profile" element={<UsersProfile />} />
-        <Route path="/Companies" element={<Companies />} />
+        <Route path="/users/:id" element={<UsersProfile />} />
+        <Route path="/companies" element={<Companies />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/viewpage/:id" element={<ViewPage />} />
-        <Route path="/questionedit" element={<QuestionEdit />} />
+        <Route path="/questions/:id" element={<QuestionDetail />} />
+        <Route path="/questions/edit/:id" element={<QuestionEdit />} />
       </Routes>
       <Footer />
     </BrowserRouter>

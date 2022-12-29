@@ -28,7 +28,7 @@ export const AllQuestionPageNation = () => {
             .map((data) => (
               <div className="singleBox" key={data.id}>
                 <div>
-                  <Link to={`/viewpage/${data.id}`} className="title">
+                  <Link to={`/questions/${data.id}`} className="title">
                     {data.title}
                   </Link>
                   <p>{data.createdAt}</p>

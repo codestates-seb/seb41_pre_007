@@ -116,7 +116,7 @@ export const QuestionPost = () => {
           content,
         }),
       });
-      location.href = '/home';
+      location.href = '/';
     }
   };
 
