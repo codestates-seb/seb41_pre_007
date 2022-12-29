@@ -1,25 +1,26 @@
 import styled from 'styled-components';
 import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
-import { useNavigate } from 'react-router-dom';
-// import dummyData from '../db/dummyData.json';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import dummyData from '../db/dummyData.json';
+
+// import { useEffect, useState } from 'react';
+// import axios from 'axios';
 
 export const Home = () => {
-  const [questions, setQuestions] = useState([]);
+  // const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https/questions');
-        setQuestions(response.data);
-      } catch {
-        window.alert('오류가 발생했습니다.');
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get('https/questions');
+  //       setQuestions(response.data);
+  //     } catch {
+  //       window.alert('오류가 발생했습니다.');
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <SHomeWrap>
@@ -60,10 +61,12 @@ export const Home = () => {
         </STopBoxList>
         <SQuestionSummary>
           <div className="singleBoxContainer">
-            {questions?.map((question) => (
-              <div className="singleBox" key={question.questionId}>
+            {dummyData.questions.map((question) => (
+              <div className="singleBox" key={question.id}>
                 <div>
-                  <div>{question.title}</div>
+                  <Link to={`/viewpage/${question.id}`} className="title">
+                    {question.title}
+                  </Link>
                   <p>{question.createdAt}</p>
                   <p>{question.userNickname}</p>
                 </div>
@@ -118,6 +121,13 @@ export const SQuestionSummary = styled.div`
     border: 1px solid #ececec;
     border-width: 1px 0;
     padding: 20px;
+    .title {
+      color: #0074cc;
+      text-decoration: none;
+      &:hover {
+        color: #b4d1ef;
+      }
+    }
   }
 `;
 
