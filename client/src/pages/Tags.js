@@ -16,13 +16,13 @@ export const Tags = () => {
             others to find and answer your question.
           </p>
           <div className="d-flex fw-wrap gs4 mb24 ai-center">
-            <p className="flex--item s-link fs-body1">Show all tag synonyms</p>
+            <p className="s-link fs-body1">Show all tag synonyms</p>
           </div>
           <STagsSearchBox className="d-flex fw-wrap">
-            <div className="flex--item ps-relative mb12">
+            <div className="ps-relative mb12">
               <input
                 id="tagfilter"
-                className="s-input s-input__search h100 js-tag-filter"
+                className="s-input s-input__search h100"
                 autoComplete="off"
                 name="tagfilter"
                 type="text"
@@ -30,7 +30,7 @@ export const Tags = () => {
                 placeholder="Filter by tag name"
               ></input>
               <Search
-                className="s-input-icon s-input-icon__search svg-icon iconSearch"
+                className="s-input-icon s-input-icon__search svg-icon"
                 fill="hsl(210deg 8% 55%)"
               />
             </div>
@@ -51,17 +51,13 @@ export const Tags = () => {
             </div>
           </STagsSearchBox>
           <STagBoxList>
-            <div id="box-row">
+            <div>
               {dummyTags.tags.map((tag) => (
-                <div
-                  id="tags_list"
-                  className="grid--item s-card js-tag-cell d-flex fd-column"
-                  key={tag.id}
-                >
-                  <div className="d-flex jc-space-between ai-center mb12">
+                <div id="tags_list" className="d-flex fd-column" key={tag.id}>
+                  <div className="d-flex ai-center mb12">
                     <p className="font100 post-tag">{tag.label}</p>
                   </div>
-                  <div className="flex--item fc-medium mb12 v-truncate4 font100">
+                  <div className="mb12 font100">
                     <p className="font100">{tag.contents}</p>
                   </div>
                 </div>

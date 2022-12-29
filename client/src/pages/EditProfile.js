@@ -1,8 +1,65 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import ToastEditor from '../components/ToastEditor';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const EditProfile = ({ image, size }) => {
+  // const [profile, setProfile] = useState('');
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+  const [about, setAbout] = useState('');
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  const handleClickSubmit = () => {
+    const formData = new FormData();
+    // formData.append('profile', profile);
+    formData.append('location', location);
+    formData.append('username', name);
+    formData.append('about', about);
+
+    axios
+      .post(`/accounts/${id}`, {
+        headers: {
+          // 'Content-Type': 'multipart/form-data;charset=UTF-8',
+          Authorization: `${sessionStorage.access_token}`,
+        },
+        body: formData,
+      })
+      .then((res) => {
+        if (!res.ok) {
+          if (res.status === 400) window.alert('Fill in the blanks');
+          throw Error('could not fetch the data for that resource');
+        }
+        if (res.status === 201) {
+          alert('Congratulations! Your account has been successfully created!');
+          navigate(`/users/profile/${id}`);
+          return location.reload();
+        }
+        return res;
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleChangeLocation = (e) => {
+    setLocation(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleChangeAbout = (e) => {
+    setAbout(e.target.value);
+    console.log(e.target.value);
+  };
   return (
     <SEditProfileWrap className="edit-profile">
       <div className="s-page-title mg-b-24">
@@ -14,16 +71,24 @@ export const EditProfile = ({ image, size }) => {
           <div className="fw-600">Profile image</div>
           <img src={image} width={size} height={size} alt="change profile" />
           <div className="mg-t-12 fw-600">Display name</div>
-          <input className="pd-l-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p" />
+          <input
+            className="pd-l-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"
+            value={name}
+            onChange={handleChangeName}
+          />
           <div className="mg-t-12 fw-600">Location</div>
-          <input className="pd-1-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p" />
+          <input
+            className="pd-1-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"
+            value={location}
+            onChange={handleChangeLocation}
+          />
           <div className="mg-t-12 fw-600">Title</div>
           <input
             className="pd-l-12 pd-r-12 fs-12 bd-r-3 input-style input-style-50p"
             placeholder="No title has been set"
           />
           <div className="mg-t-12 fw-600">About me</div>
-          <ToastEditor />
+          <ToastEditor value={about} onChange={handleChangeAbout} />
         </form>
       </div>
       <div className="mg-t-36 fs-26">Links</div>
@@ -50,7 +115,10 @@ export const EditProfile = ({ image, size }) => {
         <input className="pd-l-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p" />
       </div>
       <div className="mg-t-36">
-        <button className="mg-r-12 pd-10 bd-n bd-r-3 save-profile-button">
+        <button
+          className="mg-r-12 pd-10 bd-n bd-r-3 save-profile-button"
+          onClick={handleClickSubmit}
+        >
           Save profile
         </button>
         <button className="pd-10 bd-n bd-r-3 cancel-button">Cancel</button>
