@@ -1,44 +1,45 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export const EditProfile = ({ image, size }) => {
-  // const [idData, setIdData] = useState(idData?.profileImage);
+  const [idData, setIdData] = useState(null);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(idData?.profileImage);
   const navigate = useNavigate();
-
   const { memberId } = useParams();
 
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  };
+  const handleChangeAddress = (e) => {
+    setAddress(e.target.value);
+  };
+  const handleChangeAbout = (e) => {
+    setProfileImage(e.target.value);
+  };
+
+  const url = 'http://54.180.127.165:8080/';
   const handleClickSubmit = () => {
-    // const formData = new FormData();
-    // // formData.append('profile', profile);
-    // formData.append('address', address);
-    // formData.append('username', name);
-    // formData.append('about', about);
     axios
-      .patch(`http://54.180.127.165:8080/members/${memberId}`, {
-        // headers: {
-        //   // 'Content-Type': 'multipart/form-data;charset=UTF-8',
-        //   Authorization: `${sessionStorage.access_token}`,
-        // },
-        // body: formData,
+      .patch(url + `${memberId}`, {
         name,
         address,
         profileImage,
       })
       .then((res) => {
         if (!res.ok) {
+          console.log(res);
           if (res.status === 400) {
             window.alert('Fill in the blanks');
             throw Error('could not fetch the data for that resource');
           }
         }
         if (res.status === 200) {
-          alert('Congratulations! Your account has been successfully created!');
+          alert('축하합니다🎉 프로필 수정이 정상적으로 처리 되었습니다!');
           navigate(`/users/:id/${memberId}`);
           return location.reload();
         }
@@ -49,20 +50,24 @@ export const EditProfile = ({ image, size }) => {
       });
   };
 
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-    console.log(e.target.value);
-  };
+  useEffect(() => {
+    axios
+      .get(url + `${memberId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error('이미지를 불러오는데 실패했습니다😢');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setProfileImage(data?.profileImage);
+        setIdData(data);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }, []);
 
-  const handleChangeAddress = (e) => {
-    setAddress(e.target.value);
-    console.log(e.target.value);
-  };
-
-  const handleChangeAbout = (e) => {
-    setProfileImage(e.target.value);
-    console.log(e.target.value);
-  };
   return (
     <SEditProfileWrap className="edit-profile">
       <div className="s-page-title mg-b-24">
@@ -70,7 +75,7 @@ export const EditProfile = ({ image, size }) => {
       </div>
       <div className="fs-26">Public information</div>
       <div className="pd-24 bd-r-3 user-edit-container">
-        <form id="user-edit-form">
+        <div id="user-edit-form">
           <div className="fw-600">Profile image</div>
           <img
             src={image}
@@ -81,11 +86,11 @@ export const EditProfile = ({ image, size }) => {
           />
           <form>
             <div className="mb-3">
-              <label htmlFor="formFileSm" className="form-label mt-5">
+              <label htmlFor="formFileSm" className="form-label pt-15">
                 ⬇️⬇️ 변경할 프로필을 업로드 해주세요!
               </label>
               <input
-                className="form-control form-control-sm"
+                className="form-control form-control-sm pd-r-12 input-style-50p"
                 id="formFileSm"
                 type="file"
               />
@@ -97,19 +102,13 @@ export const EditProfile = ({ image, size }) => {
             value={name}
             onChange={handleChangeName}
           />
-          <div className="mg-t-12 fw-600">Location</div>
+          <div className="mg-t-12 fw-600">Address</div>
           <input
             className="pd-1-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"
             value={address}
             onChange={handleChangeAddress}
           />
-          {/* <div className="mg-t-12 fw-600">Title</div>
-          <input
-            className="pd-l-12 pd-r-12 fs-12 bd-r-3 input-style input-style-50p"
-            placeholder="No title has been set"
-          />
-          <div className="mg-t-12 fw-600">About me</div> */}
-        </form>
+        </div>
       </div>
       <div className="mg-t-36 fs-26">Links</div>
       <div className="pd-24 bd-r-3 fl-row user-edit-container">
@@ -275,7 +274,7 @@ const SEditProfileWrap = styled.div`
       background-color: hsl(206, 100%, 97%);
     }
   }
-  /* .mt-5 {
-    padding-top: 5px;
-  } */
+  .pt-15 {
+    padding-top: 15px;
+  }
 `;

@@ -6,11 +6,10 @@ const SAvatar = styled.div`
     border-radius: 5px;
   }
 `;
-//props로 idData 넘겨줘야함
+
 const Avatar = ({ image, size }) => {
   return (
     <SAvatar>
-      {/* src={idData?.profile} */}
       <img src={image} width={size} height={size} alt="profile" />
     </SAvatar>
   );

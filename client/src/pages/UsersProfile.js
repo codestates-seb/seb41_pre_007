@@ -87,7 +87,7 @@ const UsersProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`/users/:id/${memberId}`, {
+      .get(`http://54.180.127.165:8080/users/${memberId}`, {
         headers: {
           Accept: 'application / json',
         },
@@ -113,11 +113,12 @@ const UsersProfile = () => {
         <div className="profile-content-wrapper">
           <div className="profile-content-container">
             <div className="user-profile-avatar">
-              <Avatar idData={idData} image={recentUser[0].avatar} size="128" />
+              <Avatar idData={idData} image={idData?.profileImage} size="128" />
             </div>
             <div className="user-inform-container">
               <div className="user-inform-nickname">
-                {recentUser[0].userNickname}
+                {/* {recentUser[0].userNickname} */}
+                {idData?.name}
               </div>
               <div className="user-detail-container">
                 <Cake fill="hsl(210,8%,60%)" />
@@ -132,7 +133,8 @@ const UsersProfile = () => {
               <div className="user-detail-container">
                 <Location fill="hsl(210,8%,60%)" />
                 <div className="user-detail color-gray font-size-12">
-                  {recentUser[0].userRegion}
+                  {/* {recentUser[0].userRegion} */}
+                  {idData?.address}
                 </div>
               </div>
             </div>
