@@ -7,7 +7,7 @@ import { ReactComponent as Downicon } from '../image/Downicon.svg';
 import { ReactComponent as Save } from '../image/Save.svg';
 import { ReactComponent as Showact } from '../image/Showact.svg';
 import Answer from '../components/Answer';
-import dummyData from '../db/dummyData.json';
+import dummyUsers from '../db/dummyUsers.json';
 import Avatar from '../components/Avatar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -145,34 +145,28 @@ const SBottomCon = styled.div`
 
 const QuestionDetail = () => {
   const params = useParams();
-  //id는 주석처리
-  const id = params.id;
 
-  const url = 'http://54.180.127.165:8080/questions/' + [params.id];
-  const [questionData, setQuestionData] = useState(null);
+  const url = 'http://54.180.127.165:8080/questions/' + [params.questionId];
+  const [questionData, setQuestionData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
-        setQuestionData({ ...response.data });
-        console.log(response.data);
+        setQuestionData(response.data.data);
       } catch (err) {
         window.alert('오류가 발생했습니다.');
+        return err;
       }
     };
     fetchData();
-  }, [url]);
+  }, []);
 
   const navigate = useNavigate();
-  //이것도 주석처리
-  const filteredData = dummyData.questions.filter(
-    (question) => question.id === Number(id)
-  );
-  //if(questionData){} 데이터가 있을떄로 변경하고 questionData로 랜더링
+
   const handleDelete = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
-      fetch(`url`, { method: 'DELET' });
+      fetch(url, { method: 'DELET' });
     }
     navigate('/');
   };
@@ -187,7 +181,7 @@ const QuestionDetail = () => {
                 <span className="title">{questionData.title}</span>
                 <div className="top-content-inform">
                   <span className="three">Asked</span>
-                  <span className="val">{filteredData[0].createdAt}</span>
+                  <span className="val">{questionData.createdAt}</span>
                   <span className="three">Modified</span>
                   <span className="val">today</span>
                   <span className="three">Viewed</span>
@@ -216,7 +210,7 @@ const QuestionDetail = () => {
                   <Showact />
                 </div>
                 <div className="bottom content btop-right">
-                  <div className="body">{filteredData[0].content}</div>
+                  <div className="body">{questionData.content}</div>
                   <div className="tag-zone">
                     <button>flutter</button>
                     <button>dart</button>
@@ -231,11 +225,12 @@ const QuestionDetail = () => {
                     <div className="guide-zone right">
                       <div className="profil box">
                         <div className="user-picture">
-                          <Avatar image={filteredData[0].avatar} size="48" />
+                          <Avatar
+                            image={dummyUsers.users[params.questionId].avatar}
+                            size="48"
+                          />
                         </div>
-                        <div className="user-name">
-                          {filteredData[0].userNickname}
-                        </div>
+                        <div className="user-name">{questionData.memberId}</div>
                       </div>
                     </div>
                   </div>

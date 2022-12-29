@@ -2,14 +2,14 @@
 // import axios from 'axios';
 import styled from 'styled-components';
 import Pagination from 'react-js-pagination';
-import dummyData from '../db/dummyData.json';
+// import dummyData from '../db/dummyData.json';
 import { useState } from 'react';
 import { SQuestionSummary } from '../pages/Home';
 import { Link } from 'react-router-dom';
 //props로 questions 받아오기
-export const AllQuestionPageNation = () => {
+export const AllQuestionPageNation = ({ questions }) => {
   const [page, setPage] = useState(1);
-  const data = dummyData.questions;
+  // const data = dummyData.questions;
   // const question = questions.data;
   const items = 10;
 
@@ -23,12 +23,12 @@ export const AllQuestionPageNation = () => {
     <div>
       <SQuestionSummary>
         <div className="singleBoxContainer">
-          {data
+          {questions
             .slice(items * (page - 1), items * (page - 1) + items)
             .map((data) => (
-              <div className="singleBox" key={data.id}>
+              <div className="singleBox" key={data.questionId}>
                 <div>
-                  <Link to={`/questions/${data.id}`} className="title">
+                  <Link to={`/questions/${data.questionId}`} className="title">
                     {data.title}
                   </Link>
                   <p>{data.createdAt}</p>
