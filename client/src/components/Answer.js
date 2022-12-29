@@ -6,18 +6,27 @@ import { ReactComponent as Showact } from '../image/Showact.svg';
 import ToastEditor from './ToastEditor';
 import axios from 'axios';
 import { useState } from 'react';
+import ToastViewer from './ToastViewer';
 
 const Answer = () => {
   const [answer, setAnswer] = useState('');
-  const requestBody = { answerContent: answer };
 
-  const postAnswer = () => {
-    axios
-      .post(`http://54.180.127.165:8080/answers`, requestBody)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+  const postAnswer = async () => {
+    try {
+      await axios(`http://54.180.127.165:8080/answers`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          answerContent: answer,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
-  console.log(answer);
+
   return (
     <AnswerWrap>
       <AnswerList>
@@ -40,7 +49,7 @@ const Answer = () => {
             <Showact />
           </div>
           <div className="answer-list bottom-right">
-            <div className="body">hiiiiii</div>
+            <ToastViewer contents={'hiiiii'} />
             <div className="guide-zone">
               <div className="guide-zone left">
                 <span>Share</span>
