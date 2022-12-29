@@ -11,6 +11,7 @@ import Companies from './pages/Companies';
 import Users from './pages/Users';
 import QuestionDetail from './pages/QuestionDetail';
 import QuestionEdit from './pages/QuestionEdit';
+import AnswerEdit from './pages/AnswerEdit';
 
 const App = () => {
   return (
@@ -21,12 +22,15 @@ const App = () => {
         <Route path="/questions/ask" element={<QuestionPost />} />
         <Route path="/questions" element={<AllQuestions />} />
         <Route path="/tags" element={<Tags />} />
-        {/* <Route path="/editProfile" element={<EditProfile />} /> */}
         <Route path="/users/:id" element={<UsersProfile />} />
         <Route path="/companies" element={<Companies />} />
         <Route path="/users" element={<Users />} />
         <Route path="/questions/:questionId" element={<QuestionDetail />} />
         <Route path="/questions/edit/:id" element={<QuestionEdit />} />
+        <Route
+          path="/questions/:id/answers/edit/:id"
+          element={<AnswerEdit />}
+        />
       </Routes>
       <Footer />
     </BrowserRouter>
