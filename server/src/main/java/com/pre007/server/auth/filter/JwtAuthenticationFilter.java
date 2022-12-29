@@ -1,7 +1,7 @@
 package com.pre007.server.auth.filter;
 
 import com.pre007.server.auth.jwt.JwtTokenizer;
-import com.pre007.server.dtoUtils.LoginDto;
+import com.pre007.server.auth.dto.LoginDto;
 import com.pre007.server.member.entity.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -59,7 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     //(5)
     private String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", member.getEmail());
+        claims.put("name", member.getEmail());
         claims.put("roles", member.getRoles());
 
         String subject = member.getEmail();
@@ -110,7 +110,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 - (3-3)
 : `UsernamePasswordAuthenticationToken`은 Authentication(인증서)의 구현체이다.
-: 실질적으로 Spring Security Filter 내부에서 username, password 등의 정보를 저장하고 돌아다는 객체
+: 실질적으로 Spring Security Filter 내부에서 name, password 등의 정보를 저장하고 돌아다는 객체
 
 - (4)
 : Override 을 통해 Custom 하는 메서드
