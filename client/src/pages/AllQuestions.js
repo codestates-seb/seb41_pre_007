@@ -32,7 +32,7 @@ export const AllQuestions = () => {
           <button
             type="button"
             className="btn btn-primary top-btn"
-            onClick={() => navigate('/questionPost')}
+            onClick={() => navigate('/questions/ask')}
           >
             Ask Question
           </button>

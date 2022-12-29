@@ -110,6 +110,7 @@ const SHeader = styled.header`
     align-items: center;
     width: 60px;
     height: 50px;
+    cursor: pointer;
   }
 
   .header-bottom-profile-container:hover {
@@ -146,7 +147,7 @@ const LoginHeader = () => {
   const dispatch = useDispatch();
 
   const handleClickHome = () => {
-    navigate(`/home`);
+    navigate(`/`);
   };
   const handleSearch = () => {
     dispatch(searchSlice.actions.setIsClicked());
@@ -184,7 +185,7 @@ const LoginHeader = () => {
             </form>
             <div
               className="header-bottom-profile-container"
-              onClick={() => navigate('/users/profile')}
+              onClick={() => navigate('/users/:id')}
               aria-hidden="true"
             >
               <Avatar
