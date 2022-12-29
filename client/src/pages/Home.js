@@ -67,7 +67,10 @@ export const Home = () => {
             {questions.map((question) => (
               <div className="singleBox" key={question.questionId}>
                 <div>
-                  <Link to={`/questions/${question.id}`} className="title">
+                  <Link
+                    to={`/questions/${question.questionId}`}
+                    className="title"
+                  >
                     {question.title}
                   </Link>
                   <p>{question.createdAt}</p>
