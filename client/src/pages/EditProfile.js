@@ -21,7 +21,7 @@ export const EditProfile = ({ image, size }) => {
     setProfileImage(e.target.value);
   };
 
-  const url = 'http://54.180.127.165:8080/';
+  const url = 'http://54.180.127.165:8080';
   const handleClickSubmit = () => {
     axios
       .patch(url + `/members/${id}`, {
@@ -43,14 +43,15 @@ export const EditProfile = ({ image, size }) => {
   //기존정보 불러오기
   useEffect(() => {
     axios
-      .get(url + `members/${id}`)
+      .get(url + `/members/${id}`)
       .then((res) => {
         setName(res.data.data.name);
         setAddress(res.data.data.address);
         setProfileImage(res.data.data.profileImage);
       })
       .catch((err) => {
-        console.error(err.message);
+        console.error(err);
+        console.log('에러!!!');
       });
   }, []);
 

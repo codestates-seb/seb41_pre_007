@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as StackOver } from '../image/StackOver.svg';
@@ -159,13 +159,13 @@ export const Setc = styled.div`
 const Login = ({ handleIsOpen }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  // const usernameRef = useRef(null);
+  // const passwordRef = useRef(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.loginReducer);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     if (user) {
@@ -173,7 +173,7 @@ const Login = ({ handleIsOpen }) => {
     }
   }, [user]);
 
-  const handleChangeEmail = (e) => {
+  const handleChangeUsername = (e) => {
     setEmail(e.target.value);
   };
 
@@ -181,26 +181,30 @@ const Login = ({ handleIsOpen }) => {
     setPassword(e.target.value);
   };
 
-  const handleClickLogin = () => {
+  const handleClickLogin = (e) => {
+    e.preventDefault();
     if (
-      emailRef.current.value === '' ||
-      passwordRef.current.value === '' ||
-      emailRef.current.value === ' ' ||
-      passwordRef.current.value === ' ' ||
-      emailRef.current.value === null ||
-      passwordRef.current.value === null
+      email === '' ||
+      email === ' ' ||
+      email === null ||
+      password === '' ||
+      password === ' ' ||
+      password === null
+      // usernameRef.current.value === '' ||
+      // passwordRef.current.value === '' ||
+      // usernameRef.current.value === ' ' ||
+      // passwordRef.current.value === ' ' ||
+      // usernameRef.current.value === null ||
+      // passwordRef.current.value === null
     ) {
       window.alert('아이디 또는 비밀번호를 모두 입력하세요!');
       // return false;
     } else {
-      dispatch(loginAction(emailRef.current.value, passwordRef.current.value))
+      dispatch(loginAction({ email, password }))
         .then((res) => {
-          if (res === true) {
-            // setCookie('toked', res.data.token);
-            localStorage.setItem('token', res.data.token);
-            window.alert('로그인에 성공했습니다');
-            navigate('/');
-          }
+          localStorage.setItem('token', res.data.token);
+          window.alert('로그인에 성공했습니다');
+          navigate('/');
         })
         .catch(() => {
           window.alert('로그인에 실패했습니다 다시 시도해주세요.');
@@ -238,15 +242,15 @@ const Login = ({ handleIsOpen }) => {
                   type="text"
                   value={email}
                   className="InputEmail"
-                  ref={emailRef}
-                  onChange={handleChangeEmail}
+                  // ref={usernameRef}
+                  onChange={handleChangeUsername}
                 ></input>
                 <span>Password</span>
                 <input
                   type="text"
                   value={password}
                   className="InputPassword"
-                  ref={passwordRef}
+                  // ref={passwordRef}
                   onChange={handleChangePassword}
                 ></input>
                 <button onClick={handleClickLogin}>Login</button>

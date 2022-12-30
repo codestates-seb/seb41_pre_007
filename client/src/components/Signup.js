@@ -185,13 +185,13 @@ export const Setc = styled.div`
 
 const SignUp = ({ handleIsSignOpen }) => {
   // 이름,이메일,비밀번호 전송
-  const [nickname, setNickname] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // const [loading, setLoading] = useState(false);
 
   //유효성 검사
-  const [isValidNickNameErr, setIsValidNickNameErr] = useState({
+  const [isValidNameErr, setIsValidNameErr] = useState({
     status: false,
     text: '',
   });
@@ -207,51 +207,54 @@ const SignUp = ({ handleIsSignOpen }) => {
   const navigate = useNavigate();
 
   //base url
-  const url = 'http://localhost8080';
+  const url = 'http://54.180.127.165:8080';
   //서버에 회원가입 데이터 전송
-  const handleSignupAxios = async () => {
+  const handleSignupAxios = async (e) => {
+    e.preventDefault();
     try {
       await axios
-        .post(url + '/user/singup', {
+        .post(url + '/members', {
+          name,
           email,
           password,
-          nickname,
         })
-        .then(() => navigate('/'));
+        .then(() => {
+          handleIsSignOpen(false);
+          window.alert('축하드립니다 회원가입에 성공하셨습니다🥳');
+          navigate('/');
+        });
     } catch (err) {
-      window.alert('회원가입에 실패했습니다. 다시 시도해주세요!');
+      // handleIsSignOpen(true);
+      window.alert('이미 존재하는 정보입니다. 다시 시도해주세요😭');
     }
   };
 
   // input값 이벤트 전달
   const handleChangeNickname = (e) => {
-    setNickname(e.target.value);
-    console.log(e.target.value);
+    setName(e.target.value);
   };
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
-    console.log(e.target.value);
   };
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
-    console.log(e.target.value);
   };
 
   //유효성 검사 함수 작성
   //1. nickname 유효성 검사
-  const handleValidationNickname = (e) => {
+  const handleValidationName = (e) => {
     if (e.target.value.length <= 0) {
-      setIsValidNickNameErr({
+      setIsValidNameErr({
         status: true,
         text: '필수 정보입니다',
       });
     } else if (e.target.value.length === 1) {
-      setIsValidNickNameErr({
+      setIsValidNameErr({
         status: true,
         text: '올바른 이름을 입력하십시오',
       });
     } else {
-      setIsValidNickNameErr({
+      setIsValidNameErr({
         status: false,
         text: '',
       });
@@ -328,21 +331,19 @@ const SignUp = ({ handleIsSignOpen }) => {
                 <input
                   type="text"
                   className="InputName"
-                  // value={nickname}
+                  value={name}
                   placeholder="닉네임"
                   onChange={handleChangeNickname}
-                  onBlur={handleValidationNickname}
+                  onBlur={handleValidationName}
                 ></input>
-                {isValidNickNameErr.status && (
-                  <span className="validationText">
-                    {isValidNickNameErr.text}
-                  </span>
+                {isValidNameErr.status && (
+                  <span className="validationText">{isValidNameErr.text}</span>
                 )}
                 <span>Email</span>
                 <input
                   type="text"
                   className="InputEmail"
-                  // value={email}
+                  value={email}
                   placeholder="이메일"
                   onChange={handleChangeEmail}
                   onBlur={handleValidationEmail}
@@ -354,7 +355,7 @@ const SignUp = ({ handleIsSignOpen }) => {
                 <input
                   type="text"
                   className="InputPassword"
-                  // value={password}
+                  value={password}
                   placeholder="패스워드"
                   onChange={handleChangePassword}
                   onBlur={handleValidationPassword}
