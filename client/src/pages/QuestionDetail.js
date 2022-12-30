@@ -186,7 +186,9 @@ const QuestionDetail = () => {
                     {new Date(questionData.createdAt).toLocaleString()}
                   </span>
                   <span className="three">Modified</span>
-                  <span className="val">today</span>
+                  <span className="val">
+                    {new Date(questionData.modifiedAt).toLocaleString()}
+                  </span>
                   <span className="three">Viewed</span>
                   <span className="val">6times</span>
                 </div>
