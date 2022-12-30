@@ -31,7 +31,7 @@ export const AllQuestionPageNation = ({ questions }) => {
                   <Link to={`/questions/${data.questionId}`} className="title">
                     {data.title}
                   </Link>
-                  <p>{data.createdAt}</p>
+                  <p>{new Date(data.createdAt).toLocaleString()}</p>
                   <p>{data.userNickname}</p>
                 </div>
               </div>
