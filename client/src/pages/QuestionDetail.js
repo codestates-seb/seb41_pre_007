@@ -145,7 +145,7 @@ const SBottomCon = styled.div`
 
 const QuestionDetail = () => {
   const params = useParams();
-
+  const navigate = useNavigate();
   const url = 'http://54.180.127.165:8080/questions/' + [params.questionId];
   const [questionData, setQuestionData] = useState([]);
 
@@ -162,13 +162,13 @@ const QuestionDetail = () => {
     fetchData();
   }, []);
 
-  const navigate = useNavigate();
-
   const handleDelete = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
-      fetch(url, { method: 'DELET' });
+      fetch(url, { method: 'DELETE' });
+      navigate('/');
+    } else {
+      window.alert('취소버튼을 클릭했습니다.');
     }
-    navigate('/');
   };
   return (
     <SViewWrap>

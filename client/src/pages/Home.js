@@ -25,6 +25,21 @@ export const Home = () => {
     fetchData();
   }, []);
   console.log('333', questions);
+  //정렬
+  const handleOldest = () => {
+    let newArr = [...questions];
+    let newestResult = newArr.sort((a, b) => {
+      return a.questionId - b.questionId;
+    });
+    setQuestions(newestResult);
+  };
+  const handleNewest = () => {
+    let newArr = [...questions];
+    let newestResult = newArr.sort((a, b) => {
+      return b.questionId - a.questionId;
+    });
+    setQuestions(newestResult);
+  };
   return (
     <SHomeWrap>
       <Sidebar />
@@ -45,10 +60,18 @@ export const Home = () => {
             role="group"
             aria-label="Basic outlined example"
           >
-            <button type="button" className="btn btn-outline-primary">
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={handleOldest}
+            >
               Interestion
             </button>
-            <button type="button" className="btn btn-outline-primary">
+            <button
+              type="button"
+              className="btn btn-outline-primary"
+              onClick={handleNewest}
+            >
               Bountied
             </button>
             <button type="button" className="btn btn-outline-primary">
