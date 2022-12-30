@@ -1,6 +1,6 @@
 package com.pre007.server.member.service;
 
-import com.pre007.server.auth.authority.CustomAuthorityUtils;
+import com.pre007.server.auth.utils.authority.CustomAuthorityUtils;
 import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
 import com.pre007.server.member.entity.Member;

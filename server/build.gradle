@@ -47,6 +47,8 @@ dependencies {
 	//.yml 설정 필요
 	//https://www.h2database.com/html/main.html
 	runtimeOnly 'com.h2database:h2'
+	// MySQL 추가
+	//runtimeOnly 'mysql:mysql-connector-java'
 	//Spring Data JDBC
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	//Spring Data JPA

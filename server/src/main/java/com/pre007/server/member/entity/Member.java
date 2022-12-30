@@ -21,25 +21,27 @@ public class Member extends Auditable {
     1. image type 수정 및 기본값 설정
     2. image update 방식 설정(물리적 or 경로)
      */
-    //기본 Entity 필드
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId; // patch, response|
-    private String loginId; // post, response|
-    private String password; // post, patch, response|
-    private String email; // post, response|
-    private String address; // post, patch, response|
-    private String profileImage = "No Image"; // patch, response| 기본값을 어떻게 설정해야할까? => `No Image`라는 Image 로 설정
-    private String nickname; // post, patch, response|
+    // private String loginId; // post, response|
+    @Column(length = 100, nullable = false)
     private String name; // post, patch, response|
-    private int age; // post, patch, response|
+    @Column(nullable = false, updatable = false, unique = true)
+    private String email; // post, response|
+    @Column(length = 100, nullable = false)
+    private String password; // post, patch, response|
+    private String address = ""; // post, patch, response|
+    private String profileImage = ""; // patch, response| 기본값을 어떻게 설정해야할까? => `No Image`라는 Image 로 설정
+    private String nickname = ""; // post, patch, response|
+    private int age = 0; // post, patch, response|
     @Enumerated(value = EnumType.STRING)
+    @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE; // patch, response|
 
     // 추가
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
-
     public Member() {}
 
     public Member(String profileImage, String nickname, String name, int age) {
@@ -54,10 +56,6 @@ public class Member extends Auditable {
     private List<Question> questions = new ArrayList<>();
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
-    /*@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();*/
-   /* @OneToMany(mappedBy = "member")
-    private List<Vote> votes = new ArrayList<>();*/
 
     //Member(회원)의 상태 목록
     public enum MemberStatus {
@@ -72,22 +70,6 @@ public class Member extends Auditable {
             this.status = status;
         }
     }
- /*   public void addAnswer(Answer answer) {
-        this.answers.add(answer);
-
-        if (answer.getMember() != this) {
-            answer.setMember(this);
-        }
-    }
-
-    public void addQuestion(Question question) {
-        this.questions.add(question);
-
-        if (question.getMember() != this) {
-            question.setMember(this);
-        }
-    }*/
-
 }
 
 /*

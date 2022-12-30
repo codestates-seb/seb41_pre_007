@@ -1,7 +1,13 @@
 package com.pre007.server.exceptionAdvice;
 
+import com.pre007.server.exception.BusinessLogicException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -11,23 +17,78 @@ import javax.validation.ConstraintViolationException;
 // @RestControllerAdvice = @ControllerAdvice + @ResponseBody
 // @ControllerAdvice : 모든 Controller 에서 발생하는 예외를 잡아주는 애너테이션
 // @ResponseBody : 응답 리턴을 ResponseEntity 클래스로 래핑하지 않아도 JSON 형식의 Response Body 알아서 변환해주는 애너테이션
+
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException e) {
+        final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
 
-    @ExceptionHandler // 예외 처리를 다루는 핸들러 메서드로 지정하는 애너테이션
-    @ResponseStatus(HttpStatus.BAD_REQUEST) // ResponseEntity 으로 묶지않고 HttpStatus 를 표현하는 애너테이션
-    public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
-        final ErrorResponse errorResponse = ErrorResponse.of(e);
-
-        return errorResponse;
+        return response;
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleConstraintViolationException(ConstraintViolationException e){
-        final ErrorResponse errorResponse = ErrorResponse.of(e);
+    public ErrorResponse handleConstraintViolationException(
+            ConstraintViolationException e) {
+        final ErrorResponse response = ErrorResponse.of(e.getConstraintViolations());
 
-        return errorResponse;
+        return response;
+    }
+
+    @ExceptionHandler
+    public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
+        final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
+
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode()
+                .getStatus()));
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ErrorResponse handleHttpRequestMethodNotSupportedException(
+            HttpRequestMethodNotSupportedException e) {
+
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
+
+        return response;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException e) {
+
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST,
+                "Required request body is missing");
+
+        return response;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMissingServletRequestParameterException(
+            MissingServletRequestParameterException e) {
+
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST,
+                e.getMessage());
+
+        return response;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleException(Exception e) {
+        log.error("# handle Exception", e);
+        // TODO 애플리케이션의 에러는 에러 로그를 로그에 기록하고, 관리자에게 이메일이나 카카오 톡,
+        //  슬랙 등으로 알려주는 로직이 있는게 좋습니다.
+
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return response;
     }
 }
 
