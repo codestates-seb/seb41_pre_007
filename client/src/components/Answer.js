@@ -11,7 +11,6 @@ import ToastViewer from './ToastViewer';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Answer = ({ params }) => {
-  console.log(params);
   const navigate = useNavigate();
   const paramA = useParams();
   const [answer, setAnswer] = useState('');
@@ -24,9 +23,9 @@ const Answer = ({ params }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        data: {
+        data: JSON.stringify({
           answerContent: answer,
-        },
+        }),
       });
     } catch (err) {
       console.log(err);
