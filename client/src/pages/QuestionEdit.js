@@ -178,7 +178,7 @@ const QuestionEdit = () => {
             <div className="mg-t-12 fw-600">Title</div>
             <input
               className="w-100p pd-lr-12 bd-r-3 fs-12 input-style"
-              value={questionData.title || ''}
+              defaultValue={questionData.title}
               onChange={handleChangeTitle}
             />
             <div className="mg-t-12 fw-600">Body</div>

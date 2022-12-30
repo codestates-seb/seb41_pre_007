@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
 import { useState } from 'react';
+import axios from 'axios';
 // import { rendering } from '../redux/modules/questionSlice';
 // import { useDispatch } from 'react-redux';
 // import axios from 'axios';
@@ -93,27 +94,27 @@ const SContainer = styled.div`
 export const QuestionPost = () => {
   const [titleValue, setTitleValue] = useState('');
   const [contentValue, setContentValue] = useState('');
+  const memberId = 1;
 
   const handleTitleChange = (e) => {
     setTitleValue(e.currentTarget.value);
   };
-  console.log(titleValue);
-  console.log(contentValue);
 
   // const dispatch = useDispatch();
-  const handleSubmit = (title, content) => {
+  const handleSubmit = (title, content, memberId) => {
     if (!titleValue || !contentValue) {
       alert('제목과 내용을 입력해주세요.');
       return;
     } else {
-      fetch('http/questions', {
+      axios(`http://54.180.127.165:8080/questions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
+        data: JSON.stringify({
           title,
           content,
+          memberId,
         }),
       });
       location.href = '/questions';
@@ -199,7 +200,7 @@ export const QuestionPost = () => {
         <div>
           <button
             className="question-upload-button"
-            onClick={() => handleSubmit(titleValue, contentValue)}
+            onClick={() => handleSubmit(titleValue, contentValue, memberId)}
           >
             Review your question
           </button>

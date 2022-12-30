@@ -24,7 +24,7 @@ export const Home = () => {
     };
     fetchData();
   }, []);
-  console.log('333', questions);
+
   //정렬
   const handleOldest = () => {
     let newArr = [...questions];
@@ -96,7 +96,7 @@ export const Home = () => {
                   >
                     {question.title}
                   </Link>
-                  <p>{question.createdAt}</p>
+                  <p>{new Date(question.createdAt).toLocaleString()}</p>
                   <p>{question.userNickname}</p>
                 </div>
               </div>

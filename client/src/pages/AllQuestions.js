@@ -16,7 +16,6 @@ export const AllQuestions = () => {
           'http://54.180.127.165:8080/questions?page=1&size=10'
         );
         setQuestions(response.data.data);
-        console.log(response.data.data);
       } catch {
         window.alert('오류가 발생했습니다.');
       }
