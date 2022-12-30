@@ -22,6 +22,9 @@ export const loginSlice = createSlice({
       window.alert('로그아웃되었습니다.');
     },
   },
+  // login: (state, action) => {
+  //   state.loginAction = action.payload.data;
+  // },
   extraReducers: (builder) => {
     builder.addCase(loginAction.pending, (state) => {
       state.status = 'Loading';
