@@ -31,7 +31,7 @@ public class MemberService {
 
     //TODO createMember
     public Member createMember(Member member){
-        verifyExistsEmail(member.getEmail(), member.getPassword());
+        verifyExistsEmail(member.getEmail());
         //추가: Password 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
@@ -93,12 +93,12 @@ public class MemberService {
         return findMember;
     }
 
-    private void verifyExistsEmail(String email, String password) {
+    private void verifyExistsEmail(String email) {// , String password
         Optional<Member> memberByEmail = memberRepository.findByEmail(email);
         if (memberByEmail.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-        Optional<Member> memberByPassword = memberRepository.findByPassword(password);
+        /*Optional<Member> memberByPassword = memberRepository.findByPassword(password);
         if (memberByPassword.isPresent())
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);*/
     }
 }

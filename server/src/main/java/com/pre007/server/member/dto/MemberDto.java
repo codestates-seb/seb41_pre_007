@@ -1,6 +1,7 @@
 package com.pre007.server.member.dto;
 
 import com.pre007.server.member.entity.Member;
+import com.pre007.server.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,8 +16,9 @@ public class MemberDto {
         @NotBlank
         @Email
         private String email;
+        @NotBlank
         private String password;
-//        @NotBlank(message = "이름은 공백이 아니어야 합니다.")
+        @NotBlank(message = "회원 이름은 공백이 아니어야 합니다.")
         private String name;
         // 백엔드 협의 필요 프론트 요청
         /*private String loginId;
@@ -28,11 +30,12 @@ public class MemberDto {
     @Getter
     public static class Patch {
         private Long memberId;
+        @NotSpace(message = "회원 이름은 공백이 아니어야 합니다")
+        private String name;
         private String password;
         private String address;
         private String profileImage;
         private String nickname;
-        private String name;
         private int age;
         private Member.MemberStatus memberStatus;
 
@@ -53,6 +56,9 @@ public class MemberDto {
         private String name;
         private int age;
         private Member.MemberStatus memberStatus;
+        public String getMemberStatus() {
+            return memberStatus.getStatus();
+        }
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
