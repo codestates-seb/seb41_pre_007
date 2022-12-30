@@ -8,9 +8,11 @@ import { ReactComponent as WinterBash } from '../image/WinterBash.svg';
 import { ReactComponent as Logout } from '../image/Logout.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import searchSlice from '../redux/modules/searchSlice';
 import SearchTips from './SearchTips';
 import Avatar from './Avatar';
+import axios from 'axios';
 
 const SWrapper = styled.div`
   position: sticky;
@@ -143,8 +145,10 @@ const SHeader = styled.header`
 `;
 
 const LoginHeader = () => {
+  const [idData, setIdData] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const { id } = useParams();
 
   const handleClickHome = () => {
     navigate(`/`);
@@ -153,6 +157,18 @@ const LoginHeader = () => {
     dispatch(searchSlice.actions.setIsClicked());
   };
   const isClicked = useSelector((state) => state.search.isClicked);
+
+  useEffect(() => {
+    axios
+      .get(`http://54.180.127.165:8080/members/1`)
+      .then((res) => {
+        // console.log(res.data.data);
+        setIdData(res.data.data);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }, []);
 
   return (
     <>
@@ -185,7 +201,7 @@ const LoginHeader = () => {
             </form>
             <div
               className="header-bottom-profile-container"
-              onClick={() => navigate('/users/:id')}
+              onClick={() => navigate(`/users/${idData.memberId}`)}
               aria-hidden="true"
             >
               <Avatar

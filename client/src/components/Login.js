@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as StackOver } from '../image/StackOver.svg';
@@ -157,6 +157,8 @@ export const Setc = styled.div`
 `;
 
 const Login = ({ handleIsOpen }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -171,6 +173,14 @@ const Login = ({ handleIsOpen }) => {
     }
   }, [user]);
 
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
   const handleClickLogin = () => {
     if (
       emailRef.current.value === '' ||
@@ -181,19 +191,21 @@ const Login = ({ handleIsOpen }) => {
       passwordRef.current.value === null
     ) {
       window.alert('아이디 또는 비밀번호를 모두 입력하세요!');
-      return false;
+      // return false;
+    } else {
+      dispatch(loginAction(emailRef.current.value, passwordRef.current.value))
+        .then((res) => {
+          if (res === true) {
+            // setCookie('toked', res.data.token);
+            localStorage.setItem('token', res.data.token);
+            window.alert('로그인에 성공했습니다');
+            navigate('/');
+          }
+        })
+        .catch(() => {
+          window.alert('로그인에 실패했습니다 다시 시도해주세요.');
+        });
     }
-    dispatch(loginAction(emailRef.current.value, passwordRef.current.value))
-      .then((res) => {
-        if (res === true) {
-          // setCookie('toked', res.data.token);
-          window.alert('로그인에 성공했습니다');
-          navigate('/');
-        }
-      })
-      .catch(() => {
-        window.alert('로그인에 실패했습니다 다시 시도해주세요.');
-      });
   };
 
   return (
@@ -224,14 +236,18 @@ const Login = ({ handleIsOpen }) => {
                 <span>Email</span>
                 <input
                   type="text"
+                  value={email}
                   className="InputEmail"
                   ref={emailRef}
+                  onChange={handleChangeEmail}
                 ></input>
                 <span>Password</span>
                 <input
                   type="text"
+                  value={password}
                   className="InputPassword"
                   ref={passwordRef}
+                  onChange={handleChangePassword}
                 ></input>
                 <button onClick={handleClickLogin}>Login</button>
               </div>

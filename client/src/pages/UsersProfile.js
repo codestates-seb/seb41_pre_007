@@ -82,24 +82,16 @@ const UsersProfile = () => {
   const recentUser = dummyUsers.users.filter((user) => user.id === 1);
   const [isEdit, setIsEdit] = useState(false);
   // const navigate = useNavigate();
-  const { memberId } = useParams();
-  const [idData, setIdData] = useState(null);
+  // const { memberId } = useParams();
+  const { id } = useParams();
+  const [idData, setIdData] = useState('');
 
   useEffect(() => {
     axios
-      .get(`/users/:id/${memberId}`, {
-        headers: {
-          Accept: 'application / json',
-        },
-      })
+      .get(`http://54.180.127.165:8080/members/${id}`)
       .then((res) => {
-        if (!res.ok) {
-          throw Error('could not fetch the data for that resource');
-        }
-        return res.json();
-      })
-      .then((idData) => {
-        setIdData(idData);
+        console.log(res.data.data);
+        setIdData(res.data.data);
       })
       .catch((err) => {
         console.error(err.message);
@@ -113,11 +105,12 @@ const UsersProfile = () => {
         <div className="profile-content-wrapper">
           <div className="profile-content-container">
             <div className="user-profile-avatar">
-              <Avatar idData={idData} image={recentUser[0].avatar} size="128" />
+              <Avatar image={idData?.profileImage} size="128" />
             </div>
             <div className="user-inform-container">
               <div className="user-inform-nickname">
-                {recentUser[0].userNickname}
+                {/* {recentUser[0].userNickname} */}
+                {idData?.name}
               </div>
               <div className="user-detail-container">
                 <Cake fill="hsl(210,8%,60%)" />
@@ -132,7 +125,8 @@ const UsersProfile = () => {
               <div className="user-detail-container">
                 <Location fill="hsl(210,8%,60%)" />
                 <div className="user-detail color-gray font-size-12">
-                  {recentUser[0].userRegion}
+                  {/* {recentUser[0].userRegion} */}
+                  {idData?.address}
                 </div>
               </div>
             </div>
