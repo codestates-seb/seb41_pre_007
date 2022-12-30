@@ -11,6 +11,7 @@ import dummyUsers from '../db/dummyUsers.json';
 import Avatar from '../components/Avatar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import ToastViewer from '../components/ToastViewer';
 
 const SViewWrap = styled.div`
   display: flex;
@@ -210,14 +211,18 @@ const QuestionDetail = () => {
                   <Showact />
                 </div>
                 <div className="bottom content btop-right">
-                  <div className="body">{questionData.content}</div>
+                  <ToastViewer contents={questionData.content} />
                   <div className="tag-zone">
                     <button>flutter</button>
                     <button>dart</button>
                   </div>
                   <div className="guide-zone">
                     <div className="guide-zone left">
-                      <button onClick={() => navigate('/questions/edit/:id')}>
+                      <button
+                        onClick={() =>
+                          navigate(`/questions/edit/${questionData.questionId}`)
+                        }
+                      >
                         Edit
                       </button>
                       <button onClick={handleDelete}>Delete</button>
@@ -237,7 +242,7 @@ const QuestionDetail = () => {
                 </div>
               </div>
               <div className="bottom-content bottom">
-                <Answer />
+                <Answer params={questionData.questionId} />
               </div>
             </div>
             <SidebarRight />

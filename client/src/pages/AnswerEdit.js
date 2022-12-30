@@ -114,11 +114,11 @@ const SContent = styled.main`
   }
 `;
 
-const QuestionEdit = () => {
+const AnswerEdit = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const url = 'http://54.180.127.165:8080/questions/' + [params.id];
+  const url = 'http://54.180.127.165:8080/answers/' + [params.id];
   const [questionData, setQuestionData] = useState([]);
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
@@ -138,7 +138,7 @@ const QuestionEdit = () => {
 
   const patchQuestion = async () => {
     try {
-      await axios(`http://54.180.127.165:8080/questions/${params.id}`, {
+      await axios(`http://54.180.127.165:8080/answers/${params.id}`, {
         method: 'patch',
         headers: {
           'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ const QuestionEdit = () => {
           title: editTitle,
           content: editContent,
         },
-      }).then(navigate(`/questions/${params.id}`));
+      }).then(navigate(`/answers/${params.id}`));
     } catch (err) {
       console.log(err);
     }
@@ -213,4 +213,4 @@ const QuestionEdit = () => {
   );
 };
 
-export default QuestionEdit;
+export default AnswerEdit;
