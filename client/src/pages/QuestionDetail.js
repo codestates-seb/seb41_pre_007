@@ -182,7 +182,9 @@ const QuestionDetail = () => {
                 <span className="title">{questionData.title}</span>
                 <div className="top-content-inform">
                   <span className="three">Asked</span>
-                  <span className="val">{questionData.createdAt}</span>
+                  <span className="val">
+                    {new Date(questionData.createdAt).toLocaleString()}
+                  </span>
                   <span className="three">Modified</span>
                   <span className="val">today</span>
                   <span className="three">Viewed</span>
