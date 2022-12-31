@@ -18,7 +18,7 @@ export const loginSlice = createSlice({
   initialState: initialState,
   reducers: {
     logOut: (state) => {
-      state.user = null;
+      state.Authorization = null;
       state.isLogin = false;
       removeLocalStorage();
       //   toast('로그아웃이 정상적으로 이루어졌습니다!');
