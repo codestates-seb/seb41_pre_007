@@ -13,6 +13,7 @@ import searchSlice from '../redux/modules/searchSlice';
 import SearchTips from './SearchTips';
 import Avatar from './Avatar';
 import axios from 'axios';
+import { loginSlice } from '../redux/modules/loginSlice';
 
 const SWrapper = styled.div`
   position: sticky;
@@ -158,6 +159,11 @@ const LoginHeader = () => {
   };
   const isClicked = useSelector((state) => state.search.isClicked);
 
+  const handleLogout = () => {
+    dispatch(loginSlice.actions.logOut());
+    navigate(`/`);
+  };
+
   useEffect(() => {
     axios
       .get(`http://54.180.127.165:8080/members/1`)
@@ -225,7 +231,11 @@ const LoginHeader = () => {
               <div className="header-bottom-topbar-background">
                 <WinterBash className="header-bottom-pointer" fill="#404040" />
               </div>
-              <div className="header-bottom-topbar-background">
+              <div
+                className="header-bottom-topbar-background"
+                onClick={handleLogout}
+                role="presentation"
+              >
                 <Logout className="header-bottom-pointer" fill="#404040" />
               </div>
             </div>
