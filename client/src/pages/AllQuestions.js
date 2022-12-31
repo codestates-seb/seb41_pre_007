@@ -3,35 +3,25 @@ import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
 import { SHomeWrap, STopBoxList } from '../pages/Home';
 import { AllQuestionPageNation } from '../components/AllQuestionPageNation';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 
 export const AllQuestions = () => {
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          'http://54.180.127.165:8080/questions?page=1&size=10'
-        );
-        setQuestions(response.data.data);
-      } catch {
-        window.alert('오류가 발생했습니다.');
-      }
-    };
-    fetchData();
-  }, []);
+
+  const handlePageClick = (question) => {
+    setQuestions(question);
+  };
   const handleOldest = () => {
-    let newArr = [...questions];
-    let newestResult = newArr.sort((a, b) => {
+    const newArr = [...questions];
+    const OldestResult = newArr.sort((a, b) => {
       return a.questionId - b.questionId;
     });
-    setQuestions(newestResult);
+    setQuestions(OldestResult);
   };
   const handleNewest = () => {
-    let newArr = [...questions];
-    let newestResult = newArr.sort((a, b) => {
+    const newArr = [...questions];
+    const newestResult = newArr.sort((a, b) => {
       return b.questionId - a.questionId;
     });
     setQuestions(newestResult);
@@ -82,7 +72,10 @@ export const AllQuestions = () => {
           </div>
         </STopBoxList>
         {/*question={question} 적기*/}
-        <AllQuestionPageNation questions={questions} />
+        <AllQuestionPageNation
+          handlePageClick={handlePageClick}
+          sortQuestions={questions}
+        />
       </div>
       <SidebarRight />
     </SHomeWrap>
