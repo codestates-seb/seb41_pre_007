@@ -1,5 +1,3 @@
-import Footer from '../components/Footer';
-import LogoutHeader from '../components/LogoutHeader';
 import styled from 'styled-components';
 
 const Body = styled.main`
@@ -106,48 +104,44 @@ const Body = styled.main`
 
 const Main = () => {
   return (
-    <>
-      <LogoutHeader />
-      <Body>
-        <div className="main-content-container">
-          <div className="main-content-background">
-            <div className="main-content-card-container">
-              <div className="main-content-card card-orange">
-                <div className="card-content">
-                  Find the best answer to your techniqual question, help others
-                  answer theirs
-                </div>
-                <button className="card-button card-button-orange">
-                  Join the community
-                </button>
+    <Body>
+      <div className="main-content-container">
+        <div className="main-content-background">
+          <div className="main-content-card-container">
+            <div className="main-content-card card-orange">
+              <div className="card-content">
+                Find the best answer to your techniqual question, help others
+                answer theirs
               </div>
-              <div className="main-content-card card-blue">
-                <div className="card-content">
-                  Want a secure, private space for your technical knowledge?
-                </div>
-                <button className="card-button card-button-blue">
-                  Discover Teams
-                </button>
-              </div>
+              <button className="card-button card-button-orange">
+                Join the community
+              </button>
             </div>
-            <div className="main-content-p-container">
-              <p>Every</p>
-              <p className="p-orange">Developer</p>
-              <p>has a tab open to</p>
-              <p>Stack Overflow</p>
+            <div className="main-content-card card-blue">
+              <div className="card-content">
+                Want a secure, private space for your technical knowledge?
+              </div>
+              <button className="card-button card-button-blue">
+                Discover Teams
+              </button>
             </div>
           </div>
-          <div className="main-content-etc">
-            <div>
-              🔓 Build a private community to share technical or non-technical
-              knowledges.
-            </div>
-            <button>Create a free Team</button>
+          <div className="main-content-p-container">
+            <p>Every</p>
+            <p className="p-orange">Developer</p>
+            <p>has a tab open to</p>
+            <p>Stack Overflow</p>
           </div>
         </div>
-      </Body>
-      <Footer />
-    </>
+        <div className="main-content-etc">
+          <div>
+            🔓 Build a private community to share technical or non-technical
+            knowledges.
+          </div>
+          <button>Create a free Team</button>
+        </div>
+      </div>
+    </Body>
   );
 };
 

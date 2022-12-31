@@ -202,7 +202,8 @@ const Login = ({ handleIsOpen }) => {
     } else {
       dispatch(loginAction({ email, password }))
         .then((res) => {
-          localStorage.setItem('token', res.data.token);
+          console.log(res);
+          // localStorage.setItem('token', res.payload.token);
           window.alert('로그인에 성공했습니다');
           navigate('/');
         })
