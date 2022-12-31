@@ -4,20 +4,21 @@ import axios from 'axios';
 //비동기처리 action 정의
 export const loginAction = createAsyncThunk(
   //1.action 이름
-  'login/loginAction',
+  'loginSlice/loginAction',
   //2.처리할 비동기 로직
-  async (payload) => {
-    console.log(payload);
-    const response = await axios
-      .post('http://54.180.127.165:8080/members/login', {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          accept: 'application/json,',
-        },
-        data: payload,
-      })
+  async ({ email, password }) => {
+    const response = await axios(`http://54.180.127.165:8080/members/login`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: { email, password },
+    })
       .then((res) => {
-        console.log(res.data.data);
+        const accessToken = res.headers
+          .get('Authorization')
+          .replace(/^Bearer\s+/, '');
+        return { token: accessToken };
       })
       .catch((err) => {
         console.error(err);
@@ -30,6 +31,7 @@ export const loginAction = createAsyncThunk(
     // });
 
     //...getProfile.data,
-    return { token: response.headers.authorization };
+    // return { token: response.headers.authorization };
+    return response;
   }
 );

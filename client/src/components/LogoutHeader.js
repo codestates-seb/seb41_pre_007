@@ -7,6 +7,7 @@ import Signup from './Signup';
 import { useDispatch, useSelector } from 'react-redux';
 import searchSlice from '../redux/modules/searchSlice';
 import SearchTips from './SearchTips';
+import { useNavigate } from 'react-router-dom';
 
 const SWrapper = styled.div`
   position: sticky;
@@ -132,6 +133,7 @@ const LogoutHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSignOpen, setIsSignOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleIsOpen = () => {
     setIsOpen((prev) => !prev);
@@ -151,7 +153,11 @@ const LogoutHeader = () => {
       </SHeaderTop>
       <SHeader>
         <div className="header-bottom">
-          <div className="header-bottom-logo-container header-bottom-pointer">
+          <div
+            className="header-bottom-logo-container header-bottom-pointer"
+            onClick={() => navigate(`/`)}
+            role="presentation"
+          >
             <StackOverFlow />
           </div>
           <div className="header-bottom-navigation-container">
