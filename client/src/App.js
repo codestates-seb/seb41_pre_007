@@ -3,6 +3,7 @@ import { Home } from './pages/Home';
 import { QuestionPost } from './pages/QuestionPost';
 import Footer from './components/Footer';
 import LoginHeader from './components/LoginHeader';
+import LogoutHeader from './components/LogoutHeader';
 import { AllQuestions } from './pages/AllQuestions';
 import { Tags } from './pages/Tags';
 // import { EditProfile } from './pages/EditProfile';
@@ -12,13 +13,17 @@ import Users from './pages/Users';
 import QuestionDetail from './pages/QuestionDetail';
 import QuestionEdit from './pages/QuestionEdit';
 import AnswerEdit from './pages/AnswerEdit';
+import { useSelector } from 'react-redux';
+import Main from './pages/Main';
 
 const App = () => {
+  const isLogin = useSelector((state) => state.login.isLogin);
+
   return (
     <BrowserRouter>
-      <LoginHeader />
+      {isLogin ? <LoginHeader /> : <LogoutHeader />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={isLogin ? <Home /> : <Main />} />
         <Route path="/questions/ask" element={<QuestionPost />} />
         <Route path="/questions" element={<AllQuestions />} />
         <Route path="/tags" element={<Tags />} />
