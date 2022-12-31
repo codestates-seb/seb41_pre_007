@@ -1,41 +1,68 @@
 /* eslint-disable react/prop-types */
-// import axios from 'axios';
 import styled from 'styled-components';
 import Pagination from 'react-js-pagination';
-// import dummyData from '../db/dummyData.json';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SQuestionSummary } from '../pages/Home';
 import { Link } from 'react-router-dom';
-//props로 questions 받아오기
-export const AllQuestionPageNation = ({ questions }) => {
+import axios from 'axios';
+
+export const AllQuestionPageNation = ({ handlePageClick, sortQuestions }) => {
   const [page, setPage] = useState(1);
-  // const data = dummyData.questions;
-  // const question = questions.data;
+  const [questions, setQuestions] = useState([]);
   const items = 10;
 
   const handlePageChange = (page) => {
     setPage(page);
   };
 
-  //   console.log(items * (page - 1), items * (page - 1) + items);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://54.180.127.165:8080/questions?page=${page}&size=${items}`
+        );
+        setQuestions(response.data.data);
+        handlePageClick(response.data.data);
+      } catch {
+        window.alert('오류가 발생했습니다.');
+      }
+    };
+    fetchData();
+  }, [page]);
 
   return (
     <div>
       <SQuestionSummary>
         <div className="singleBoxContainer">
-          {questions
-            .slice(items * (page - 1), items * (page - 1) + items)
-            .map((data) => (
-              <div className="singleBox" key={data.questionId}>
-                <div>
-                  <Link to={`/questions/${data.questionId}`} className="title">
-                    {data.title}
-                  </Link>
-                  <p>{new Date(data.createdAt).toLocaleString()}</p>
-                  <p>{data.userNickname}</p>
+          {sortQuestions
+            ? sortQuestions.slice(0, 10).map((data) => (
+                <div className="singleBox" key={data.questionId}>
+                  <div>
+                    <Link
+                      to={`/questions/${data.questionId}`}
+                      className="title"
+                    >
+                      {data.title}
+                    </Link>
+                    <p>{new Date(data.createdAt).toLocaleString()}</p>
+                    <p>{data.userNickname}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            : questions.slice(0, 10).map((data) => (
+                <div className="singleBox" key={data.questionId}>
+                  <div>
+                    <Link
+                      to={`/questions/${data.questionId}`}
+                      className="title"
+                    >
+                      {data.title}
+                    </Link>
+                    <p>{new Date(data.createdAt).toLocaleString()}</p>
+                    <p>{data.userNickname}</p>
+                  </div>
+                </div>
+              ))}
         </div>
       </SQuestionSummary>
       <PaginationBox>
