@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -46,6 +47,9 @@ public class AnswerService {
     public Answer updateAnswer(Answer answer) {
         Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
 
+        Member postMember = memberService.findVerifiedMember(findAnswer.getMember().getMemberId()); // 작성자
+        if(!Objects.equals(memberService.getLoginMember().getMemberId(), postMember.getMemberId())) // 로그인 유저 != 작성자
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED); // 수정 권한 없음
         Optional.ofNullable(answer.getAnswerContent())
                 .ifPresent(answerContent -> findAnswer.setAnswerContent(answerContent));
         Optional.ofNullable(answer.getAnswerCheck())
@@ -70,6 +74,11 @@ public class AnswerService {
     }
     public void deleteOneAnswer(long answerId) {
         Answer findAnswer = findVerifiedAnswer(answerId);
+
+        Member postMember = memberService.findVerifiedMember(findAnswer.getMember().getMemberId()); // 작성자
+        if(!Objects.equals(memberService.getLoginMember().getMemberId(), postMember.getMemberId())) // 로그인 유저 != 작성자
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED); // 수정 권한 없음
+
         answerRepository.delete(findAnswer);
     }
     @Transactional(readOnly = true)

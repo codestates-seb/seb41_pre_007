@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -28,12 +29,16 @@ public class QuestionService {
     }
     public Question createQuestion(Question question){
         Member member = verifyExistingMember(question.getMember());
-        question.setMember(member);
+        question.setMember(memberService.getLoginMember());
         member.addQuestion(question);
         return questionRepository.save(question);
     }
     public Question updateQuestion(Question question){
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());
+
+        Member postMember = memberService.findVerifiedMember(findQuestion.getMember().getMemberId()); // 작성자
+        if(!Objects.equals(memberService.getLoginMember().getMemberId(), postMember.getMemberId())) // 로그인 유저 != 작성자
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED); // 수정 권한 없음
 
         Optional.ofNullable(question.getTitle())
                 .ifPresent(title -> findQuestion.setTitle(title));
@@ -41,20 +46,23 @@ public class QuestionService {
                 .ifPresent(content -> findQuestion.setContent(content));
 
         Question savedQuestion = questionRepository.save(findQuestion);
-
         return savedQuestion;
     }
     public Page<Question> findAllQuestion(int page, int size){
         Page<Question> pageQuestions = questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
         return pageQuestions;
     }
-    public Question findOneQuestion(long questionId) {
+    public Question findQuestion(long questionId) {
 
         return findVerifiedQuestion(questionId);
     }
     public void deleteOneQuestion(long questionId){
-        Question findQuestion = findVerifiedQuestion(questionId);
-        questionRepository.delete(findQuestion);
+        Question question = findVerifiedQuestion(questionId);
+
+        Member postMember = memberService.findVerifiedMember(question.getMember().getMemberId()); // 작성자
+        if(!Objects.equals(memberService.getLoginMember().getMemberId(), postMember.getMemberId())) // 로그인 유저 != 작성자
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED); // 수정 권한 없음
+        questionRepository.delete(question);
     }
 
     @Transactional(readOnly = true)
