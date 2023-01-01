@@ -165,10 +165,11 @@ const QuestionDetail = () => {
 
   const handleDelete = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
-      fetch(url, { method: 'DELETE' });
-      navigate('/');
-    } else {
-      window.alert('취소버튼을 클릭했습니다.');
+      fetch(url, { method: 'DELETE' }).then((res) => {
+        if (res.ok) {
+          navigate('/questions');
+        }
+      });
     }
   };
   return (
