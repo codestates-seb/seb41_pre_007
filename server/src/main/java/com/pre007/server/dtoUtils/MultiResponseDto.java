@@ -11,7 +11,7 @@ public class MultiResponseDto<T> {
     private List<T> data;
     //TODO PageInfo 필드
     //page,size,totalElements, totalPages;
-    private com.pre007.server.dtoUtils.PageInfo pageInfo;
+    private PageInfo pageInfo;
     //TODO 생성자 (Pagination)
     public MultiResponseDto(List<T> data, Page page) {
         this.data = data;

@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class MemberService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     //추가; 패스워드, 사용자 권한 관련
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
@@ -31,7 +31,20 @@ public class MemberService {
 
     //TODO createMember
     public Member createMember(Member member){
-        verifyExistsEmail(member.getEmail());
+        Optional<Member> optionalMember = memberRepository.findByEmail(member.getEmail());
+        if (optionalMember.isPresent()) {
+            if (passwordEncoder.matches(member.getPassword(), optionalMember.get().getPassword())) {
+                throw new BusinessLogicException(ExceptionCode.MEMBER_REDIRECTION_LOGIN_SUCCESS);
+            } else {
+                throw new BusinessLogicException(ExceptionCode.MEMBER_REDIRECTION_FIND_PASSWORD);
+            }
+        }
+
+        if (member.getName().isBlank()) {
+            member.setName("member" + Long.sum(memberRepository.count(), 1));
+        }
+        verifyExistingName(member.getName());
+
         //추가: Password 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
@@ -83,7 +96,7 @@ public class MemberService {
 //    }
 
     //validation 영역
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     private Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
                 memberRepository.findById(memberId);
@@ -91,7 +104,7 @@ public class MemberService {
                 optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
-    }
+    }*/
 
     private void verifyExistsEmail(String email) {// , String password
         Optional<Member> memberByEmail = memberRepository.findByEmail(email);
@@ -101,4 +114,23 @@ public class MemberService {
         if (memberByPassword.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);*/
     }
+
+
+
+
+    public Member findVerifiedMember(Long memberId) {
+
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        return member;
+    }
+
+    private void verifyExistingName(String name) {
+        Optional<Member> optionalMember = memberRepository.findByName(name);
+        if (optionalMember.isPresent()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_DISPLAY_NAME_EXISTS);
+        }
+    }
+
 }
