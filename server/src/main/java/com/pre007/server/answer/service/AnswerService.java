@@ -52,8 +52,8 @@ public class AnswerService {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED); // 수정 권한 없음
         Optional.ofNullable(answer.getAnswerContent())
                 .ifPresent(answerContent -> findAnswer.setAnswerContent(answerContent));
-        Optional.ofNullable(answer.getAnswerCheck())
-                .ifPresent(answerCheck -> findAnswer.setAnswerCheck(answerCheck));
+       /* Optional.ofNullable(answer.getAnswerCheck())
+                .ifPresent(answerCheck -> findAnswer.setAnswerCheck(answerCheck));*/
         //findAnswer.setModifiedAt(LocalDateTime.now());
         Answer savedAnswer = answerRepository.save(findAnswer);
 
