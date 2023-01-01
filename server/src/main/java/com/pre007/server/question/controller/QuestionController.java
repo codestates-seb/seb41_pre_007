@@ -20,8 +20,8 @@ import java.util.List;
 @Slf4j
 @Validated
 public class QuestionController {
-    private QuestionService questionService;
-    private QuestionMapper questionMapper;
+    private final QuestionService questionService;
+    private final QuestionMapper questionMapper;
 
     public QuestionController(QuestionService questionService, QuestionMapper questionMapper) {
         this.questionService = questionService;
@@ -65,6 +65,7 @@ public class QuestionController {
     //Todo 4 : 특정 질문 조회 -> GET One
     @GetMapping("/{question-id}")
     public ResponseEntity getOneQuestion(@PathVariable("question-id") long questionId){
+
         Question questionForResponse = questionService.findOneQuestion(questionId);
         QuestionDto.Response response  = questionMapper.questionToQuestionResponseDto(questionForResponse);
 

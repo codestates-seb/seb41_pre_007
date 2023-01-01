@@ -14,5 +14,5 @@ public interface AnswerMapper {
 
     AnswerDto.Response answerToAnswerResponseDto(Answer answer);
 
-    List<AnswerDto.Response> answerListToAnswerListResponseDto(List<Answer> answerList);
+    List<AnswerDto.Response> answerListToAnswerListResponseDto(List<Answer> answers);
 }

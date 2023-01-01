@@ -4,6 +4,7 @@ import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.audit.Auditable;
 import com.pre007.server.question.entity.Question;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Slf4j
 @Entity
 public class Member extends Auditable {
@@ -42,6 +44,7 @@ public class Member extends Auditable {
     // 추가
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+/*
     public Member() {}
 
     public Member(String profileImage, String nickname, String name, int age) {
@@ -50,6 +53,7 @@ public class Member extends Auditable {
         this.name = name;
         this.age = age;
     }
+*/
 
     //Foreign Key 필드
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -57,6 +61,14 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
+
+    public void addQuestion(Question question) {
+        questions.add(question);
+    }
+
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
+    }
     //Member(회원)의 상태 목록
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),

@@ -20,9 +20,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.http.HttpMethod.*;
-import static org.springframework.http.HttpMethod.PATCH;
-
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -50,20 +47,24 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
 
-                        .antMatchers(POST, "/members/login").permitAll()
-                        .antMatchers(POST, "/members").permitAll()
-                        .antMatchers(GET, "/members/profile").hasRole("USER")
-                        .antMatchers(GET, "/members/*").permitAll()
-                        .antMatchers(POST, "/questions").hasRole("USER")
-                        .antMatchers(GET, "/questions").permitAll()
-                        .antMatchers(GET, "/questions/*").permitAll()
-                        .antMatchers(PATCH, "/questions/").hasRole("USER")
-                        .antMatchers(PATCH, "/questions/*").hasRole("USER")
-                        .antMatchers(DELETE, "/questions/*").hasRole("USER")
-                        .antMatchers(POST, "/questions/*/answers").hasRole("USER")
-                        .antMatchers(DELETE, "/answers/*").hasRole("USER")
-                        .antMatchers(PATCH, "/answers/*").hasRole("USER")
-                        .anyRequest().denyAll()
+                                /*.antMatchers("/members", "/members/login", "/docs/*").permitAll()
+                                .antMatchers(HttpMethod.GET, "/questions/**", "/questions", "/answers/**").permitAll()
+//*/
+//                        .antMatchers(POST, "/members/login").permitAll()
+//                        .antMatchers(POST, "/members").permitAll()
+//                        .antMatchers(GET, "/members/profile").hasRole("USER")
+//                        .antMatchers(GET, "/members/*").permitAll()
+//                        .antMatchers(POST, "/questions").hasRole("USER")
+//                        .antMatchers(GET, "/questions").permitAll()
+//                        .antMatchers(GET, "/questions/*").permitAll()
+//                        .antMatchers(PATCH, "/questions/").hasRole("USER")
+//                        .antMatchers(PATCH, "/questions/*").hasRole("USER")
+//                        .antMatchers(DELETE, "/questions/*").hasRole("USER")
+//                        .antMatchers(POST, "/questions/*/answers").hasRole("USER")
+//                        .antMatchers(DELETE, "/answers/*").hasRole("USER")
+//                        .antMatchers(PATCH, "/answers/*").hasRole("USER")
+//                        .anyRequest().denyAll()
+                        .anyRequest().permitAll()
                 );
         return http.build();
     }
