@@ -32,7 +32,6 @@ public class AnswerDto {
     public static class Patch {
         private Long answerId;
         private String answerContent;
-        private Boolean answerCheck;
     }
 
     @AllArgsConstructor
@@ -40,7 +39,6 @@ public class AnswerDto {
     public static class Response {
         private Long answerId;
         private String answerContent;
-        private Boolean answerCheck;
         private String memberName;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

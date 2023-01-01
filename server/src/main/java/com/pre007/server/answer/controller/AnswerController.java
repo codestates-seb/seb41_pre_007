@@ -29,7 +29,7 @@ public class AnswerController {
     }
 
     //Todo 1 : 작성하기(생성하기) -> POST
-    @PostMapping("ㅊ")
+    @PostMapping("/questions/{question-id}/answers/add")
     public ResponseEntity postAnswer(@PathVariable("question-id") @Positive long questionId, @Valid @RequestBody AnswerDto.Post postRequest) {
         Answer answerForService = answerMapper.answerPostDtoToAnswer(postRequest);
         Answer answerForResponse = answerService.createAnswer(answerForService);

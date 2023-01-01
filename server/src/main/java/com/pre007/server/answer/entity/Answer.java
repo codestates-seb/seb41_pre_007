@@ -21,9 +21,6 @@ public class Answer extends Auditable {
     @Column(nullable = false)
     private String answerContent;
 
-    @Column(nullable = false)
-    private Boolean answerCheck = false;
-
     //Todo 연관 관계 매핑 필요
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
