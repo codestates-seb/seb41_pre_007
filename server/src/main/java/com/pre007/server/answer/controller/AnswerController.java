@@ -16,7 +16,7 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping("/answers")
+@RequestMapping
 @Slf4j
 @Validated
 public class AnswerController {
@@ -29,8 +29,8 @@ public class AnswerController {
     }
 
     //Todo 1 : 작성하기(생성하기) -> POST
-    @PostMapping
-    public ResponseEntity postAnswer(@Valid @RequestBody AnswerDto.Post postRequest) {
+    @PostMapping("/questions/{question-id}/answers/add")
+    public ResponseEntity postAnswer(@PathVariable("question-id") @Positive long questionId, @Valid @RequestBody AnswerDto.Post postRequest) {
         Answer answerForService = answerMapper.answerPostDtoToAnswer(postRequest);
         Answer answerForResponse = answerService.createAnswer(answerForService);
         AnswerDto.Response response = answerMapper.answerToAnswerResponseDto(answerForResponse);
@@ -39,7 +39,7 @@ public class AnswerController {
     }
 
     //Todo 2 : 수정하기 -> PATCH
-    @PatchMapping("/{answer-id}")
+    @PatchMapping("/answers/{answer-id}/edit")
     public ResponseEntity patchAnswer(@Valid @RequestBody AnswerDto.Patch patchRequest,
                                       @PathVariable("answer-id") @Positive long answerId) {
         Answer answerForService = answerMapper.answerPatchDtoToAnswer(patchRequest);
@@ -59,8 +59,8 @@ public class AnswerController {
         return new ResponseEntity(new SingleResponseDto<>(responses), HttpStatus.OK);
     }
     //Todo 4 : 특정 질문 조회 -> GET One
-    @GetMapping("/{answer-id}")
-    public ResponseEntity getAnswer(@PathVariable("answer-id") long answerId) {
+    @GetMapping("/questions/{question-id}/answers")
+    public ResponseEntity getAnswer(@PathVariable("question-id") long answerId) {
         Answer answerForResponse = answerService.findAnswer(answerId);
         AnswerDto.Response response = answerMapper.answerToAnswerResponseDto(answerForResponse);
 
@@ -68,7 +68,7 @@ public class AnswerController {
     }
 
     //Todo 5 : 질문 삭제하기 -> DELETE ONE
-    @DeleteMapping("/{answer-id}")
+    @DeleteMapping("/answers/{answer-id}/delete")
     public ResponseEntity deleteOneAnswer(@PathVariable("answer-id") long answerId) {
         answerService.deleteOneAnswer(answerId);
 

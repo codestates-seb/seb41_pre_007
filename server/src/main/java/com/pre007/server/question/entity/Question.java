@@ -19,7 +19,9 @@ public class Question extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String content;
 
     //Todo 연관 관계 매핑 필요
