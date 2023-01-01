@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
+@NoArgsConstructor
 @Entity
 public class Question extends Auditable {
     @Id
@@ -25,8 +26,22 @@ public class Question extends Auditable {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+    public long getMemberId() {
+        return member.getMemberId();
+    }
+
+    public String getName() {
+        return member.getName();
+    }
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
+    public void addAnswers(Answer answer) {
+        answers.add(answer);
+    }
+
+    public long getAnswerCount() {
+        return answers.stream().count();
+    }
 
 }
