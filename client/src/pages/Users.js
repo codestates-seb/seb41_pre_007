@@ -2,8 +2,10 @@ import { Sidebar } from '../components/Sidebar';
 import { ReactComponent as Search } from '../image/Search.svg';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+// import { useState, useEffect } from 'react';
 import dummyUsers from '../db/dummyUsers.json';
 import Avatar from '../components/Avatar';
+// import axios from 'axios';
 
 const SWrapper = styled.div`
   display: flex;
@@ -123,7 +125,26 @@ const SUsersContainer = styled.div`
 `;
 
 const Users = () => {
+  // const [items, setItem] = useState(null);
   const navigate = useNavigate();
+  // const { page, size } = useParams();
+
+  // const userAxios = async () => {
+  //   axios
+  //     .get(`http://54.180.127.165:8080/members?page=1&size=10`)
+  //     .then((res) => {
+  //       setItem(res.data.data);
+  //       console.log('data:', res.data.data);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       console.log('에러!!!');
+  //     });
+  // };
+  // useEffect(() => {
+  //   userAxios();
+  // }, []);
+
   return (
     <SWrapper>
       <Sidebar />

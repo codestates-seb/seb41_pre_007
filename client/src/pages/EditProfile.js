@@ -17,8 +17,9 @@ export const EditProfile = ({ image, size }) => {
   const handleChangeAddress = (e) => {
     setAddress(e.target.value);
   };
-  const handleChangeAbout = (e) => {
-    setProfileImage(e.target.value);
+  const handleChangeProfile = (e) => {
+    console.log(e.target.files);
+    setProfileImage(e.target.files);
   };
 
   const url = 'http://54.180.127.165:8080';
@@ -69,7 +70,7 @@ export const EditProfile = ({ image, size }) => {
             width={size}
             height={size}
             alt="change profile"
-            onChange={handleChangeAbout}
+            // onChange={handleChangeAbout}
           />
           <form>
             <div className="mb-3">
@@ -80,6 +81,8 @@ export const EditProfile = ({ image, size }) => {
                 className="form-control form-control-sm pd-r-12 input-style-50p"
                 id="formFileSm"
                 type="file"
+                accept="image/*"
+                onChange={handleChangeProfile}
               />
             </div>
           </form>
