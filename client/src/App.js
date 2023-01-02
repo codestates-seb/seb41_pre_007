@@ -6,7 +6,6 @@ import LoginHeader from './components/LoginHeader';
 import LogoutHeader from './components/LogoutHeader';
 import { AllQuestions } from './pages/AllQuestions';
 import { Tags } from './pages/Tags';
-// import { EditProfile } from './pages/EditProfile';
 import UsersProfile from './pages/UsersProfile';
 import Companies from './pages/Companies';
 import Users from './pages/Users';

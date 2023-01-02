@@ -79,20 +79,19 @@ const SProfile = styled.main`
 
 const UsersProfile = () => {
   const [isEdit, setIsEdit] = useState(false);
-  const { id } = useParams();
+  const { id } = useParams(); //현재 접속한 페이지의 url에서 파라미터 값을 가져옴
   const [idData, setIdData] = useState('');
 
   useEffect(() => {
     axios
       .get(`http://54.180.127.165:8080/members/${id}`)
       .then((res) => {
-        console.log(res.data.data);
         setIdData(res.data.data);
       })
       .catch((err) => {
         console.error(err.message);
       });
-  }, []);
+  }, [idData]);
 
   return (
     <SWrapper>
@@ -104,10 +103,7 @@ const UsersProfile = () => {
               <Avatar image={idData?.profileImage} size="128" />
             </div>
             <div className="user-inform-container">
-              <div className="user-inform-nickname">
-                {/* {recentUser[0].userNickname} */}
-                {idData?.name}
-              </div>
+              <div className="user-inform-nickname">{idData?.name}</div>
               <div className="user-detail-container">
                 <Cake fill="hsl(210,8%,60%)" />
                 <div className="user-detail color-gray font-size-12">
@@ -121,7 +117,6 @@ const UsersProfile = () => {
               <div className="user-detail-container">
                 <Location fill="hsl(210,8%,60%)" />
                 <div className="user-detail color-gray font-size-12">
-                  {/* {recentUser[0].userRegion} */}
                   {idData?.address}
                 </div>
               </div>
@@ -131,7 +126,6 @@ const UsersProfile = () => {
             <button
               className="user-button"
               onClick={() => {
-                // navigate('/editProfile');
                 setIsEdit((prev) => !prev);
               }}
             >
