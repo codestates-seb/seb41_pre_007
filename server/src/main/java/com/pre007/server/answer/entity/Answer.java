@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @Slf4j
 @Entity
+@NoArgsConstructor
 public class Answer extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +26,20 @@ public class Answer extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    public String getMemberName() {
+        return member.getName();
+    }
+
+    public long getMemberId() {
+        return member.getMemberId();
+    }
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
+
+    public long getQuestionId() {
+        return question.getQuestionId();
+    }
 
 
 

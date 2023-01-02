@@ -12,7 +12,6 @@ public class AnswerDto {
     @Getter
     public static class Post {
         private String answerContent;
-        private String answerNickname;
         private Long memberId;
         private Long questionId;
         public Member getMember() {
@@ -39,8 +38,8 @@ public class AnswerDto {
     @Getter
     public static class Response {
         private Long answerId;
-        private String answerNickname;
         private String answerContent;
+        private String memberName;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private Long memberId;

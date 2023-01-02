@@ -1,6 +1,7 @@
 package com.pre007.server.member.controller;
 
 
+import com.pre007.server.auth.jwt.JwtTokenizer;
 import com.pre007.server.dtoUtils.MultiResponseDto;
 import com.pre007.server.dtoUtils.SingleResponseDto;
 import com.pre007.server.member.dto.MemberDto;
@@ -24,10 +25,12 @@ import java.util.List;
 public class MemberController {
     private MemberService memberService;
     private MemberMapper mapper;
+    private final JwtTokenizer jwtTokenizer;
 
-    public MemberController(MemberService memberService, MemberMapper mapper) {
+    public MemberController(MemberService memberService, MemberMapper mapper, JwtTokenizer jwtTokenizer) {
         this.memberService = memberService;
         this.mapper = mapper;
+        this.jwtTokenizer = jwtTokenizer;
     }
 
     //TODO POST
@@ -44,8 +47,8 @@ public class MemberController {
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(@PathVariable("member-id") long memberId,
                                       @RequestBody MemberDto.Patch patchRequest){
-        patchRequest.setMemberId(memberId);
         Member memberForService = mapper.memberPatchToMember(patchRequest);
+        memberForService.setMemberId(memberId);
         Member memberForResponse = memberService.updateMember(memberForService);
         MemberDto.Response response = mapper.memberToMemberResponse(memberForResponse);
 

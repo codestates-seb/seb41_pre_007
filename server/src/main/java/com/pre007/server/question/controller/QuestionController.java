@@ -10,9 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,8 +22,8 @@ import java.util.List;
 @Slf4j
 @Validated
 public class QuestionController {
-    private QuestionService questionService;
-    private QuestionMapper questionMapper;
+    private final QuestionService questionService;
+    private final QuestionMapper questionMapper;
 
     public QuestionController(QuestionService questionService, QuestionMapper questionMapper) {
         this.questionService = questionService;
@@ -29,8 +31,10 @@ public class QuestionController {
     }
 
     //Todo 1 : 작성하기(생성하기) -> POST
+
+    @Secured("ROLE_USER")
     @PostMapping
-    public ResponseEntity postQuestion(@RequestBody QuestionDto.Post postRequest){
+    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post postRequest){
         Question questionForService = questionMapper.questionPostDtoToQuestion(postRequest);
         Question questionForResponse = questionService.createQuestion(questionForService);
         QuestionDto.Response response = questionMapper.questionToQuestionResponseDto(questionForResponse);
@@ -39,6 +43,8 @@ public class QuestionController {
     }
 
     //Todo 2 : 수정하기 -> PATCH
+
+    @Secured("ROLE_USER")
     @PatchMapping("/{question-id}")
     public ResponseEntity patchQuestion(@RequestBody QuestionDto.Patch patchRequest,
                                         @PathVariable("question-id") long questionId){
@@ -65,13 +71,16 @@ public class QuestionController {
     //Todo 4 : 특정 질문 조회 -> GET One
     @GetMapping("/{question-id}")
     public ResponseEntity getOneQuestion(@PathVariable("question-id") long questionId){
-        Question questionForResponse = questionService.findOneQuestion(questionId);
+
+        Question questionForResponse = questionService.findQuestion(questionId);
         QuestionDto.Response response  = questionMapper.questionToQuestionResponseDto(questionForResponse);
 
         return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     //Todo 5 : 질문 삭제하기 -> DELETE ONE
+
+    @Secured("ROLE_USER")
     @DeleteMapping("/{question-id}")
     public ResponseEntity deleteOneQuestion(@PathVariable("question-id") long questionId){
         questionService.deleteOneQuestion(questionId);

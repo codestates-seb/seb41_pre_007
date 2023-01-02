@@ -4,10 +4,16 @@ import com.pre007.server.answer.entity.Answer;
 import com.pre007.server.answer.repository.AnswerRepository;
 import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
+import com.pre007.server.member.entity.Member;
+import com.pre007.server.member.service.MemberService;
+import com.pre007.server.question.entity.Question;
+import com.pre007.server.question.service.QuestionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -15,11 +21,24 @@ import java.util.Optional;
 @Slf4j
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    public AnswerService(AnswerRepository answerRepository) {
+    private final QuestionService questionService;
+    private final MemberService memberService;
+    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, MemberService memberService) {
         this.answerRepository = answerRepository;
+        this.questionService = questionService;
+        this.memberService = memberService;
     }
 
     public Answer createAnswer(Answer answer) {
+        Question question = verifyExistingQuestion(answer.getQuestion());
+        Member member = verifyExistingMember(answer.getMember());
+
+        answer.setQuestion(question);
+        answer.setMember(member);
+
+        question.addAnswers(answer);
+        member.addAnswer(answer);
+
         Answer savedAnswer = answerRepository.save(answer);
 
         return savedAnswer;
@@ -28,8 +47,13 @@ public class AnswerService {
     public Answer updateAnswer(Answer answer) {
         Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
 
+        Member postMember = memberService.findVerifiedMember(findAnswer.getMember().getMemberId()); // 작성자
+        if(!Objects.equals(memberService.getLoginMember().getMemberId(), postMember.getMemberId())) // 로그인 유저 != 작성자
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED); // 수정 권한 없음
         Optional.ofNullable(answer.getAnswerContent())
-                .ifPresent(content -> findAnswer.setAnswerContent(content));
+                .ifPresent(answerContent -> findAnswer.setAnswerContent(answerContent));
+       /* Optional.ofNullable(answer.getAnswerCheck())
+                .ifPresent(answerCheck -> findAnswer.setAnswerCheck(answerCheck));*/
         //findAnswer.setModifiedAt(LocalDateTime.now());
         Answer savedAnswer = answerRepository.save(findAnswer);
 
@@ -41,14 +65,20 @@ public class AnswerService {
         return pageAnswers;
     }*/
 
-    public Answer findOneAnswer(long answerId) {
-        Answer findAnswer = findVerifiedAnswer(answerId);
-
-        return findAnswer;
+    public Answer findAnswer(long answerId) {
+        return findVerifiedAnswer(answerId);
     }
 
+    public List<Answer> findAnswers() {
+        return answerRepository.findAll();
+    }
     public void deleteOneAnswer(long answerId) {
         Answer findAnswer = findVerifiedAnswer(answerId);
+
+        Member postMember = memberService.findVerifiedMember(findAnswer.getMember().getMemberId()); // 작성자
+        if(!Objects.equals(memberService.getLoginMember().getMemberId(), postMember.getMemberId())) // 로그인 유저 != 작성자
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED); // 수정 권한 없음
+
         answerRepository.delete(findAnswer);
     }
     @Transactional(readOnly = true)
@@ -58,4 +88,13 @@ public class AnswerService {
                 new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer;
     }
+
+
+    private Question verifyExistingQuestion(Question question){
+        return questionService.findVerifiedQuestion(question.getQuestionId());
+    }
+    private Member verifyExistingMember(Member member) {
+        return memberService.findVerifiedMember(member.getMemberId());
+    }
+
 }

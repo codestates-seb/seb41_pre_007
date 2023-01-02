@@ -5,9 +5,12 @@ import com.pre007.server.exception.BusinessLogicException;
 import com.pre007.server.exception.ExceptionCode;
 import com.pre007.server.member.entity.Member;
 import com.pre007.server.member.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +20,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class MemberService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     //추가; 패스워드, 사용자 권한 관련
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
@@ -31,7 +35,20 @@ public class MemberService {
 
     //TODO createMember
     public Member createMember(Member member){
-        verifyExistsEmail(member.getEmail());
+        Optional<Member> optionalMember = memberRepository.findByEmail(member.getEmail());
+        if (optionalMember.isPresent()) {
+            if (passwordEncoder.matches(member.getPassword(), optionalMember.get().getPassword())) {
+                throw new BusinessLogicException(ExceptionCode.MEMBER_REDIRECTION_LOGIN_SUCCESS);
+            } else {
+                throw new BusinessLogicException(ExceptionCode.MEMBER_REDIRECTION_FIND_PASSWORD);
+            }
+        }
+
+        if (member.getName().isBlank()) {
+            member.setName("member" + Long.sum(memberRepository.count(), 1));
+        }
+        verifyExistingName(member.getName());
+
         //추가: Password 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
@@ -76,6 +93,7 @@ public class MemberService {
     //TODO deleteOneMember
     public void deleteOneMember(long memberId){
         Member foundMember = findVerifiedMember(memberId);
+        foundMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
         memberRepository.delete(foundMember);
     }
 //    //TODO deleteAllMembers
@@ -83,7 +101,7 @@ public class MemberService {
 //    }
 
     //validation 영역
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     private Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember =
                 memberRepository.findById(memberId);
@@ -91,7 +109,7 @@ public class MemberService {
                 optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
-    }
+    }*/
 
     private void verifyExistsEmail(String email) {// , String password
         Optional<Member> memberByEmail = memberRepository.findByEmail(email);
@@ -101,4 +119,38 @@ public class MemberService {
         if (memberByPassword.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);*/
     }
+
+
+
+
+    public Member findVerifiedMember(Long memberId) {
+
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        return member;
+    }
+
+    private void verifyExistingName(String name) {
+        Optional<Member> optionalMember = memberRepository.findByName(name);
+        if (optionalMember.isPresent()) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NAME_EXISTS);
+        }
+    }
+
+
+    public Member getLoginMember() { // 로그인된 유저 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication == null || authentication.getName() == null || authentication.getName().equals("anonymousUser"))
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+
+        Optional<Member> optionalMember = memberRepository.findByEmail(authentication.getName());
+        Member member = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        log.info("HERE:"+member.getMemberId());
+
+        return member;
+    }
+
 }

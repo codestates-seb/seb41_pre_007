@@ -83,13 +83,6 @@ export const EditProfile = ({ image, size }) => {
                 id="formFileSm"
                 onChange={handleChangeProfile}
               />
-              {/* <input
-                className="form-control form-control-sm pd-r-12 input-style-50p"
-                id="formFileSm"
-                type="file"
-                accept="image/*"
-                onChange={handleChangeProfile}
-              /> */}
             </div>
           </form>
           <div className="mg-t-12 fw-600">Display name</div>

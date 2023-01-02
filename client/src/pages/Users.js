@@ -134,6 +134,7 @@ const Users = () => {
   const page = 1;
   const size = 36;
 
+
   const userAxios = async () => {
     axios
       .get(`http://54.180.127.165:8080/members?page=${page}&size=${size}`)

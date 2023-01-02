@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
 import { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 // import { rendering } from '../redux/modules/questionSlice';
 // import { useDispatch } from 'react-redux';
-// import axios from 'axios';
 
 const SWrapper = styled.div`
   box-sizing: border-box;
@@ -106,7 +105,7 @@ export const QuestionPost = () => {
       alert('제목과 내용을 입력해주세요.');
       return;
     } else {
-      axios(`http://54.180.127.165:8080/questions`, {
+      fetch(`http://54.180.127.165:8080/questions/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -116,8 +115,15 @@ export const QuestionPost = () => {
           content,
           memberId,
         }),
-      });
-      location.href = '/questions';
+      })
+        .then((res) => {
+          if (res.ok) {
+            location.href = '/questions';
+          }
+        })
+        .catch((err) => {
+          return err;
+        });
     }
   };
 
