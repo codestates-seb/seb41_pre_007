@@ -8,10 +8,8 @@ import {
   removeLocalStorage,
   removerLocalMemberId,
 } from '../../utils/localStorage';
-// import { toast } from 'react-toastify';
 
 const initialState = {
-  // user: getLocalStorage() ? getLocalStorage() : null,
   Authorization: getLocalStorage() ? getLocalStorage() : null,
   isLogin: getLocalStorage() ? true : false,
   memberId: getLocalStorage() ? getLocalMemberId() : null,
@@ -35,21 +33,17 @@ export const loginSlice = createSlice({
   //   state.loginAction = action.payload.data;
   // },
   extraReducers: (builder) => {
-    builder.addCase(loginAction.pending, (state, action) => {
-      console.log('pending', action);
+    builder.addCase(loginAction.pending, (state) => {
       state.status = 'Loading';
     });
     builder.addCase(loginAction.fulfilled, (state, action) => {
-      //fulfilled 되었을 때, 서버에서 받아온 데이터를 state에 넣어준다
       state.Authorization = action.payload.token;
       state.isLogin = true;
       state.memberId = action.payload.memberId;
       addLocalStorage(state.Authorization);
       addLocalMemberId(state.memberId);
-      //   toast(`Hello! ${state.user.displayName}`);
     });
-    builder.addCase(loginAction.rejected, (state, action) => {
-      console.log(action);
+    builder.addCase(loginAction.rejected, (state) => {
       state.status = 'Fail';
       window.alert('이메일 또는 패스워드가 틀립니다!');
     });
