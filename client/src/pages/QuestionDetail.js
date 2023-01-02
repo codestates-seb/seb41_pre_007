@@ -7,7 +7,6 @@ import { ReactComponent as Downicon } from '../image/Downicon.svg';
 import { ReactComponent as Save } from '../image/Save.svg';
 import { ReactComponent as Showact } from '../image/Showact.svg';
 import Answer from '../components/Answer';
-import dummyUsers from '../db/dummyUsers.json';
 import Avatar from '../components/Avatar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -154,6 +153,7 @@ const QuestionDetail = () => {
   const navigate = useNavigate();
   const url = 'http://54.180.127.165:8080/questions/' + [params.questionId];
   const [questionData, setQuestionData] = useState([]);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -165,7 +165,19 @@ const QuestionDetail = () => {
         return err;
       }
     };
+
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          `http://54.180.165:8080/members/${questionData.memberId}`
+        );
+        setUser(response.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     fetchData();
+    fetchUser();
   }, []);
 
   const handleDelete = () => {
@@ -249,10 +261,7 @@ const QuestionDetail = () => {
                     <div className="guide-zone right">
                       <div className="profil box">
                         <div className="user-picture">
-                          <Avatar
-                            image={dummyUsers.users[params.questionId].avatar}
-                            size="48"
-                          />
+                          <Avatar image={user.profileImage} size="48" />
                         </div>
                         <div
                           className="user-name"
