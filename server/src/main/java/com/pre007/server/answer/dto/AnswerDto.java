@@ -44,13 +44,13 @@ public class AnswerDto {
         private LocalDateTime modifiedAt;
         private Long memberId;
         private Long questionId;
-        public void setMember(Member member) {
+        /*public void setMember(Member member) {
             this.memberId = member.getMemberId();
         }
 
         public void setQuestion(Question question) {
             this.questionId = question.getQuestionId();
-        }
+        }*/
 
     }
 }
