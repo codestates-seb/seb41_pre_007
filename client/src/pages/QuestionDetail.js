@@ -134,6 +134,10 @@ const SBottomCon = styled.div`
           .user-name {
             margin-left: 10px;
             color: #237ed0;
+            cursor: pointer;
+            &:hover {
+              color: #b4d1ef;
+            }
           }
         }
       }
@@ -250,7 +254,15 @@ const QuestionDetail = () => {
                             size="48"
                           />
                         </div>
-                        <div className="user-name">{questionData.memberId}</div>
+                        <div
+                          className="user-name"
+                          role="presentation"
+                          onClick={() =>
+                            navigate(`/users/${questionData.memberId}`)
+                          }
+                        >
+                          {questionData.name}
+                        </div>
                       </div>
                     </div>
                   </div>
