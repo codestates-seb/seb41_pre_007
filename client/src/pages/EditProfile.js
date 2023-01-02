@@ -65,18 +65,13 @@ export const EditProfile = ({ image, size }) => {
         <div id="user-edit-form">
           <div className="fw-600">Profile image</div>
           <img src={image} width={size} height={size} alt="change profile" />
-          <form>
-            <div className="mb-3">
-              <label htmlFor="formFileSm" className="form-label pt-15">
-                ⬇️⬇️ 변경할 프로필을 업로드 해주세요!
-              </label>
-              <input
-                className="pd-l-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"
-                id="formFileSm"
-                onChange={handleChangeProfile}
-              />
-            </div>
-          </form>
+          <div className="mg-t-12 fw-600">변경할 프로필 주소를 입력하세요</div>
+          <input
+            className="pd-l-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"
+            id="formFileSm"
+            value={profileImage}
+            onChange={handleChangeProfile}
+          />
           <div className="mg-t-12 fw-600">Display name</div>
           <input
             className="pd-l-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"

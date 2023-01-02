@@ -127,7 +127,7 @@ const Users = () => {
   const [items, setItem] = useState([]);
   const navigate = useNavigate();
   const page = 1;
-  const size = 36;
+  const size = 100;
 
   const userAxios = async () => {
     axios
@@ -201,7 +201,7 @@ const Users = () => {
                   <div
                     className="users-inform-nickname"
                     role="presentation"
-                    onClick={() => navigate('/users/:id')}
+                    onClick={() => navigate(`/users/${user.memberId}`)}
                   >
                     {user.name}
                   </div>
@@ -209,13 +209,6 @@ const Users = () => {
                   <div className="users-inform-reputation">
                     {user.createdAt}
                   </div>
-                  {/* <div className="users-inform-tags-container">
-                    {user.tags.map((tag, idx) => (
-                      <div key={idx} className="users-inform-tags">
-                        {tag}
-                      </div>
-                    ))}
-                  </div> */}
                 </div>
               </div>
             ))}
