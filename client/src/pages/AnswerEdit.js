@@ -118,7 +118,7 @@ const AnswerEdit = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const url = 'http://54.180.127.165:8080/answers/' + [params.id];
+  const url = 'http://54.180.127.165:8080/answers/' + [params.answerId];
   const [questionData, setQuestionData] = useState([]);
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
