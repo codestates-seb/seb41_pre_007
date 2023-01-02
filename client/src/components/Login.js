@@ -207,7 +207,6 @@ const Login = ({ handleIsOpen }) => {
     <>
       <div>
         <SModalBack onClick={handleIsOpen}></SModalBack>
-
         <SModal>
           <SModalView>
             <button onClick={handleIsOpen}>x</button>
@@ -233,7 +232,6 @@ const Login = ({ handleIsOpen }) => {
                   type="text"
                   value={email}
                   className="InputEmail"
-                  // ref={usernameRef}
                   onChange={handleChangeUsername}
                 ></input>
                 <span>Password</span>
@@ -241,7 +239,6 @@ const Login = ({ handleIsOpen }) => {
                   type="text"
                   value={password}
                   className="InputPassword"
-                  // ref={passwordRef}
                   onChange={handleChangePassword}
                 ></input>
                 <button onClick={handleClickLogin}>Login</button>
