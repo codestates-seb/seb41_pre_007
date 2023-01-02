@@ -3,7 +3,6 @@ import { ReactComponent as Search } from '../image/Search.svg';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-// import dummyUsers from '../db/dummyUsers.json';
 import Avatar from '../components/Avatar';
 import axios from 'axios';
 
@@ -125,15 +124,10 @@ const SUsersContainer = styled.div`
 `;
 
 const Users = () => {
-  // const newDate = new Date();
-  // const today = `${newDate.getFullYear()}. ${
-  //   newDate.getMonth() + 1
-  // }. ${newDate.getDate()}`;
   const [items, setItem] = useState([]);
   const navigate = useNavigate();
   const page = 1;
   const size = 36;
-
 
   const userAxios = async () => {
     axios
