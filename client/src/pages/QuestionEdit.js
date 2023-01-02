@@ -5,6 +5,7 @@ import { Sidebar } from '../components/Sidebar';
 import SidebarEdit from '../components/SidebarEdit';
 import ToastEditor from '../components/ToastEditor';
 import axios from 'axios';
+import { getLocalStorage } from '../utils/localStorage';
 
 const SWrapper = styled.div`
   display: flex;
@@ -142,12 +143,17 @@ const QuestionEdit = () => {
         method: 'patch',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${getLocalStorage()}`,
         },
         data: {
-          title: editTitle,
-          content: editContent,
+          title: editTitle ? editTitle : questionData.title,
+          content: editContent ? editContent : questionData.content,
         },
-      }).then(navigate(`/questions/${params.id}`));
+      }).then((res) => {
+        if (res) {
+          navigate(`/questions/${params.id}`);
+        }
+      });
     } catch (err) {
       console.log(err);
     }
