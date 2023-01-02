@@ -157,6 +157,8 @@ const LoginHeader = () => {
   const handleSearch = () => {
     dispatch(searchSlice.actions.setIsClicked());
   };
+
+  const memberId = useSelector((state) => state.login.memberId);
   const isClicked = useSelector((state) => state.search.isClicked);
 
   const handleLogout = () => {
@@ -166,7 +168,7 @@ const LoginHeader = () => {
 
   useEffect(() => {
     axios
-      .get(`http://54.180.127.165:8080/members/1`)
+      .get(`http://54.180.127.165:8080/members/${memberId}`)
       .then((res) => {
         // console.log(res.data.data);
         setIdData(res.data.data);

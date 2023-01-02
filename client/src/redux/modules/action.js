@@ -15,10 +15,11 @@ export const loginAction = createAsyncThunk(
       data: { email, password },
     })
       .then((res) => {
+        console.log(res);
         const accessToken = res.headers
           .get('Authorization')
           .replace(/^Bearer\s+/, '');
-        return { token: accessToken };
+        return { token: accessToken, memberId: res.data.memberId };
       })
       .catch((err) => {
         console.error(err);
