@@ -2,8 +2,10 @@ import { Sidebar } from '../components/Sidebar';
 import { ReactComponent as Search } from '../image/Search.svg';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import dummyUsers from '../db/dummyUsers.json';
+import { useState, useEffect } from 'react';
+// import dummyUsers from '../db/dummyUsers.json';
 import Avatar from '../components/Avatar';
+import axios from 'axios';
 
 const SWrapper = styled.div`
   display: flex;
@@ -123,7 +125,29 @@ const SUsersContainer = styled.div`
 `;
 
 const Users = () => {
+  const newDate = new Date();
+  const today = `${newDate.toLocaleString()}`;
+  const [items, setItem] = useState([]);
   const navigate = useNavigate();
+  const page = 1;
+  const size = 10;
+
+  const userAxios = async () => {
+    axios
+      .get(`http://54.180.127.165:8080/members?page=${page}&size=${size}`)
+      .then((res) => {
+        setItem(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.error(err);
+        console.log('에러!!!');
+      });
+  };
+  useEffect(() => {
+    userAxios();
+  }, []);
+
   return (
     <SWrapper>
       <Sidebar />
@@ -171,10 +195,10 @@ const Users = () => {
             <button className="users-period-button">all</button>
           </div>
           <SUsersContainer>
-            {dummyUsers.users.map((user) => (
-              <div className="users-inform-container" key={user.id}>
+            {items.map((user) => (
+              <div className="users-inform-container" key={user.memberId}>
                 <div className="users-inform-avatar">
-                  <Avatar image={user.avatar} size="48" />
+                  <Avatar image={user.profileImage} size="48" />
                 </div>
                 <div className="users-inform">
                   <div
@@ -182,19 +206,19 @@ const Users = () => {
                     role="presentation"
                     onClick={() => navigate('/users/:id')}
                   >
-                    {user.userNickname}
+                    {user.name}
                   </div>
-                  <div className="users-inform-region">{user.userRegion}</div>
+                  <div className="users-inform-region">{user.address}</div>
                   <div className="users-inform-reputation">
-                    {user.reputation}
+                    {user.createdAt && today}
                   </div>
-                  <div className="users-inform-tags-container">
+                  {/* <div className="users-inform-tags-container">
                     {user.tags.map((tag, idx) => (
                       <div key={idx} className="users-inform-tags">
                         {tag}
                       </div>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}
