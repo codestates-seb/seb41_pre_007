@@ -125,12 +125,15 @@ const SUsersContainer = styled.div`
 `;
 
 const Users = () => {
-  const newDate = new Date();
-  const today = `${newDate.toLocaleString()}`;
+  // const newDate = new Date();
+  // const today = `${newDate.getFullYear()}. ${
+  //   newDate.getMonth() + 1
+  // }. ${newDate.getDate()}`;
   const [items, setItem] = useState([]);
   const navigate = useNavigate();
   const page = 1;
-  const size = 10;
+  const size = 36;
+
 
   const userAxios = async () => {
     axios
@@ -210,7 +213,7 @@ const Users = () => {
                   </div>
                   <div className="users-inform-region">{user.address}</div>
                   <div className="users-inform-reputation">
-                    {user.createdAt && today}
+                    {user.createdAt}
                   </div>
                   {/* <div className="users-inform-tags-container">
                     {user.tags.map((tag, idx) => (
