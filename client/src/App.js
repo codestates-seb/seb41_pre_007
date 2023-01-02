@@ -32,7 +32,7 @@ const App = () => {
         <Route path="/questions/:questionId" element={<QuestionDetail />} />
         <Route path="/questions/edit/:id" element={<QuestionEdit />} />
         <Route
-          path="/questions/:id/answers/edit/:id"
+          path="/questions/:questionId/answers/edit/:answerId"
           element={<AnswerEdit />}
         />
       </Routes>

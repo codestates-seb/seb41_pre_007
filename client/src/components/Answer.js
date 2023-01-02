@@ -1,32 +1,40 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
+import Avatar from './Avatar';
 import { ReactComponent as Upicon } from '../image/Upicon.svg';
 import { ReactComponent as Downicon } from '../image/Downicon.svg';
 import { ReactComponent as Save } from '../image/Save.svg';
 import { ReactComponent as Showact } from '../image/Showact.svg';
 import ToastEditor from './ToastEditor';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import ToastViewer from './ToastViewer';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getLocalStorage } from '../utils/localStorage';
 
-const Answer = ({ params }) => {
+const Answer = () => {
   const navigate = useNavigate();
-  const paramA = useParams();
   const [answer, setAnswer] = useState('');
-  const [answered, setAnswered] = useState({});
+  const [answered, setAnswered] = useState([]);
+  const [user, setUser] = useState({});
+  const memberId = useSelector((state) => state.login.memberId);
+  const params = useParams();
 
-  const postAnswer = async () => {
+  const postAnswer = async (questionId, memberId) => {
     try {
       await axios(`http://54.180.127.165:8080/answers`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${getLocalStorage()}`,
         },
         data: JSON.stringify({
           answerContent: answer,
+          questionId,
+          memberId,
         }),
-      });
+      }).then((res) => setAnswered([...answered, res.data.data]));
     } catch (err) {
       console.log(err);
     }
@@ -36,9 +44,10 @@ const Answer = ({ params }) => {
     const getAnswer = async () => {
       try {
         await axios
-          .get(`http://54.180.127.165:8080/answers/1`)
-          .then((res) => res.data)
-          .then((data) => setAnswered(data.data));
+          .get(`http://54.180.127.165:8080/questions/${params.questionId}`)
+          .then((res) => {
+            setAnswered(res.data.data.answers);
+          });
       } catch (err) {
         console.log(err);
       }
@@ -46,46 +55,75 @@ const Answer = ({ params }) => {
     getAnswer();
   }, []);
 
+  useEffect(() => {
+    const getMember = async (memberId) => {
+      try {
+        await axios
+          .get(`http://54.180.127.165:8080/members/${memberId}`)
+          .then((res) => {
+            setUser({
+              profileImage: res.data.data.profileImage,
+              name: res.data.data.name,
+            });
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMember(memberId);
+  }, [answered]);
+
   return (
     <AnswerWrap>
-      <AnswerList>
-        <div className="answer-list top">
-          <div className="answer-list top-left">
-            <p>1 Answer</p>
-          </div>
-          <div className="answer-list top-right">
-            <p>Sorted by:</p>
-            <button>Highest score (default)</button>
-          </div>
+      <div className="answer-list top">
+        <div className="answer-list top-left">
+          <p>{answered.length} Answer</p>
         </div>
-        <div className="answer-list bottom">
-          <div className="answer-list bottom-left">
-            {' '}
-            <Upicon />
-            <div className="count-num">0</div>
-            <Downicon />
-            <Save />
-            <Showact />
-          </div>
-          <div className="answer-list bottom-right">
-            <ToastViewer contents={answered.answerContent} />
-            <div className="guide-zone">
-              <div className="guide-zone left">
-                <span>Share</span>
-                <span
-                  onClick={() =>
-                    navigate(`/questions/${params}/answers/edit/${paramA.id}`)
-                  }
-                  role="presentation"
-                >
-                  Edit
-                </span>
-                <span>Follow</span>
+      </div>
+      {answered.length > 0
+        ? answered.map((answer) => (
+            <AnswerList key={answer.answerId}>
+              <div className="answer-list bottom">
+                <div className="answer-list bottom-left">
+                  {' '}
+                  <Upicon />
+                  <div className="count-num">0</div>
+                  <Downicon />
+                  <Save />
+                  <Showact />
+                </div>
+                <div className="answer-list bottom-right">
+                  <ToastViewer contents={answer.answerContent} />
+                  <div className="guide-zone">
+                    <div className="guide-zone left">
+                      <span>Share</span>
+                      <span
+                        onClick={() =>
+                          navigate(
+                            `/questions/${params.questionId}/answers/edit/${answer.answerId}`
+                          )
+                        }
+                        role="presentation"
+                      >
+                        Edit
+                      </span>
+                      <span>Follow</span>
+                    </div>
+                    <div className="guide-zone right">
+                      <div className="profil box">
+                        <div className="user-picture">
+                          <Avatar image={user.profileImage} size="48" />
+                        </div>
+                        <div className="user-name">{user.name}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </AnswerList>
+            </AnswerList>
+          ))
+        : null}
+
       <YourWrap>
         <div className="answer-top">
           <p>Your Answer</p>
@@ -94,7 +132,10 @@ const Answer = ({ params }) => {
           <form>
             <ToastEditor onChangeHandler={setAnswer} />
           </form>
-          <button className="create-answer" onClick={postAnswer}>
+          <button
+            className="create-answer"
+            onClick={() => postAnswer(params.questionId, memberId)}
+          >
             Post Your Answer
           </button>
           <p>
@@ -150,6 +191,7 @@ const AnswerList = styled.div`
       align-items: center;
     }
     .bottom-right {
+      width: 100%;
       margin-left: 20px;
       margin-top: 10px;
       .body {
@@ -163,8 +205,24 @@ const AnswerList = styled.div`
           font-size: 12px;
           color: #6f7881;
         }
+        .box {
+          display: flex;
+          background-color: #d9e9f7;
+          width: 170px;
+          height: 60px;
+          align-items: center;
+          padding-left: 15px;
+
+          .user-name {
+            margin-left: 10px;
+            color: #237ed0;
+          }
+        }
       }
     }
+  }
+  .right {
+    display: flex;
   }
 `;
 const AnswerWrap = styled.div`
