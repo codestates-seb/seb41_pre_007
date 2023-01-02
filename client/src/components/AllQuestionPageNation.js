@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import Pagination from 'react-js-pagination';
 import { useState, useEffect } from 'react';
 import { SQuestionSummary } from '../pages/Home';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const AllQuestionPageNation = ({ handlePageClick, sortQuestions }) => {
   const [page, setPage] = useState(1);
   const [questions, setQuestions] = useState([]);
   const items = 10;
+  const navigate = useNavigate();
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -45,7 +46,13 @@ export const AllQuestionPageNation = ({ handlePageClick, sortQuestions }) => {
                       {data.title}
                     </Link>
                     <p>{new Date(data.createdAt).toLocaleString()}</p>
-                    <p>{data.userNickname}</p>
+                    <p
+                      className="username"
+                      role="presentation"
+                      onClick={() => navigate(`/users/${data.memberId}`)}
+                    >
+                      {data.name}
+                    </p>
                   </div>
                 </div>
               ))
@@ -59,7 +66,13 @@ export const AllQuestionPageNation = ({ handlePageClick, sortQuestions }) => {
                       {data.title}
                     </Link>
                     <p>{new Date(data.createdAt).toLocaleString()}</p>
-                    <p>{data.userNickname}</p>
+                    <p
+                      className="username"
+                      role="presentation"
+                      onClick={() => navigate(`/users/${data.memberId}`)}
+                    >
+                      {data.name}
+                    </p>
                   </div>
                 </div>
               ))}

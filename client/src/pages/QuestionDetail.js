@@ -12,6 +12,7 @@ import Avatar from '../components/Avatar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ToastViewer from '../components/ToastViewer';
+import { getLocalStorage } from '../utils/localStorage';
 
 const SViewWrap = styled.div`
   display: flex;
@@ -133,6 +134,10 @@ const SBottomCon = styled.div`
           .user-name {
             margin-left: 10px;
             color: #237ed0;
+            cursor: pointer;
+            &:hover {
+              color: #b4d1ef;
+            }
           }
         }
       }
@@ -165,11 +170,20 @@ const QuestionDetail = () => {
 
   const handleDelete = () => {
     if (window.confirm('삭제 하시겠습니까?')) {
-      fetch(url, { method: 'DELETE' }).then((res) => {
-        if (res.ok) {
-          navigate('/questions');
-        }
-      });
+      axios(url, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${getLocalStorage()}`,
+        },
+      })
+        .then((res) => {
+          if (res) {
+            location.href = '/questions';
+          }
+        })
+        .catch((err) => {
+          return err;
+        });
     }
   };
   return (
@@ -240,7 +254,15 @@ const QuestionDetail = () => {
                             size="48"
                           />
                         </div>
-                        <div className="user-name">{questionData.memberId}</div>
+                        <div
+                          className="user-name"
+                          role="presentation"
+                          onClick={() =>
+                            navigate(`/users/${questionData.memberId}`)
+                          }
+                        >
+                          {questionData.name}
+                        </div>
                       </div>
                     </div>
                   </div>
