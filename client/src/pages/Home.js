@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import { Sidebar } from '../components/Sidebar';
 import { SidebarRight } from '../components/SidebarRight';
 import { useNavigate, Link } from 'react-router-dom';
-// import dummyData from '../db/dummyData.json';
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -40,6 +38,7 @@ export const Home = () => {
     });
     setQuestions(newestResult);
   };
+
   return (
     <SHomeWrap>
       <Sidebar />
@@ -97,7 +96,13 @@ export const Home = () => {
                     {question.title}
                   </Link>
                   <p>{new Date(question.createdAt).toLocaleString()}</p>
-                  <p>{question.userNickname}</p>
+                  <p
+                    className="username"
+                    role="presentation"
+                    onClick={() => navigate(`/users/${question.memberId}`)}
+                  >
+                    {question.name}
+                  </p>
                 </div>
               </div>
             ))}
@@ -144,17 +149,27 @@ export const SHomeWrap = styled.div`
 
 export const SQuestionSummary = styled.div`
   .singleBox {
-    width: 776px;
-  }
-  .singleBox {
     border: 1px solid #ececec;
     border-width: 1px 0;
     padding: 20px;
+    width: 776px;
     .title {
+      font-size: 18px;
       color: #0074cc;
       text-decoration: none;
       &:hover {
         color: #b4d1ef;
+      }
+    }
+    p {
+      margin-bottom: 0px;
+      font-size: 14px;
+    }
+    .username {
+      cursor: pointer;
+      color: black;
+      &:hover {
+        color: gray;
       }
     }
   }
