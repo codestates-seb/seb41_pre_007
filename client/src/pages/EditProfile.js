@@ -8,7 +8,6 @@ export const EditProfile = ({ image, size }) => {
   const [profileImage, setProfileImage] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
-  // const navigate = useNavigate();
   const { id } = useParams();
 
   const handleChangeName = (e) => {
@@ -35,7 +34,6 @@ export const EditProfile = ({ image, size }) => {
         console.log(res.data.data.profileImage);
         setName(res.data.data.name);
         setAddress(res.data.data.address);
-        // navigate(`/users/${id}`);
         window.alert('수정이 완료되었습니다!');
       })
       .catch(() => {
@@ -66,13 +64,7 @@ export const EditProfile = ({ image, size }) => {
       <div className="pd-24 bd-r-3 user-edit-container">
         <div id="user-edit-form">
           <div className="fw-600">Profile image</div>
-          <img
-            src={image}
-            width={size}
-            height={size}
-            alt="change profile"
-            // onChange={handleChangeAbout}
-          />
+          <img src={image} width={size} height={size} alt="change profile" />
           <form>
             <div className="mb-3">
               <label htmlFor="formFileSm" className="form-label pt-15">

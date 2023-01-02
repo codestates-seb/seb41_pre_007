@@ -8,7 +8,6 @@ import { ReactComponent as Time } from '../image/Time.svg';
 import { ReactComponent as Location } from '../image/Location.svg';
 import { ReactComponent as Pencil } from '../image/Pencil.svg';
 import { ReactComponent as Network } from '../image/Network.svg';
-import dummyUsers from '../db/dummyUsers.json';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -79,10 +78,7 @@ const SProfile = styled.main`
 `;
 
 const UsersProfile = () => {
-  const recentUser = dummyUsers.users.filter((user) => user.id === 1);
   const [isEdit, setIsEdit] = useState(false);
-  // const navigate = useNavigate();
-  // const { memberId } = useParams();
   const { id } = useParams();
   const [idData, setIdData] = useState('');
 
@@ -148,7 +144,7 @@ const UsersProfile = () => {
             </button>
           </div>
         </div>
-        {isEdit && <EditProfile image={recentUser[0].avatar} size="164" />}
+        {isEdit && <EditProfile image={idData.profileImage} size="164" />}
       </SProfile>
     </SWrapper>
   );

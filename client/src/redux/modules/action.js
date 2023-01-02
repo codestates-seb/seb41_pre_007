@@ -24,15 +24,6 @@ export const loginAction = createAsyncThunk(
       .catch((err) => {
         console.error(err);
       });
-
-    // const getProfile = await axios('http://localhost8080/members/{member-id}', {
-    //   headers: {
-    //     authorization: response.headers.authorization,
-    //   },
-    // });
-
-    //...getProfile.data,
-    // return { token: response.headers.authorization };
     return response;
   }
 );

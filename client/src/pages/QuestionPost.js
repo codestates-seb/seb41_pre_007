@@ -2,9 +2,6 @@ import styled from 'styled-components';
 import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
 import { useState } from 'react';
-// import axios from 'axios';
-// import { rendering } from '../redux/modules/questionSlice';
-// import { useDispatch } from 'react-redux';
 
 const SWrapper = styled.div`
   box-sizing: border-box;
@@ -99,7 +96,6 @@ export const QuestionPost = () => {
     setTitleValue(e.currentTarget.value);
   };
 
-  // const dispatch = useDispatch();
   const handleSubmit = (title, content, memberId) => {
     if (!titleValue || !contentValue) {
       alert('제목과 내용을 입력해주세요.');
@@ -126,23 +122,6 @@ export const QuestionPost = () => {
         });
     }
   };
-
-  // axios
-  //   .post('http/questions', {
-  //     title: title,
-  //     content: content,
-  //   })
-
-  //   .then((res) => {
-  //     if (res.ok) {
-  //       alert('추가가 완료되었습니다.');
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     window.alert('추가를 실패했습니다.', err.message);
-  //   });
-  // navigate(`/allQuestions`);
-  // dispatch(rendering());
 
   return (
     <SWrapper>

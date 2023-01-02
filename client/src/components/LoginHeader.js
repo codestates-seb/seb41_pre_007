@@ -149,7 +149,6 @@ const LoginHeader = () => {
   const [idData, setIdData] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { id } = useParams();
 
   const handleClickHome = () => {
     navigate(`/`);
@@ -212,10 +211,7 @@ const LoginHeader = () => {
               onClick={() => navigate(`/users/${idData.memberId}`)}
               aria-hidden="true"
             >
-              <Avatar
-                image="https://avatars.githubusercontent.com/u/111413253?v=4"
-                size="24"
-              />
+              <Avatar image={idData.profileImage} size="24" />
             </div>
             <div className="header-bottom-topbar-container">
               <div className="header-bottom-topbar-background">

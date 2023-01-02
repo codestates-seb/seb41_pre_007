@@ -159,8 +159,6 @@ export const Setc = styled.div`
 const Login = ({ handleIsOpen }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const usernameRef = useRef(null);
-  // const passwordRef = useRef(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -190,20 +188,12 @@ const Login = ({ handleIsOpen }) => {
       password === '' ||
       password === ' ' ||
       password === null
-      // usernameRef.current.value === '' ||
-      // passwordRef.current.value === '' ||
-      // usernameRef.current.value === ' ' ||
-      // passwordRef.current.value === ' ' ||
-      // usernameRef.current.value === null ||
-      // passwordRef.current.value === null
     ) {
       window.alert('아이디 또는 비밀번호를 모두 입력하세요!');
-      // return false;
     } else {
       dispatch(loginAction({ email, password }))
         .then((res) => {
           console.log(res);
-          // localStorage.setItem('token', res.payload.token);
           window.alert('로그인에 성공했습니다');
           navigate('/');
         })
