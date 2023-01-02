@@ -247,7 +247,7 @@ const QuestionDetail = () => {
                 </div>
               </div>
               <div className="bottom-content bottom">
-                <Answer questionId={questionData.questionId} />
+                <Answer />
               </div>
             </div>
             <SidebarRight />

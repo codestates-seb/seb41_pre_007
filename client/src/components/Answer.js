@@ -13,13 +13,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getLocalStorage } from '../utils/localStorage';
 
-const Answer = ({ questionId }) => {
+const Answer = () => {
   const navigate = useNavigate();
-  const paramA = useParams();
   const [answer, setAnswer] = useState('');
   const [answered, setAnswered] = useState([]);
   const [user, setUser] = useState({});
   const memberId = useSelector((state) => state.login.memberId);
+  const params = useParams();
 
   const postAnswer = async (questionId, memberId) => {
     try {
@@ -38,8 +38,22 @@ const Answer = ({ questionId }) => {
     } catch (err) {
       console.log(err);
     }
-    console.log(answered);
   };
+
+  useEffect(() => {
+    const getAnswer = async () => {
+      try {
+        await axios
+          .get(`http://54.180.127.165:8080/questions/${params.questionId}`)
+          .then((res) => {
+            setAnswered(res.data.data.answers);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getAnswer();
+  }, []);
 
   useEffect(() => {
     const getMember = async (memberId) => {
@@ -86,7 +100,7 @@ const Answer = ({ questionId }) => {
                       <span
                         onClick={() =>
                           navigate(
-                            `/questions/${questionId}/answers/edit/${paramA.id}`
+                            `/questions/${params.questionId}/answers/edit/${answer.answerId}`
                           )
                         }
                         role="presentation"
@@ -120,7 +134,7 @@ const Answer = ({ questionId }) => {
           </form>
           <button
             className="create-answer"
-            onClick={() => postAnswer(questionId, memberId)}
+            onClick={() => postAnswer(params.questionId, memberId)}
           >
             Post Your Answer
           </button>
