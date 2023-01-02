@@ -134,7 +134,6 @@ const Users = () => {
       .get(`http://54.180.127.165:8080/members?page=${page}&size=${size}`)
       .then((res) => {
         setItem(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.error(err);

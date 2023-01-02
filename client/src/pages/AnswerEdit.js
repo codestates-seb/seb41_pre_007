@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Sidebar } from '../components/Sidebar';
 import SidebarEdit from '../components/SidebarEdit';
 import ToastEditor from '../components/ToastEditor';
 import axios from 'axios';
+import ToastViewer from '../components/ToastViewer';
+import { getLocalStorage } from '../utils/localStorage';
 
 const SWrapper = styled.div`
   display: flex;
@@ -119,15 +121,19 @@ const AnswerEdit = () => {
   const params = useParams();
 
   const url = 'http://54.180.127.165:8080/answers/' + [params.answerId];
+  const [answerData, setAnswerData] = useState([]);
   const [questionData, setQuestionData] = useState([]);
-  const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(url);
-        setQuestionData(response.data.data);
+        const answerResponse = await axios.get(url);
+        const questionResponse = await axios.get(
+          `http://54.180.127.165:8080/questions/${params.questionId}`
+        );
+        setAnswerData(answerResponse.data.data);
+        setQuestionData(questionResponse.data.data);
       } catch (err) {
         window.alert('오류가 발생했습니다.');
         return err;
@@ -136,25 +142,21 @@ const AnswerEdit = () => {
     fetchData();
   }, []);
 
-  const patchQuestion = async () => {
+  const patchAnswer = async () => {
     try {
-      await axios(`http://54.180.127.165:8080/answers/${params.id}`, {
+      await axios(`http://54.180.127.165:8080/answers/${params.answerId}`, {
         method: 'patch',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${getLocalStorage()}`,
         },
         data: {
-          title: editTitle,
-          content: editContent,
+          answerContent: editContent,
         },
-      }).then(navigate(`/answers/${params.id}`));
+      }).then(navigate(`/questions/${params.questionId}`));
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const handleChangeTitle = (e) => {
-    setEditTitle(e.target.value);
   };
 
   return (
@@ -175,16 +177,16 @@ const AnswerEdit = () => {
             </p>
           </div>
           <form>
-            <div className="mg-t-12 fw-600">Title</div>
-            <input
-              className="w-100p pd-lr-12 bd-r-3 fs-12 input-style"
-              value={questionData.title || ''}
-              onChange={handleChangeTitle}
-            />
-            <div className="mg-t-12 fw-600">Body</div>
+            <div className="mg-t-12 fw-600">
+              <Link to={`/quesetions/${params.questionId}`}>
+                {questionData.title}
+              </Link>
+              <ToastViewer contents={questionData.content} />
+            </div>
+            <div className="mg-t-12 fw-600">Answer</div>
             <ToastEditor
               onChangeHandler={setEditContent}
-              value={questionData.content}
+              value={answerData.answerContent}
             />
             <div className="mg-t-12 fw-600">Tags</div>
             <input className="w-100p pd-lr-12 fs-12 bd-r-3 input-style" />
@@ -197,7 +199,7 @@ const AnswerEdit = () => {
           <div className="mg-t-24">
             <button
               className="mg-r-12 pd-10 bd-n bd-r-3 save-edits-button"
-              onClick={() => patchQuestion()}
+              onClick={() => patchAnswer()}
             >
               Save edits
             </button>
