@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import ToastEditor from '../components/ToastEditor';
 import { ReactComponent as Thinking } from '../image/Thinking.svg';
 import { useState } from 'react';
+import { getLocalStorage } from '../utils/localStorage';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const SWrapper = styled.div`
   box-sizing: border-box;
@@ -90,7 +93,7 @@ const SContainer = styled.div`
 export const QuestionPost = () => {
   const [titleValue, setTitleValue] = useState('');
   const [contentValue, setContentValue] = useState('');
-  const memberId = 1;
+  const memberId = useSelector((state) => state.login.memberId);
 
   const handleTitleChange = (e) => {
     setTitleValue(e.currentTarget.value);
@@ -101,10 +104,11 @@ export const QuestionPost = () => {
       alert('제목과 내용을 입력해주세요.');
       return;
     } else {
-      fetch(`http://54.180.127.165:8080/questions/`, {
+      axios(`http://54.180.127.165:8080/questions/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${getLocalStorage()}`,
         },
         data: JSON.stringify({
           title,
@@ -113,9 +117,11 @@ export const QuestionPost = () => {
         }),
       })
         .then((res) => {
-          if (res.ok) {
-            location.href = '/questions';
-          }
+          // if (res) {
+          //   location.href = '/questions';
+          // }
+          console.log(res);
+          location.href = '/questions';
         })
         .catch((err) => {
           return err;
