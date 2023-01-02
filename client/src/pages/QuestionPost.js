@@ -117,11 +117,9 @@ export const QuestionPost = () => {
         }),
       })
         .then((res) => {
-          // if (res) {
-          //   location.href = '/questions';
-          // }
-          console.log(res);
-          location.href = '/questions';
+          if (res) {
+            location.href = '/questions';
+          }
         })
         .catch((err) => {
           return err;
