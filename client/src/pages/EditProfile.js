@@ -18,8 +18,8 @@ export const EditProfile = ({ image, size }) => {
     setAddress(e.target.value);
   };
   const handleChangeProfile = (e) => {
-    console.log(e.target.files);
-    setProfileImage(e.target.files);
+    console.log(e.target.value);
+    setProfileImage(e.target.value);
   };
 
   const url = 'http://54.180.127.165:8080';
@@ -32,6 +32,7 @@ export const EditProfile = ({ image, size }) => {
       })
       .then((res) => {
         setProfileImage(res.data.data.profileImage);
+        console.log(res.data.data.profileImage);
         setName(res.data.data.name);
         setAddress(res.data.data.address);
         // navigate(`/users/${id}`);
@@ -78,12 +79,17 @@ export const EditProfile = ({ image, size }) => {
                 ⬇️⬇️ 변경할 프로필을 업로드 해주세요!
               </label>
               <input
+                className="pd-l-12 pd-r-12 bd-r-3 fs-12 input-style input-style-50p"
+                id="formFileSm"
+                onChange={handleChangeProfile}
+              />
+              {/* <input
                 className="form-control form-control-sm pd-r-12 input-style-50p"
                 id="formFileSm"
                 type="file"
                 accept="image/*"
                 onChange={handleChangeProfile}
-              />
+              /> */}
             </div>
           </form>
           <div className="mg-t-12 fw-600">Display name</div>
