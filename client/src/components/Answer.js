@@ -17,7 +17,7 @@ const Answer = () => {
   const navigate = useNavigate();
   const [answer, setAnswer] = useState('');
   const [answered, setAnswered] = useState([]);
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
   const memberId = useSelector((state) => state.login.memberId);
   const params = useParams();
 
@@ -55,23 +55,17 @@ const Answer = () => {
     getAnswer();
   }, []);
 
-  useEffect(() => {
-    const getMember = async (memberId) => {
-      try {
-        await axios
-          .get(`http://54.180.127.165:8080/members/${memberId}`)
-          .then((res) => {
-            setUser({
-              profileImage: res.data.data.profileImage,
-              name: res.data.data.name,
-            });
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getMember(memberId);
-  }, [answered]);
+  const getMember = async (memberId) => {
+    const response = await axios
+      .get(`http://54.180.127.165:8080/members/${memberId}`)
+      .then((res) => {
+        return {
+          profileImage: res.data.data.profileImage,
+          name: res.data.data.name,
+        };
+      });
+    return response;
+  };
 
   return (
     <AnswerWrap>
@@ -112,9 +106,14 @@ const Answer = () => {
                     <div className="guide-zone right">
                       <div className="profil box">
                         <div className="user-picture">
-                          <Avatar image={user.profileImage} size="48" />
+                          <Avatar
+                            image={getMember(answer.memberId).profileImage}
+                            size="48"
+                          />
                         </div>
-                        <div className="user-name">{user.name}</div>
+                        <div className="user-name">
+                          {getMember(answer.memberId).name}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -204,6 +203,7 @@ const AnswerList = styled.div`
           margin-right: 10px;
           font-size: 12px;
           color: #6f7881;
+          cursor: pointer;
         }
         .box {
           display: flex;

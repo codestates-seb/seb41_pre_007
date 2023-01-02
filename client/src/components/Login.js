@@ -193,9 +193,10 @@ const Login = ({ handleIsOpen }) => {
     } else {
       dispatch(loginAction({ email, password }))
         .then((res) => {
-          console.log(res);
-          window.alert('로그인에 성공했습니다');
-          navigate('/');
+          if (res) {
+            window.alert('로그인에 성공했습니다');
+            navigate('/');
+          }
         })
         .catch(() => {
           window.alert('로그인에 실패했습니다 다시 시도해주세요.');
@@ -236,7 +237,7 @@ const Login = ({ handleIsOpen }) => {
                 ></input>
                 <span>Password</span>
                 <input
-                  type="text"
+                  type="password"
                   value={password}
                   className="InputPassword"
                   onChange={handleChangePassword}
