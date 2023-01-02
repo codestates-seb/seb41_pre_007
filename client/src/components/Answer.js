@@ -203,6 +203,7 @@ const AnswerList = styled.div`
           margin-right: 10px;
           font-size: 12px;
           color: #6f7881;
+          cursor: pointer;
         }
         .box {
           display: flex;
